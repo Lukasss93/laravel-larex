@@ -1,0 +1,36 @@
+{
+    "name": "lukasss93/laravel-larex",
+    "description": "Translate your Laravel application from a single CSV file!",
+    "keywords": ["laravel", "localization", "translation", "i18n", "csv"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Luca Patera",
+            "email": "lucapatera@outlook.it",
+            "homepage": "https://www.lucapatera.it/",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^7.2",
+        "illuminate/support": "^5.8|^6.0|^7.0|^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Lukasss93\\Larex\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Lukasss93\\Larex\\LarexServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

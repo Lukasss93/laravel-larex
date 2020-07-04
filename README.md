@@ -3,11 +3,7 @@
 </center>
 
 # Laravel Larex
-
-WIP
-
-## Work In Progress
-This package is still under active development.
+Translate your Laravel application from a single CSV file!
 
 ## Installation
 You can install the package using composer
@@ -17,30 +13,69 @@ composer require lukasss93/laravel-larex
 ```
 
 Then add the service provider to `config/app.php`.  
-In Laravel versions 5.5 and beyond, this step can be skipped if package auto-discovery is enabled.
+This step *can be skipped* if package auto-discovery is enabled.
 
 ```php
 'providers' => [
-    ...
     Lukasss93\Larex\LarexServiceProvider::class
-    ...
 ];
 ```
 
-Now that we have published a few new files to our application we need to reload them with the following command:
-
-```bash
-composer dump-autoload
-```
-
 ## Usage
+1. First, you must create the initial CSV file with `php artisan larex:init`.<br>
+   Or you can use `php artisan larex:init --base` to init the CSV file with default Laravel entries.<br>
+   The csv file has the following columns:
+   * group (basically the file name)
+   * key (the array key)
+   * en (the language code)
+   * other language codes...
+   
+2. Open the *project-root/resources/lang/localization.csv* file and edit it as you see fit.
 
-WIP
+3. Finally, you can use `php artisan larex` to translate your entries from the csv file to the laravel php files.
+
+### Tips
+* The **key** column inside the CSV file supports the **dot notation** for nested arrays.
+* You can watch your CSV file with `php artisan larex --watch`
+* You can use `php artisan larex:sort` to sort the CSV file by group and key.
+* Be careful when using the `php artisan larex` command! It will overwrite all files named with the group names inside the CSV.
+* Be careful when using the **dot notation**! Only the **last** entry will override the value.
+
+### Example
+1. Run `php artisan larex:init` command
+2. Edit the *project-root/resources/lang/localization.csv* file
+
+   | group | key | en | it |
+   |---|---|---|---|
+   | app | hello | Hello | Ciao |
+   | app | developers | Developers | Sviluppatori |
+   
+3. Run `php artisan larex` command
+4. You'll get the following files:
+   ```php
+   //project-root/resources/lang/en/app.php
+   
+   <?php
+   
+   return [
+       'hello' => 'Hello',
+       'developers' => 'Developers',
+   ];
+   
+   //project-root/resources/lang/it/app.php
+   
+   <?php
+   
+   return [
+       'hello' => 'Ciao',
+       'developers' => 'Sviluppatori',
+   ];
+   ```
+
+
 
 ## Changelog
-
 Please see the CHANGELOG.md for more information on what has changed recently.
 
 ## License
-
-Please see the license file for more information.
+Please see the LICENSE.md file for more information.
