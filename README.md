@@ -3,6 +3,10 @@
 </center>
 
 # Laravel Larex
+[![Latest Stable Version](https://poser.pugx.org/lukasss93/laravel-larex/v/stable)](https://packagist.org/packages/lukasss93/laravel-larex)
+[![Total Downloads](https://poser.pugx.org/lukasss93/laravel-larex/downloads)](https://packagist.org/packages/lukasss93/laravel-larex)
+[![License](https://poser.pugx.org/lukasss93/laravel-larex/license)](https://packagist.org/packages/lukasss93/laravel-larex)
+
 Translate your Laravel application from a single CSV file!
 
 ## Installation
