@@ -77,11 +77,8 @@ class LarexCommand extends Command
         //file parsing
         $file = fopen($this->file, 'rb');
         $i = -1;
-        while(($row = fgetcsv($file)) !== false) {
+        while (($columns = fgetcsv($file, 0, ';')) !== false) {
             $i++;
-
-            //get the row
-            $columns = str_getcsv($row[0], ';');
 
             //get the header
             if ($i === 0) {
