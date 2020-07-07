@@ -2,6 +2,7 @@
 
 namespace Lukasss93\Larex\Console;
 
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
@@ -32,7 +33,7 @@ class LarexCommand extends Command
      */
     public function handle(): void
     {
-        if($this->option('watch')) {
+        if ($this->option('watch')) {
             $this->watch();
             return;
         }
@@ -49,21 +50,21 @@ class LarexCommand extends Command
             $currentEditDate = filemtime(base_path($this->file));
             clearstatcache();
 
-            if($lastEditDate !== $currentEditDate) {
+            if ($lastEditDate !== $currentEditDate) {
                 $lastEditDate = $currentEditDate;
                 $this->translate();
                 $this->line('Waiting for changes...');
             }
 
-            usleep(500*1000);
-        } while(true);
+            usleep(500 * 1000);
+        } while (true);
     }
 
     private function translate(): void
     {
         $this->warn("Processing the '$this->file' file...");
 
-        if(!File::exists($this->file)) {
+        if (!File::exists($this->file)) {
             $this->error("The '$this->file' does not exists.");
             $this->line('Please create it with: php artisan larex:init');
             return;
@@ -83,7 +84,7 @@ class LarexCommand extends Command
             $columns = str_getcsv($row[0], ';');
 
             //get the header
-            if($i === 0) {
+            if ($i === 0) {
                 $header = $columns;
                 $columnsCount = count($header);
                 continue;
@@ -92,29 +93,33 @@ class LarexCommand extends Command
             //get first two columns values
             [$group, $key] = $columns;
 
-            for($j = 2; $j < $columnsCount; $j++) {
-                Arr::set($languages[$header[$j]][$group], $key, $columns[$j]);
+            for ($j = 2; $j < $columnsCount; $j++) {
+                try {
+                    Arr::set($languages[$header[$j]][$group], $key, $columns[$j]);
+                } catch (Exception $e) {
+                    $this->warn("[{$group}|{$key}] on line " . ($i + 1) . ", column " . ($j + 1) . " is not valid. It will be skipped.");
+                }
             }
         }
         fclose($file);
 
-        if(count($languages) === 0) {
+        if (count($languages) === 0) {
             $this->info("No entries found.");
             return;
         }
 
         //finally save the files
-        foreach($languages as $language => $groups) {
+        foreach ($languages as $language => $groups) {
             //check lang directory exists
-            if(!File::exists(resource_path('lang/' . $language))) {
+            if (!File::exists(resource_path('lang/' . $language))) {
                 File::makeDirectory(resource_path('lang/' . $language));
             }
 
-            foreach($groups as $group => $keys) {
+            foreach ($groups as $group => $keys) {
                 $write = fopen(resource_path('lang/' . $language . '/' . $group . '.php'), 'wb');
                 fwrite($write, "<?php\n\nreturn [\n\n");
 
-                foreach($keys as $key => $value) {
+                foreach ($keys as $key => $value) {
                     Utils::writeKeyValue($key, $value, $write);
                 }
 
