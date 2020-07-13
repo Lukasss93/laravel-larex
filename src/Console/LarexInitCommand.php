@@ -8,22 +8,22 @@ use Lukasss93\Larex\Utils;
 
 class LarexInitCommand extends Command
 {
-    private const FILE = 'resources/lang/localization.csv';
-
+    protected $file = 'resources' . DIRECTORY_SEPARATOR . 'lang' . DIRECTORY_SEPARATOR . 'localization.csv';
+    
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
     protected $signature = 'larex:init {--base : Init the CSV file with default Laravel entries }';
-
+    
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'Init the CSV file';
-
+    
     /**
      * Execute the console command.
      *
@@ -32,18 +32,18 @@ class LarexInitCommand extends Command
     public function handle(): void
     {
         $stub = 'base';
-
+        
         if($this->option('base')) {
             $stub = 'laravel';
         }
-
-        if(File::exists(self::FILE)) {
-            $this->error(self::FILE . ' already exists.');
+        
+        if(File::exists(base_path($this->file))) {
+            $this->error($this->file . ' already exists.');
             return;
         }
-
-        File::put(self::FILE, Utils::getStub($stub));
-
-        $this->info(self::FILE . ' created successfully.');
+        
+        File::put(base_path($this->file), Utils::getStub($stub));
+        
+        $this->info($this->file . ' created successfully.');
     }
 }

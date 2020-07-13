@@ -76,7 +76,10 @@ This step *can be skipped* if package auto-discovery is enabled.
    ];
    ```
 
-
+## Testing
+```bash
+composer test
+```
 
 ## Changelog
 Please see the CHANGELOG.md for more information on what has changed recently.

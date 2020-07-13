@@ -14,7 +14,7 @@ class LarexServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register():void
+    public function register(): void
     {
         $this->commands([
             LarexCommand::class,
@@ -22,13 +22,13 @@ class LarexServiceProvider extends ServiceProvider
             LarexSortCommand::class
         ]);
     }
-
+    
     /**
      * Bootstrap services.
      *
      * @return void
      */
-    public function boot():void
+    public function boot(): void
     {
         //
     }

@@ -18,9 +18,18 @@
         "php": "^7.2",
         "illuminate/support": "^5.8|^6.0|^7.0|^8.0"
     },
+    "require-dev": {
+        "orchestra/testbench": "^5.3",
+        "phpunit/phpunit": "^9.2"
+    },
     "autoload": {
         "psr-4": {
             "Lukasss93\\Larex\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lukasss93\\Larex\\Tests\\": "tests/"
         }
     },
     "extra": {
@@ -32,5 +41,10 @@
     },
     "config": {
         "sort-packages": true
+    },
+    "scripts": {
+        "test": [
+            "@php vendor/phpunit/phpunit/phpunit --colors=always"
+        ]
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Support\Collection;
 
 class Utils
 {
-
+    
     public static function csvToCollection(string $filename): Collection
     {
         $output = collect([]);
@@ -18,7 +18,7 @@ class Utils
         fclose($file);
         return $output;
     }
-
+    
     public static function collectionToCsv(Collection $array, string $filename): void
     {
         $file = fopen($filename, 'wb');
@@ -27,12 +27,12 @@ class Utils
         }
         fclose($file);
     }
-
+    
     public static function getStub(string $name): string
     {
         return file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'Stubs' . DIRECTORY_SEPARATOR . $name . '.stub');
     }
-
+    
     public static function writeKeyValue($key, $value, &$file, int $level = 1): void
     {
         if(is_array($value)) {
@@ -44,10 +44,10 @@ class Utils
             fwrite($file, str_repeat('    ', $level - 1) . "],\n");
             return;
         }
-
+        
         $value = (string)$value;
         $value = str_replace("'", "\'", $value);
         fwrite($file, str_repeat('    ', $level) . "'$key' => '$value',\n");
     }
-
+    
 }
