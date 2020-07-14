@@ -36,18 +36,18 @@ class Utils
     public static function writeKeyValue($key, $value, &$file, int $level = 1): void
     {
         if(is_array($value)) {
-            fwrite($file, str_repeat('    ', $level) . "'$key' => [\n");
+            fwrite($file, str_repeat('    ', $level) . "'$key' => [" . PHP_EOL);
             $level++;
             foreach($value as $childKey => $childValue) {
                 self::writeKeyValue($childKey, $childValue, $file, $level);
             }
-            fwrite($file, str_repeat('    ', $level - 1) . "],\n");
+            fwrite($file, str_repeat('    ', $level - 1) . "]," . PHP_EOL);
             return;
         }
         
         $value = (string)$value;
         $value = str_replace("'", "\'", $value);
-        fwrite($file, str_repeat('    ', $level) . "'$key' => '$value',\n");
+        fwrite($file, str_repeat('    ', $level) . "'$key' => '$value'," . PHP_EOL);
     }
     
 }
