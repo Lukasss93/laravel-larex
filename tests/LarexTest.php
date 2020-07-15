@@ -29,13 +29,7 @@ class LarexTest extends TestCase
     {
         $this->artisan('larex:init')->run();
         
-        $inputData = <<<CSV
-app;first;First
-app;second
-
-CSV;
-        
-        File::append(base_path($this->file), $inputData);
+        File::append(base_path($this->file), $this->getTestStub('warning-input'));
         
         $this->artisan('larex')
             ->expectsOutput("Processing the '$this->file' file...")
@@ -45,19 +39,8 @@ CSV;
         
         self::assertFileExists(resource_path('lang' . DIRECTORY_SEPARATOR . 'en' . DIRECTORY_SEPARATOR . 'app.php'));
         
-        $appData = <<<PHP
-<?php
-
-return [
-
-    'first' => 'First',
-
-];
-
-PHP;
-        
         self::assertEquals(
-            $appData,
+            $this->getTestStub('warning-output'),
             File::get(resource_path('lang' . DIRECTORY_SEPARATOR . 'en' . DIRECTORY_SEPARATOR . 'app.php'))
         );
     }
@@ -66,14 +49,7 @@ PHP;
     {
         $this->artisan('larex:init')->run();
         
-        $inputData = <<<CSV
-app;first;First
-app;second;Second
-another;third;Third
-
-CSV;
-        
-        File::append(base_path($this->file), $inputData);
+        File::append(base_path($this->file), $this->getTestStub('larex-input'));
         
         $this->artisan('larex')
             ->expectsOutput("Processing the '$this->file' file...")
@@ -84,35 +60,13 @@ CSV;
         self::assertFileExists(resource_path('lang' . DIRECTORY_SEPARATOR . 'en' . DIRECTORY_SEPARATOR . 'app.php'));
         self::assertFileExists(resource_path('lang' . DIRECTORY_SEPARATOR . 'en' . DIRECTORY_SEPARATOR . 'another.php'));
         
-        $appData = <<<PHP
-<?php
-
-return [
-
-    'first' => 'First',
-    'second' => 'Second',
-
-];
-
-PHP;
-        
         self::assertEquals(
-            $appData,
+            $this->getTestStub('larex-output-app'),
             File::get(resource_path('lang' . DIRECTORY_SEPARATOR . 'en' . DIRECTORY_SEPARATOR . 'app.php'))
         );
         
-        $anotherData = <<<PHP
-<?php
-
-return [
-
-    'third' => 'Third',
-
-];
-
-PHP;
         self::assertEquals(
-            $anotherData,
+            $this->getTestStub('larex-output-another'),
             File::get(resource_path('lang' . DIRECTORY_SEPARATOR . 'en' . DIRECTORY_SEPARATOR . 'another.php'))
         );
     }

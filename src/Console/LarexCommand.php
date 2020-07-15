@@ -41,6 +41,9 @@ class LarexCommand extends Command
         $this->translate();
     }
     
+    /**
+     *
+     */
     private function watch(): void
     {
         $this->warn("Watching the '$this->file' file...");

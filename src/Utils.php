@@ -3,34 +3,55 @@
 namespace Lukasss93\Larex;
 
 use Illuminate\Support\Collection;
+use Keboola\Csv\CsvOptions;
+use Keboola\Csv\CsvReader;
+use Keboola\Csv\CsvWriter;
+use Keboola\Csv\Exception;
+use Keboola\Csv\InvalidArgumentException;
 
 class Utils
 {
     
+    /**
+     * Get a collection from csv file
+     * @param string $filename
+     * @return Collection
+     * @throws Exception
+     */
     public static function csvToCollection(string $filename): Collection
     {
         $output = collect([]);
-        $file = fopen($filename, 'rb');
-        while(($row = fgetcsv($file)) !== false) {
-            $columns = str_getcsv($row[0], ';');
-            $output->push($columns);
+        $reader = new CsvReader($filename, ';', CsvOptions::DEFAULT_ENCLOSURE, CsvOptions::DEFAULT_ESCAPED_BY);
+        foreach($reader as $row) {
+            $output->push($row);
         }
-        fclose($file);
         return $output;
     }
     
+    /**
+     * Write a collection to csv file
+     * @param Collection $array
+     * @param string $filename
+     * @throws Exception
+     * @throws InvalidArgumentException
+     */
     public static function collectionToCsv(Collection $array, string $filename): void
     {
-        $file = fopen($filename, 'wb');
+        $writer = new CsvWriter($filename, ';', null, PHP_EOL);
         foreach($array as $row) {
-            fputcsv($file, $row, ';');
+            $writer->writeRow($row);
         }
-        fclose($file);
     }
     
     public static function getStub(string $name): string
     {
-        return file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'Stubs' . DIRECTORY_SEPARATOR . $name . '.stub');
+        $content = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'Stubs' . DIRECTORY_SEPARATOR . $name . '.stub');
+        return self::normalizeEOLs($content);
+    }
+    
+    public static function normalizeEOLs(string $content): string
+    {
+        return preg_replace('/\r\n|\r|\n/', PHP_EOL, $content);
     }
     
     public static function writeKeyValue($key, $value, &$file, int $level = 1): void

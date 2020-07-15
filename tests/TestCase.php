@@ -5,6 +5,7 @@ namespace Lukasss93\Larex\Tests;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\File;
 use Lukasss93\Larex\LarexServiceProvider;
+use Lukasss93\Larex\Utils;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 abstract class TestCase extends OrchestraTestCase
@@ -32,5 +33,10 @@ abstract class TestCase extends OrchestraTestCase
                 File::delete(base_path($this->file));
             }
         });
+    }
+    
+    public function getTestStub(string $name):string{
+        $content = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'Stubs' . DIRECTORY_SEPARATOR . $name . '.stub');
+        return Utils::normalizeEOLs($content);
     }
 }
