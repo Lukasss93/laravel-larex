@@ -84,7 +84,7 @@ composer test
 ```
 
 ## Changelog
-Please see the CHANGELOG.md for more information on what has changed recently.
+Please see the [CHANGELOG.md](https://github.com/Lukasss93/laravel-larex/blob/master/CHANGELOG.md) for more information on what has changed recently.
 
 ## License
-Please see the LICENSE.md file for more information.
+Please see the [LICENSE.md](https://github.com/Lukasss93/laravel-larex/blob/master/LICENSE.md) file for more information.
