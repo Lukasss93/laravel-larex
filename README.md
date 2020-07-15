@@ -7,7 +7,7 @@
 [![Total Downloads](https://poser.pugx.org/lukasss93/laravel-larex/downloads)](https://packagist.org/packages/lukasss93/laravel-larex)
 [![License](https://poser.pugx.org/lukasss93/laravel-larex/license)](https://packagist.org/packages/lukasss93/laravel-larex)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/Lukasss93/laravel-larex/run-tests)
-[![Coverage Status](https://coveralls.io/repos/github/Lukasss93/laravel-larex/badge.svg?branch=master)](https://coveralls.io/github/Lukasss93/laravel-larex?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/Lukasss93/laravel-larex/badge.svg)](https://coveralls.io/github/Lukasss93/laravel-larex)
 
 Translate your Laravel application from a single CSV file!
 
