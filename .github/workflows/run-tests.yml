@@ -37,7 +37,8 @@ jobs:
             - name: Execute tests
               run: composer test-coverage
 
-            - name: Coveralls GitHub Action
-              uses: coverallsapp/github-action@v1.1.1
-              with:
-                github-token: ${{ secrets.COVERALLS_TOKEN }}
+            - name: Send coverage
+              run: composer send-coverage
+              env:
+                COVERALLS_RUN_LOCALLY: 1
+                COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
