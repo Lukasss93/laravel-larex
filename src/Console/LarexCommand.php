@@ -2,7 +2,7 @@
 
 namespace Lukasss93\Larex\Console;
 
-use Exception;
+use ErrorException;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
@@ -41,15 +41,12 @@ class LarexCommand extends Command
         $this->translate();
     }
     
-    /**
-     *
-     */
     private function watch(): void
     {
         $this->warn("Watching the '$this->file' file...");
         
         $lastEditDate = null;
-        do {
+        Utils::forever(function() use (&$lastEditDate) {
             $currentEditDate = filemtime(base_path($this->file));
             clearstatcache();
             
@@ -60,7 +57,7 @@ class LarexCommand extends Command
             }
             
             usleep(500 * 1000);
-        } while(true);
+        });
     }
     
     private function translate(): void
@@ -90,15 +87,29 @@ class LarexCommand extends Command
                 continue;
             }
             
-            //get first two columns values
-            [$group, $key] = $columns;
-            
-            for($j = 2; $j < $columnsCount; $j++) {
-                try {
-                    Arr::set($languages[$header[$j]][$group], $key, $columns[$j]);
-                } catch(Exception $e) {
-                    $this->warn("[{$group}|{$key}] on line " . ($i + 1) . ", column " . ($j + 1) . " is not valid. It will be skipped.");
+            try {
+                unset($group, $key);
+                
+                //get first two columns values
+                [$group, $key] = $columns;
+                
+                if($key === '') {
+                    throw new ErrorException();
                 }
+                
+                for($j = 2; $j < $columnsCount; $j++) {
+                    try {
+                        Arr::set($languages[$header[$j]][$group], $key, $columns[$j]);
+                    } catch(ErrorException $e) {
+                        $this->warn(
+                            "[{$group}|{$key}] on line " . ($i + 1) .
+                            ", column " . ($j + 1) .
+                            " ({$header[$j]}) is not valid. It will be skipped."
+                        );
+                    }
+                }
+            } catch(ErrorException $ee) {
+                $this->warn("Line " . ($i + 1) . " is not valid. It will be skipped.");
             }
         }
         fclose($file);
@@ -110,10 +121,6 @@ class LarexCommand extends Command
         
         //finally save the files
         foreach($languages as $language => $groups) {
-            //check lang directory exists
-            if(!File::exists(resource_path('lang/' . $language))) {
-                File::makeDirectory(resource_path('lang/' . $language));
-            }
             
             foreach($groups as $group => $keys) {
                 $write = fopen(resource_path('lang/' . $language . '/' . $group . '.php'), 'wb');

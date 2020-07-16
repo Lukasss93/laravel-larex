@@ -71,4 +71,17 @@ class Utils
         fwrite($file, str_repeat('    ', $level) . "'$key' => '$value'," . PHP_EOL);
     }
     
+    public static function forever(callable $callback): void
+    {
+        $env = getenv('NOLOOP');
+        
+        if($env !== '1') {
+            while(true) {
+                $callback();
+            }
+        } else {
+            $callback();
+        }
+    }
+    
 }

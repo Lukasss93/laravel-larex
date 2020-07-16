@@ -25,15 +25,19 @@ class LarexTest extends TestCase
             ->run();
     }
     
-    public function test_larex_command_with_warning(): void
+    /** @dataProvider providerWarning
+     * @param string $stub
+     * @param string $output
+     */
+    public function test_larex_command_with_warning(string $stub, string $output): void
     {
         $this->artisan('larex:init')->run();
         
-        File::append(base_path($this->file), $this->getTestStub('warning-input'));
+        File::append(base_path($this->file), $this->getTestStub($stub));
         
         $this->artisan('larex')
             ->expectsOutput("Processing the '$this->file' file...")
-            ->expectsOutput('[app|second] on line 3, column 3 is not valid. It will be skipped.')
+            ->expectsOutput($output)
             ->expectsOutput('resources/lang/en/app.php created successfully.')
             ->run();
         
@@ -69,5 +73,41 @@ class LarexTest extends TestCase
             $this->getTestStub('larex-output-another'),
             File::get(resource_path('lang' . DIRECTORY_SEPARATOR . 'en' . DIRECTORY_SEPARATOR . 'another.php'))
         );
+    }
+    
+    public function test_larex_watch(): void
+    {
+        $this->artisan('larex:init')->run();
+    
+        File::append(base_path($this->file), $this->getTestStub('larex-input'));
+    
+        $this->artisan('larex --watch')
+            ->expectsOutput("Processing the '$this->file' file...")
+            ->expectsOutput("resources/lang/en/app.php created successfully.")
+            ->expectsOutput("resources/lang/en/another.php created successfully.")
+            ->expectsOutput('Waiting for changes...')
+            ->run();
+    
+        self::assertFileExists(resource_path('lang' . DIRECTORY_SEPARATOR . 'en' . DIRECTORY_SEPARATOR . 'app.php'));
+        self::assertFileExists(resource_path('lang' . DIRECTORY_SEPARATOR . 'en' . DIRECTORY_SEPARATOR . 'another.php'));
+    
+        self::assertEquals(
+            $this->getTestStub('larex-output-app'),
+            File::get(resource_path('lang' . DIRECTORY_SEPARATOR . 'en' . DIRECTORY_SEPARATOR . 'app.php'))
+        );
+    
+        self::assertEquals(
+            $this->getTestStub('larex-output-another'),
+            File::get(resource_path('lang' . DIRECTORY_SEPARATOR . 'en' . DIRECTORY_SEPARATOR . 'another.php'))
+        );
+    }
+    
+    public function providerWarning(): array
+    {
+        return [
+            ['warning-input-1', 'Line 3 is not valid. It will be skipped.'],
+            ['warning-input-2', 'Line 3 is not valid. It will be skipped.'],
+            ['warning-input-3', '[app|second] on line 3, column 3 (en) is not valid. It will be skipped.'],
+        ];
     }
 }

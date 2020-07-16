@@ -39,4 +39,10 @@ abstract class TestCase extends OrchestraTestCase
         $content = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'Stubs' . DIRECTORY_SEPARATOR . $name . '.stub');
         return Utils::normalizeEOLs($content);
     }
+    
+    public static function setUpBeforeClass(): void
+    {
+        parent::setUpBeforeClass();
+        putenv('NOLOOP=1');
+    }
 }
