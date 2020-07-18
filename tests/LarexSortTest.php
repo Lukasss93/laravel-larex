@@ -19,4 +19,13 @@ class LarexSortTest extends TestCase
         
         self::assertEquals($this->getTestStub('sort-output'), File::get(base_path($this->file)));
     }
+    
+    public function test_sort_command_if_file_does_not_exists(): void
+    {
+        $this->artisan('larex:sort')
+            ->expectsOutput('Sorting che CSV rows...')
+            ->expectsOutput("The '$this->file' does not exists.")
+            ->expectsOutput('Please create it with: php artisan larex:init')
+            ->run();
+    }
 }

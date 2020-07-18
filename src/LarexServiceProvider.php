@@ -4,6 +4,7 @@ namespace Lukasss93\Larex;
 
 use Illuminate\Support\ServiceProvider;
 use Lukasss93\Larex\Console\LarexCommand;
+use Lukasss93\Larex\Console\LarexImportCommand;
 use Lukasss93\Larex\Console\LarexInitCommand;
 use Lukasss93\Larex\Console\LarexSortCommand;
 
@@ -19,7 +20,8 @@ class LarexServiceProvider extends ServiceProvider
         $this->commands([
             LarexCommand::class,
             LarexInitCommand::class,
-            LarexSortCommand::class
+            LarexSortCommand::class,
+            LarexImportCommand::class
         ]);
     }
     

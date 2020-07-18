@@ -30,7 +30,7 @@ This step *can be skipped* if package auto-discovery is enabled.
 
 ## Usage
 1. First, you must create the initial CSV file with `php artisan larex:init`.<br>
-   Or you can use `php artisan larex:init --base` to init the CSV file with default Laravel entries.<br>
+   Or you can use `php artisan larex:import` to import entries from resources/lang files.<br>
    The csv file has the following columns:
    * group (basically the file name)
    * key (the array key)
@@ -42,6 +42,8 @@ This step *can be skipped* if package auto-discovery is enabled.
 3. Finally, you can use `php artisan larex` to translate your entries from the csv file to the laravel php files.
 
 ### Tips
+* You can import existing laravel php files with `php artisan larex:import`.
+* You can use `php artisan larex:init --base` to init the CSV file with default Laravel entries.
 * The **key** column inside the CSV file supports the **dot notation** for nested arrays.
 * You can watch your CSV file with `php artisan larex --watch`
 * You can use `php artisan larex:sort` to sort the CSV file by group and key.

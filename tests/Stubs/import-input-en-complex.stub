@@ -1,0 +1,16 @@
+<?php
+
+return [
+
+    'hello' => 'Hello',
+    'this' => [
+        'car' => 'This car',
+        'bus' => 'This bus'
+    ],
+    'very' => [
+        'long' => [
+            'limousine' => 'It\'s a very long limuosine'
+        ]
+    ]
+
+];

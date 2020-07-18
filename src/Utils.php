@@ -45,7 +45,7 @@ class Utils
     
     public static function getStub(string $name): string
     {
-        $content = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'Stubs' . DIRECTORY_SEPARATOR . $name . '.stub');
+        $content = file_get_contents(__DIR__ . '/Stubs/' . $name . '.stub');
         return self::normalizeEOLs($content);
     }
     

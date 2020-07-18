@@ -10,7 +10,7 @@ use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 abstract class TestCase extends OrchestraTestCase
 {
-    protected $file = 'resources' . DIRECTORY_SEPARATOR . 'lang' . DIRECTORY_SEPARATOR . 'localization.csv';
+    protected $file = 'resources/lang/localization.csv';
     
     /**
      * @param Application $app
@@ -28,15 +28,35 @@ abstract class TestCase extends OrchestraTestCase
     {
         parent::setUp();
         
-        $this->beforeApplicationDestroyed(function() {
+        $this->afterApplicationCreated(function(){
+            
+            if(File::exists(resource_path('lang/en'))) {
+                File::deleteDirectory(resource_path('lang/en'));
+            }
+    
+            File::makeDirectory(resource_path('lang/en'), 0755, true, true);
+        });
+        
+        $this->beforeApplicationDestroyed(function(){
             if(File::exists(base_path($this->file))) {
                 File::delete(base_path($this->file));
             }
+    
+            if(File::exists(resource_path('lang/it'))) {
+                File::deleteDirectory(resource_path('lang/it'));
+            }
+    
+            if(File::exists(resource_path('lang/en'))) {
+                File::deleteDirectory(resource_path('lang/en'));
+            }
+    
+            File::makeDirectory(resource_path('lang/en'), 0755, true, true);
         });
     }
     
-    public function getTestStub(string $name):string{
-        $content = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'Stubs' . DIRECTORY_SEPARATOR . $name . '.stub');
+    public function getTestStub(string $name): string
+    {
+        $content = file_get_contents(__DIR__ . '/Stubs/' . $name . '.stub');
         return Utils::normalizeEOLs($content);
     }
     

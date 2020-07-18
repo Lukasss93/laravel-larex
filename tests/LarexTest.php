@@ -41,11 +41,11 @@ class LarexTest extends TestCase
             ->expectsOutput('resources/lang/en/app.php created successfully.')
             ->run();
         
-        self::assertFileExists(resource_path('lang' . DIRECTORY_SEPARATOR . 'en' . DIRECTORY_SEPARATOR . 'app.php'));
+        self::assertFileExists(resource_path('lang/en/app.php'));
         
         self::assertEquals(
             $this->getTestStub('warning-output'),
-            File::get(resource_path('lang' . DIRECTORY_SEPARATOR . 'en' . DIRECTORY_SEPARATOR . 'app.php'))
+            File::get(resource_path('lang/en/app.php'))
         );
     }
     
@@ -61,53 +61,56 @@ class LarexTest extends TestCase
             ->expectsOutput("resources/lang/en/another.php created successfully.")
             ->run();
         
-        self::assertFileExists(resource_path('lang' . DIRECTORY_SEPARATOR . 'en' . DIRECTORY_SEPARATOR . 'app.php'));
-        self::assertFileExists(resource_path('lang' . DIRECTORY_SEPARATOR . 'en' . DIRECTORY_SEPARATOR . 'another.php'));
+        self::assertFileExists(resource_path('lang/en/app.php'));
+        self::assertFileExists(resource_path('lang/en/another.php'));
         
         self::assertEquals(
             $this->getTestStub('larex-output-app'),
-            File::get(resource_path('lang' . DIRECTORY_SEPARATOR . 'en' . DIRECTORY_SEPARATOR . 'app.php'))
+            File::get(resource_path('lang/en/app.php'))
         );
         
         self::assertEquals(
             $this->getTestStub('larex-output-another'),
-            File::get(resource_path('lang' . DIRECTORY_SEPARATOR . 'en' . DIRECTORY_SEPARATOR . 'another.php'))
+            File::get(resource_path('lang/en/another.php'))
         );
     }
     
     public function test_larex_watch(): void
     {
         $this->artisan('larex:init')->run();
-    
+        
         File::append(base_path($this->file), $this->getTestStub('larex-input'));
-    
+        
         $this->artisan('larex --watch')
             ->expectsOutput("Processing the '$this->file' file...")
             ->expectsOutput("resources/lang/en/app.php created successfully.")
             ->expectsOutput("resources/lang/en/another.php created successfully.")
             ->expectsOutput('Waiting for changes...')
             ->run();
-    
-        self::assertFileExists(resource_path('lang' . DIRECTORY_SEPARATOR . 'en' . DIRECTORY_SEPARATOR . 'app.php'));
-        self::assertFileExists(resource_path('lang' . DIRECTORY_SEPARATOR . 'en' . DIRECTORY_SEPARATOR . 'another.php'));
-    
+        
+        self::assertFileExists(resource_path('lang/en/app.php'));
+        self::assertFileExists(resource_path('lang/en/another.php'));
+        
         self::assertEquals(
             $this->getTestStub('larex-output-app'),
-            File::get(resource_path('lang' . DIRECTORY_SEPARATOR . 'en' . DIRECTORY_SEPARATOR . 'app.php'))
+            File::get(resource_path('lang/en/app.php'))
         );
-    
+        
         self::assertEquals(
             $this->getTestStub('larex-output-another'),
-            File::get(resource_path('lang' . DIRECTORY_SEPARATOR . 'en' . DIRECTORY_SEPARATOR . 'another.php'))
+            File::get(resource_path('lang/en/another.php'))
         );
     }
     
     public function providerWarning(): array
     {
         return [
-            ['warning-input-1', 'Line 3 is not valid. It will be skipped.'],
-            ['warning-input-2', 'Line 3 is not valid. It will be skipped.'],
-            ['warning-input-3', '[app|second] on line 3, column 3 (en) is not valid. It will be skipped.'],
+            'blank line' => ['warning-input-1', 'Line 3 is not valid. It will be skipped.'],
+            'missing key' => ['warning-input-2', 'Line 3 is not valid. It will be skipped.'],
+            'missing column' => [
+                'warning-input-3',
+                '[app|second] on line 3, column 3 (en) is not valid. It will be skipped.'
+            ],
         ];
     }
 }
