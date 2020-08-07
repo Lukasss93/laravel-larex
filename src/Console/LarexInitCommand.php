@@ -34,7 +34,7 @@ class LarexInitCommand extends Command
         $stub = 'default';
         
         if($this->option('base')) {
-            $stub = 'laravel';
+            $stub = 'base';
         }
         
         if(File::exists(base_path($this->file))) {

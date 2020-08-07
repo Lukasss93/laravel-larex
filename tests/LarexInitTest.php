@@ -24,7 +24,7 @@ class LarexInitTest extends TestCase
             ->run();
         
         self::assertFileExists(base_path($this->file));
-        self::assertEquals(Utils::getStub('laravel'), File::get(base_path($this->file)));
+        self::assertEquals(Utils::getStub('base'), File::get(base_path($this->file)));
     }
     
     public function test_init_command_fail_if_file_already_exists(): void
