@@ -14,7 +14,7 @@ class LarexInitTest extends TestCase
             ->run();
         
         self::assertFileExists(base_path($this->file));
-        self::assertEquals(Utils::getStub('base'), File::get(base_path($this->file)));
+        self::assertEquals(Utils::getStub('default'), File::get(base_path($this->file)));
     }
     
     public function test_init_command_with_base_option(): void

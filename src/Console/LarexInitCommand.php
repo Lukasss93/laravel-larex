@@ -31,7 +31,7 @@ class LarexInitCommand extends Command
      */
     public function handle(): void
     {
-        $stub = 'base';
+        $stub = 'default';
         
         if($this->option('base')) {
             $stub = 'laravel';
