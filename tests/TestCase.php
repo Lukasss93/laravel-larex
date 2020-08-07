@@ -28,28 +28,27 @@ abstract class TestCase extends OrchestraTestCase
     {
         parent::setUp();
         
-        $this->afterApplicationCreated(function(){
-            
-            if(File::exists(resource_path('lang/en'))) {
+        $this->afterApplicationCreated(function () {
+            if (File::exists(resource_path('lang/en'))) {
                 File::deleteDirectory(resource_path('lang/en'));
             }
-    
+            
             File::makeDirectory(resource_path('lang/en'), 0755, true, true);
         });
         
-        $this->beforeApplicationDestroyed(function(){
-            if(File::exists(base_path($this->file))) {
+        $this->beforeApplicationDestroyed(function () {
+            if (File::exists(base_path($this->file))) {
                 File::delete(base_path($this->file));
             }
-    
-            if(File::exists(resource_path('lang/it'))) {
+            
+            if (File::exists(resource_path('lang/it'))) {
                 File::deleteDirectory(resource_path('lang/it'));
             }
-    
-            if(File::exists(resource_path('lang/en'))) {
+            
+            if (File::exists(resource_path('lang/en'))) {
                 File::deleteDirectory(resource_path('lang/en'));
             }
-    
+            
             File::makeDirectory(resource_path('lang/en'), 0755, true, true);
         });
     }
@@ -64,5 +63,10 @@ abstract class TestCase extends OrchestraTestCase
     {
         parent::setUpBeforeClass();
         putenv('NOLOOP=1');
+    }
+    
+    public function initFromStub(string $stub): void
+    {
+        File::put(base_path($this->file), $this->getTestStub($stub));
     }
 }
