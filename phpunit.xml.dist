@@ -19,6 +19,7 @@
             <directory suffix=".php">src/</directory>
             <exclude>
                 <file>src/Utils.php</file>
+                <file>src/Console/LarexCommand.php</file>
             </exclude>
         </whitelist>
     </filter>
