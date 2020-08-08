@@ -8,7 +8,7 @@
 [![License](https://poser.pugx.org/lukasss93/laravel-larex/license)](https://packagist.org/packages/lukasss93/laravel-larex)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/Lukasss93/laravel-larex/run-tests)
 [![Coveralls github](https://img.shields.io/coveralls/github/Lukasss93/laravel-larex)](https://coveralls.io/github/Lukasss93/laravel-larex)
-[![Chat](https://img.shields.io/badge/chat-on%20telegram-blue)](https://t.me/Lukasss93)
+[![Chat](https://img.shields.io/badge/chat%20on-telegram-blue)](https://t.me/Lukasss93)
 
 Translate your Laravel application from a single CSV file!
 
@@ -39,7 +39,7 @@ This step *can be skipped* if package auto-discovery is enabled.
    
 2. Open the *project-root/resources/lang/localization.csv* file and edit it as you see fit.
 
-3. Finally, you can use `php artisan larex` to translate your entries from the csv file to the laravel php files.
+3. Finally, you can use `php artisan larex:export` to translate your entries from the csv file to the laravel php files.
 
 ### Tips
 * You can import existing laravel php files with `php artisan larex:import`.
@@ -47,7 +47,7 @@ This step *can be skipped* if package auto-discovery is enabled.
 * The **key** column inside the CSV file supports the **dot notation** for nested arrays.
 * You can watch your CSV file with `php artisan larex --watch`
 * You can use `php artisan larex:sort` to sort the CSV file by group and key.
-* Be careful when using the `php artisan larex` command! It will overwrite all files named with the group names inside the CSV.
+* Be careful when using the `php artisan larex:export` command! It will overwrite all files named with the group names inside the CSV.
 * Be careful when using the **dot notation**! Only the **last** entry will override the value.
 
 ### Example
@@ -57,9 +57,10 @@ This step *can be skipped* if package auto-discovery is enabled.
    | group | key | en | it |
    |---|---|---|---|
    | app | hello | Hello | Ciao |
-   | app | developers | Developers | Sviluppatori |
+   | app | list.developers | Developers | Sviluppatori |
+   | app | list.teachers | Teachers | Insegnanti |
    
-3. Run `php artisan larex` command
+3. Run `php artisan larex:export` command
 4. You'll get the following files:
    ```php
    //project-root/resources/lang/en/app.php
@@ -68,7 +69,10 @@ This step *can be skipped* if package auto-discovery is enabled.
    
    return [
        'hello' => 'Hello',
-       'developers' => 'Developers',
+       'list' => [
+           'developers' => 'Developers',
+           'teachers' => 'Teachers',
+       ]
    ];
    
    //project-root/resources/lang/it/app.php
@@ -77,7 +81,10 @@ This step *can be skipped* if package auto-discovery is enabled.
    
    return [
        'hello' => 'Ciao',
-       'developers' => 'Sviluppatori',
+       'list' => [
+           'developers' => 'Sviluppatori',
+           'teachers' => 'Insegnanti',
+       ]
    ];
    ```
 
