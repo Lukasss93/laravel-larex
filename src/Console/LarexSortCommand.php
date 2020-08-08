@@ -4,8 +4,6 @@ namespace Lukasss93\Larex\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use Keboola\Csv\Exception;
-use Keboola\Csv\InvalidArgumentException;
 use Lukasss93\Larex\Utils;
 
 class LarexSortCommand extends Command
@@ -30,8 +28,6 @@ class LarexSortCommand extends Command
      * Execute the console command.
      *
      * @return void
-     * @throws Exception
-     * @throws InvalidArgumentException
      */
     public function handle(): void
     {

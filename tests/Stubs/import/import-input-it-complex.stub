@@ -9,7 +9,7 @@ return [
     ],
     'very' => [
         'long' => [
-            'limousine' => 'È una limuosine molto lunga'
+            'limousine' => 'È una limousine molto lunga'
         ]
     ]
 

@@ -35,8 +35,8 @@ class LarexImportTest extends TestCase
         
         File::makeDirectory(resource_path('lang/en'), 0755, true, true);
         File::makeDirectory(resource_path('lang/it'), 0755, true, true);
-        File::put(resource_path('lang/en/app.php'), $this->getTestStub('import-input-en-simple'));
-        File::put(resource_path('lang/it/app.php'), $this->getTestStub('import-input-it-simple'));
+        File::put(resource_path('lang/en/app.php'), $this->getTestStub('import/import-input-en-simple'));
+        File::put(resource_path('lang/it/app.php'), $this->getTestStub('import/import-input-it-simple'));
         
         $this->artisan('larex:import')
             ->expectsOutput('Importing entries...')
@@ -45,7 +45,7 @@ class LarexImportTest extends TestCase
         
         self::assertFileExists(resource_path('lang/localization.csv'));
         self::assertNotEquals(
-            $this->getTestStub('import-output-simple'),
+            $this->getTestStub('import/import-output-simple'),
             File::get(resource_path('lang/localization.csv'))
         );
     }
@@ -56,8 +56,8 @@ class LarexImportTest extends TestCase
         
         File::makeDirectory(resource_path('lang/en'), 0755, true, true);
         File::makeDirectory(resource_path('lang/it'), 0755, true, true);
-        File::put(resource_path('lang/en/app.php'), $this->getTestStub('import-input-en-simple'));
-        File::put(resource_path('lang/it/app.php'), $this->getTestStub('import-input-it-simple'));
+        File::put(resource_path('lang/en/app.php'), $this->getTestStub('import/import-input-en-simple'));
+        File::put(resource_path('lang/it/app.php'), $this->getTestStub('import/import-input-it-simple'));
         
         $this->artisan('larex:import -f')
             ->expectsOutput('Importing entries...')
@@ -66,7 +66,7 @@ class LarexImportTest extends TestCase
         
         self::assertFileExists(resource_path('lang/localization.csv'));
         self::assertEquals(
-            $this->getTestStub('import-output-simple'),
+            $this->getTestStub('import/import-output-simple'),
             File::get(resource_path('lang/localization.csv'))
         );
     }
@@ -74,8 +74,8 @@ class LarexImportTest extends TestCase
     public function providerImportCommand(): array
     {
         return [
-            'simple' => ['import-input-en-simple', 'import-input-it-simple', 'import-output-simple'],
-            'complex' => ['import-input-en-complex', 'import-input-it-complex', 'import-output-complex']
+            'simple' => ['import/import-input-en-simple', 'import/import-input-it-simple', 'import/import-output-simple'],
+            'complex' => ['import/import-input-en-complex', 'import/import-input-it-complex', 'import/import-output-complex']
         ];
     }
 }
