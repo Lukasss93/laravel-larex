@@ -55,19 +55,33 @@ class LarexExportTest extends TestCase
             ->expectsOutput("Processing the '$this->file' file...")
             ->expectsOutput("resources/lang/en/app.php created successfully.")
             ->expectsOutput("resources/lang/en/another.php created successfully.")
+            ->expectsOutput("resources/lang/it/app.php created successfully.")
+            ->expectsOutput("resources/lang/it/another.php created successfully.")
             ->run();
         
         self::assertFileExists(resource_path('lang/en/app.php'));
         self::assertFileExists(resource_path('lang/en/another.php'));
+        self::assertFileExists(resource_path('lang/it/app.php'));
+        self::assertFileExists(resource_path('lang/it/another.php'));
         
         self::assertEquals(
-            $this->getTestStub('export/larex-output-app'),
+            $this->getTestStub('export/larex-output-en-app'),
             File::get(resource_path('lang/en/app.php'))
         );
         
         self::assertEquals(
-            $this->getTestStub('export/larex-output-another'),
+            $this->getTestStub('export/larex-output-en-another'),
             File::get(resource_path('lang/en/another.php'))
+        );
+    
+        self::assertEquals(
+            $this->getTestStub('export/larex-output-it-app'),
+            File::get(resource_path('lang/it/app.php'))
+        );
+    
+        self::assertEquals(
+            $this->getTestStub('export/larex-output-it-another'),
+            File::get(resource_path('lang/it/another.php'))
         );
     }
     
@@ -93,6 +107,30 @@ class LarexExportTest extends TestCase
         self::assertEquals(
             $this->getTestStub('export/larex-output-another'),
             File::get(resource_path('lang/en/another.php'))
+        );
+    }
+    
+    public function test_larex_command_with_numeric_keys(): void
+    {
+        $this->initFromStub('export/numeric/input');
+        
+        $this->artisan('larex:export')
+            ->expectsOutput("Processing the '$this->file' file...")
+            ->expectsOutput("resources/lang/en/app.php created successfully.")
+            ->expectsOutput("resources/lang/it/app.php created successfully.")
+            ->run();
+        
+        self::assertFileExists(resource_path('lang/en/app.php'));
+        self::assertFileExists(resource_path('lang/it/app.php'));
+        
+        self::assertEquals(
+            $this->getTestStub('export/numeric/output-en'),
+            File::get(resource_path('lang/en/app.php'))
+        );
+        
+        self::assertEquals(
+            $this->getTestStub('export/numeric/output-it'),
+            File::get(resource_path('lang/it/app.php'))
         );
     }
     

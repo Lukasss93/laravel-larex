@@ -62,7 +62,13 @@ class Utils
         
         $value = (string)$value;
         $value = str_replace("'", "\'", $value);
-        fwrite($file, str_repeat('    ', $level) . "'$key' => '$value'," . PHP_EOL);
+        
+        if (is_int($key) || (is_numeric($key) && ctype_digit($key))) {
+            $key = (int)$key;
+            fwrite($file, str_repeat('    ', $level) . "$key => '$value'," . PHP_EOL);
+        } else {
+            fwrite($file, str_repeat('    ', $level) . "'$key' => '$value'," . PHP_EOL);
+        }
     }
     
     public static function forever(callable $callback): void

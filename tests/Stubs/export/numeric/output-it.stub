@@ -1,0 +1,12 @@
+<?php
+
+return [
+
+    'months' => [
+        1 => 'Gennaio',
+        2 => 'Febbraio',
+        3 => 'Marzo',
+        'default' => 'Default',
+    ],
+
+];

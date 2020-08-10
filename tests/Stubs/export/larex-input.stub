@@ -1,4 +1,4 @@
-group;key;en
-app;first;First
-app;second;Second
-another;third;Third
+group;key;en;it
+app;first;First;Primo
+app;second;Second;Secondo
+another;third;Third;Terzo

@@ -1,0 +1,8 @@
+<?php
+
+return [
+
+    'first' => 'Primo',
+    'second' => 'Secondo',
+
+];
