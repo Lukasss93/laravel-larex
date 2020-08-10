@@ -4,12 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v1.3.1 - 2020-08-11
+### Fixed
+- Missing language folders creation
+- Integer keys are treated as strings
+
 ## v1.3 - 2020-08-08
 ### Added
 - Added `larex:export` command (it's an alias of `larex` command)
 
 ### Changed
-- Deprecated `larex` command (it will be removed in the next release)
+- Deprecated `larex` command (it will be removed in the next major release)
 
 ### Fixed
 - Sentences with line break aren't escaped.
