@@ -122,6 +122,10 @@ class LarexExportCommand extends Command
         //finally save the files
         foreach($languages as $language => $groups) {
             
+            if(!File::exists(resource_path('lang/' . $language . '/'))){
+                File::makeDirectory(resource_path('lang/' . $language . '/'));
+            }
+            
             foreach($groups as $group => $keys) {
                 $write = fopen(resource_path('lang/' . $language . '/' . $group . '.php'), 'wb');
                 fwrite($write, '<?php' . PHP_EOL . PHP_EOL . 'return [' . PHP_EOL . PHP_EOL);
