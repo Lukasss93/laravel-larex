@@ -99,7 +99,9 @@ class LarexExportCommand extends Command
                 
                 for($j = 2; $j < $columnsCount; $j++) {
                     try {
-                        Arr::set($languages[$header[$j]][$group], $key, $columns[$j]);
+                        if($columns[$j]!==''){
+                            Arr::set($languages[$header[$j]][$group], $key, $columns[$j]);
+                        }
                     } catch(ErrorException $e) {
                         $this->warn(
                             "[{$group}|{$key}] on line " . ($i + 1) .
