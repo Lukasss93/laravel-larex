@@ -36,7 +36,7 @@ class LarexCommand extends Command
         $this->warn('This command is deprecated. Please use the larax:export command.');
         
         if($this->option('watch')) {
-            $this->call('larex:export --watch');
+            $this->call('larex:export',['--watch']);
             return;
         }
     
