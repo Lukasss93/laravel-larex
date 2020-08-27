@@ -7,6 +7,7 @@ use Lukasss93\Larex\Console\LarexCommand;
 use Lukasss93\Larex\Console\LarexExportCommand;
 use Lukasss93\Larex\Console\LarexImportCommand;
 use Lukasss93\Larex\Console\LarexInitCommand;
+use Lukasss93\Larex\Console\LarexInsertCommand;
 use Lukasss93\Larex\Console\LarexSortCommand;
 
 class LarexServiceProvider extends ServiceProvider
@@ -24,6 +25,7 @@ class LarexServiceProvider extends ServiceProvider
             LarexExportCommand::class,
             LarexImportCommand::class,
             LarexSortCommand::class,
+            LarexInsertCommand::class,
         ]);
     }
     
