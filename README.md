@@ -3,6 +3,8 @@
 </center>
 
 # Laravel Larex
+![PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-blue)
+![Laravel Version](https://img.shields.io/badge/laravel-%3E%3D%206.0-orange)
 [![Latest Stable Version](https://poser.pugx.org/lukasss93/laravel-larex/v/stable)](https://packagist.org/packages/lukasss93/laravel-larex)
 [![Total Downloads](https://poser.pugx.org/lukasss93/laravel-larex/downloads)](https://packagist.org/packages/lukasss93/laravel-larex)
 [![License](https://poser.pugx.org/lukasss93/laravel-larex/license)](https://packagist.org/packages/lukasss93/laravel-larex)
@@ -49,6 +51,7 @@ This step *can be skipped* if package auto-discovery is enabled.
 * You can use `php artisan larex:sort` to sort the CSV file by group and key.
 * Be careful when using the `php artisan larex:export` command! It will overwrite all files named with the group names inside the CSV.
 * Be careful when using the **dot notation**! Only the **last** entry will override the value.
+* You can use `php artisan larex:insert` to add new items via CLI too!
 
 ### Example
 1. Run `php artisan larex:init` command
