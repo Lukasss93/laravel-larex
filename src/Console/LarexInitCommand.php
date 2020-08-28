@@ -8,7 +8,7 @@ use Lukasss93\Larex\Utils;
 
 class LarexInitCommand extends Command
 {
-    protected $file = 'resources/lang/localization.csv';
+    protected $file;
     
     /**
      * The name and signature of the console command.
@@ -23,6 +23,17 @@ class LarexInitCommand extends Command
      * @var string
      */
     protected $description = 'Init the CSV file';
+    
+    /**
+     * Create a new console command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->file=config('larex.path');
+    }
     
     /**
      * Execute the console command.

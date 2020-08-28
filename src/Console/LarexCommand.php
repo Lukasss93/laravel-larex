@@ -10,8 +10,6 @@ use Lukasss93\Larex\Utils;
 
 class LarexCommand extends Command
 {
-    protected $file = 'resources/lang/localization.csv';
-    
     /**
      * The name and signature of the console command.
      *

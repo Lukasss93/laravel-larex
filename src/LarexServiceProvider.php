@@ -19,6 +19,9 @@ class LarexServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $configPath = __DIR__ . '/config/larex.php';
+        $this->mergeConfigFrom($configPath, 'larex');
+        
         $this->commands([
             LarexInitCommand::class,
             LarexCommand::class,

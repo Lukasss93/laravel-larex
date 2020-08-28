@@ -11,7 +11,7 @@ use Symfony\Component\Console\Helper\TableSeparator;
 
 class LarexInsertCommand extends Command
 {
-    protected $file = 'resources/lang/localization.csv';
+    protected $file;
     
     /**
      * The name and signature of the console command.
@@ -26,6 +26,17 @@ class LarexInsertCommand extends Command
      * @var string
      */
     protected $description = 'Insert a new record in the CSV';
+    
+    /**
+     * Create a new console command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->file=config('larex.path');
+    }
     
     /**
      * Execute the console command.

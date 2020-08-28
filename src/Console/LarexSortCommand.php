@@ -8,7 +8,7 @@ use Lukasss93\Larex\Utils;
 
 class LarexSortCommand extends Command
 {
-    protected $file = 'resources/lang/localization.csv';
+    protected $file;
     
     /**
      * The name and signature of the console command.
@@ -23,6 +23,17 @@ class LarexSortCommand extends Command
      * @var string
      */
     protected $description = 'Sort the CSV rows by group and key';
+    
+    /**
+     * Create a new console command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->file=config('larex.path');
+    }
     
     /**
      * Execute the console command.

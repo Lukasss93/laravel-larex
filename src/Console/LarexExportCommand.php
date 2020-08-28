@@ -10,7 +10,8 @@ use Lukasss93\Larex\Utils;
 
 class LarexExportCommand extends Command
 {
-    protected $file = 'resources/lang/localization.csv';
+    protected $file;
+    protected $watch_sleep;
     
     /**
      * The name and signature of the console command.
@@ -25,6 +26,18 @@ class LarexExportCommand extends Command
      * @var string
      */
     protected $description = 'Convert the CSV file to Laravel lang files';
+    
+    /**
+     * Create a new console command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->file=config('larex.path');
+        $this->watch_sleep=config('larex.watch_sleep');
+    }
     
     /**
      * Execute the console command.
@@ -56,7 +69,7 @@ class LarexExportCommand extends Command
                 $this->line('Waiting for changes...');
             }
             
-            usleep(500 * 1000);
+            usleep($this->watch_sleep);
         });
     }
     

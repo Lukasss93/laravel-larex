@@ -10,7 +10,7 @@ use RecursiveIteratorIterator;
 
 class LarexImportCommand extends Command
 {
-    protected $file = 'resources/lang/localization.csv';
+    protected $file;
     
     /**
      * The name and signature of the console command.
@@ -25,6 +25,17 @@ class LarexImportCommand extends Command
      * @var string
      */
     protected $description = 'Import entries from resources/lang files';
+    
+    /**
+     * Create a new console command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->file=config('larex.path');
+    }
     
     /**
      * Execute the console command.
@@ -107,16 +118,13 @@ class LarexImportCommand extends Command
         $data->prepend($header->toArray());
         $data = $data->values();
         
-        
         $force = $this->option('force');
-        
         
         //check file exists
         if(File::exists(base_path($this->file)) && !$force) {
             $this->error("The '{$this->file}' already exists.");
             return;
         }
-        
         
         Utils::collectionToCsv($data, base_path($this->file));
         $this->info('Files imported successfully.');

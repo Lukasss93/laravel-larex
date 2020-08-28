@@ -16,7 +16,7 @@ class Utils
     {
         $output = collect([]);
         $file = fopen($filename, 'rb');
-        while (($columns = fgetcsv($file, 0, ';')) !== false) {
+        while (($columns = fgetcsv($file, 0, config('larex.csv.delimiter'))) !== false) {
             $output->push($columns);
         }
         fclose($file);
@@ -32,7 +32,12 @@ class Utils
     {
         $file = fopen($filename, 'wb');
         foreach ($array as $row) {
-            self::fputcsv($file, $row, ';');
+            self::fputcsv(
+                $file,
+                $row,
+                config('larex.csv.delimiter'),
+                config('larex.csv.enclosure')
+            );
         }
         fclose($file);
     }
