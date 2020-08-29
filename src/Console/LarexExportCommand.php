@@ -18,7 +18,10 @@ class LarexExportCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'larex:export {--watch : Watch the CSV file from changes}';
+    protected $signature = 'larex:export
+                            {--watch : Watch the CSV file from changes}
+                            {--include= : Languages allowed to export in the application}
+                            {--exclude= : Languages not allowed to export in the application}';
     
     /**
      * The console command description.
@@ -35,8 +38,8 @@ class LarexExportCommand extends Command
     public function __construct()
     {
         parent::__construct();
-        $this->file=config('larex.path');
-        $this->watch_sleep=config('larex.watch_sleep');
+        $this->file = config('larex.path');
+        $this->watch_sleep = config('larex.watch_sleep');
     }
     
     /**
@@ -46,7 +49,7 @@ class LarexExportCommand extends Command
      */
     public function handle(): void
     {
-        if($this->option('watch')) {
+        if ($this->option('watch')) {
             $this->watch();
             return;
         }
@@ -59,11 +62,11 @@ class LarexExportCommand extends Command
         $this->warn("Watching the '$this->file' file...");
         
         $lastEditDate = null;
-        Utils::forever(function() use (&$lastEditDate) {
+        Utils::forever(function () use (&$lastEditDate) {
             $currentEditDate = filemtime(base_path($this->file));
             clearstatcache();
             
-            if($lastEditDate !== $currentEditDate) {
+            if ($lastEditDate !== $currentEditDate) {
                 $lastEditDate = $currentEditDate;
                 $this->translate();
                 $this->line('Waiting for changes...');
@@ -77,9 +80,14 @@ class LarexExportCommand extends Command
     {
         $this->warn("Processing the '$this->file' file...");
         
-        if(!File::exists(base_path($this->file))) {
+        if (!File::exists(base_path($this->file))) {
             $this->error("The '$this->file' does not exists.");
             $this->line('Please create it with: php artisan larex:init');
+            return;
+        }
+        
+        if ($this->option('include') !== null && $this->option('exclude') !== null) {
+            $this->error('The --include and --exclude options can be used only one at a time.');
             return;
         }
         
@@ -90,11 +98,11 @@ class LarexExportCommand extends Command
         //file parsing
         $file = fopen(base_path($this->file), 'rb');
         $i = -1;
-        while(($columns = fgetcsv($file, 0, ';')) !== false) {
+        while (($columns = fgetcsv($file, 0, ';')) !== false) {
             $i++;
             
             //get the header
-            if($i === 0) {
+            if ($i === 0) {
                 $header = $columns;
                 $columnsCount = count($header);
                 continue;
@@ -106,16 +114,16 @@ class LarexExportCommand extends Command
                 //get first two columns values
                 [$group, $key] = $columns;
                 
-                if($key === '') {
+                if ($key === '') {
                     throw new ErrorException();
                 }
                 
-                for($j = 2; $j < $columnsCount; $j++) {
+                for ($j = 2; $j < $columnsCount; $j++) {
                     try {
-                        if($columns[$j]!==''){
+                        if ($columns[$j] !== '') {
                             Arr::set($languages[$header[$j]][$group], $key, $columns[$j]);
                         }
-                    } catch(ErrorException $e) {
+                    } catch (ErrorException $e) {
                         $this->warn(
                             "[{$group}|{$key}] on line " . ($i + 1) .
                             ", column " . ($j + 1) .
@@ -123,29 +131,42 @@ class LarexExportCommand extends Command
                         );
                     }
                 }
-            } catch(ErrorException $ee) {
+            } catch (ErrorException $ee) {
                 $this->warn("Line " . ($i + 1) . " is not valid. It will be skipped.");
             }
         }
         fclose($file);
         
-        if(count($languages) === 0) {
+        if ($this->option('include') !== null) {
+            $allowed = explode(',', $this->option('include'));
+            
+            $languages = array_filter($languages, function ($value, $key) use ($allowed) {
+                return in_array($key, $allowed, true);
+            }, ARRAY_FILTER_USE_BOTH);
+        } else if ($this->option('exclude') !== null) {
+            $allowed = explode(',', $this->option('exclude'));
+            
+            $languages = array_filter($languages, function ($value, $key) use ($allowed) {
+                return !in_array($key, $allowed, true);
+            }, ARRAY_FILTER_USE_BOTH);
+        }
+        
+        if (count($languages) === 0) {
             $this->info('No entries found.');
             return;
         }
         
         //finally save the files
-        foreach($languages as $language => $groups) {
-            
-            if(!File::exists(resource_path('lang/' . $language . '/'))){
+        foreach ($languages as $language => $groups) {
+            if (!File::exists(resource_path('lang/' . $language . '/'))) {
                 File::makeDirectory(resource_path('lang/' . $language . '/'));
             }
             
-            foreach($groups as $group => $keys) {
+            foreach ($groups as $group => $keys) {
                 $write = fopen(resource_path('lang/' . $language . '/' . $group . '.php'), 'wb');
                 fwrite($write, '<?php' . PHP_EOL . PHP_EOL . 'return [' . PHP_EOL . PHP_EOL);
                 
-                foreach($keys as $key => $value) {
+                foreach ($keys as $key => $value) {
                     Utils::writeKeyValue($key, $value, $write);
                 }
                 

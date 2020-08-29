@@ -25,6 +25,16 @@ class LarexExportTest extends TestCase
             ->run();
     }
     
+    public function test_larex_command_fail_when_include_exclude_are_together(): void
+    {
+        $this->initFromStub('export/larex-input');
+        
+        $this->artisan('larex:export --include= --exclude=')
+            ->expectsOutput("Processing the '$this->file' file...")
+            ->expectsOutput("The --include and --exclude options can be used only one at a time.")
+            ->run();
+    }
+    
     /** @dataProvider providerWarning
      * @param string $stub
      * @param string $output
@@ -169,6 +179,108 @@ class LarexExportTest extends TestCase
         self::assertEquals(
             $this->getTestStub('export/empty/output-it'),
             File::get(resource_path('lang/it/app.php'))
+        );
+    }
+    
+    public function test_larex_with_include_empty(): void
+    {
+        $this->initFromStub('export/larex-input');
+        
+        $this->artisan('larex:export --include=')
+            ->expectsOutput("Processing the '$this->file' file...")
+            ->expectsOutput('No entries found.')
+            ->run();
+        
+    }
+    
+    public function test_larex_with_include(): void
+    {
+        $this->initFromStub('export/larex-input');
+        
+        $this->artisan('larex:export --include=it')
+            ->expectsOutput("Processing the '$this->file' file...")
+            ->expectsOutput("resources/lang/it/app.php created successfully.")
+            ->expectsOutput("resources/lang/it/another.php created successfully.")
+            ->run();
+        
+        self::assertFileExists(resource_path('lang/it/app.php'));
+        self::assertFileExists(resource_path('lang/it/another.php'));
+        self::assertFileDoesNotExist(resource_path('lang/en/another.php'));
+        self::assertFileDoesNotExist(resource_path('lang/en/another.php'));
+        
+        self::assertEquals(
+            $this->getTestStub('export/larex-output-it-app'),
+            File::get(resource_path('lang/it/app.php'))
+        );
+        
+        self::assertEquals(
+            $this->getTestStub('export/larex-output-it-another'),
+            File::get(resource_path('lang/it/another.php'))
+        );
+    }
+    
+    public function test_larex_with_exclude_empty(): void
+    {
+        $this->initFromStub('export/larex-input');
+    
+        $this->artisan('larex:export --exclude=')
+            ->expectsOutput("Processing the '$this->file' file...")
+            ->expectsOutput("resources/lang/en/app.php created successfully.")
+            ->expectsOutput("resources/lang/en/another.php created successfully.")
+            ->expectsOutput("resources/lang/it/app.php created successfully.")
+            ->expectsOutput("resources/lang/it/another.php created successfully.")
+            ->run();
+    
+        self::assertFileExists(resource_path('lang/en/app.php'));
+        self::assertFileExists(resource_path('lang/en/another.php'));
+        self::assertFileExists(resource_path('lang/it/app.php'));
+        self::assertFileExists(resource_path('lang/it/another.php'));
+    
+        self::assertEquals(
+            $this->getTestStub('export/larex-output-en-app'),
+            File::get(resource_path('lang/en/app.php'))
+        );
+    
+        self::assertEquals(
+            $this->getTestStub('export/larex-output-en-another'),
+            File::get(resource_path('lang/en/another.php'))
+        );
+    
+        self::assertEquals(
+            $this->getTestStub('export/larex-output-it-app'),
+            File::get(resource_path('lang/it/app.php'))
+        );
+    
+        self::assertEquals(
+            $this->getTestStub('export/larex-output-it-another'),
+            File::get(resource_path('lang/it/another.php'))
+        );
+        
+    }
+    
+    public function test_larex_with_exclude(): void
+    {
+        $this->initFromStub('export/larex-input');
+        
+        $this->artisan('larex:export --exclude=it')
+            ->expectsOutput("Processing the '$this->file' file...")
+            ->expectsOutput("resources/lang/en/app.php created successfully.")
+            ->expectsOutput("resources/lang/en/another.php created successfully.")
+            ->run();
+        
+        self::assertFileExists(resource_path('lang/en/app.php'));
+        self::assertFileExists(resource_path('lang/en/another.php'));
+        self::assertFileDoesNotExist(resource_path('lang/it/another.php'));
+        self::assertFileDoesNotExist(resource_path('lang/it/another.php'));
+        
+        self::assertEquals(
+            $this->getTestStub('export/larex-output-en-app'),
+            File::get(resource_path('lang/en/app.php'))
+        );
+        
+        self::assertEquals(
+            $this->getTestStub('export/larex-output-en-another'),
+            File::get(resource_path('lang/en/another.php'))
         );
     }
     
