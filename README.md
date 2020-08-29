@@ -38,7 +38,7 @@ This step *can be skipped* if package auto-discovery is enabled.
    * key (the array key)
    * en (the language code)
    * other language codes...
-   
+
 2. Open the *project-root/resources/lang/localization.csv* file and edit it as you see fit.
 
 3. Finally, you can use `php artisan larex:export` to translate your entries from the csv file to the laravel php files.
@@ -52,19 +52,23 @@ This step *can be skipped* if package auto-discovery is enabled.
 * Be careful when using the `php artisan larex:export` command! It will overwrite all files named with the group names inside the CSV.
 * Be careful when using the **dot notation**! Only the **last** entry will override the value.
 * You can use `php artisan larex:insert` to add new items via CLI too!
+* You can use `php artisan larex:export --include=en,it` to export only _"en"_ and _"it"_ columns.
+* You can use `php artisan larex:export --exclude=it` to export only _"en"_ column.
 
 ### Example
 1. Run `php artisan larex:init` command
 2. Edit the *project-root/resources/lang/localization.csv* file
-
-   | group | key | en | it |
-   |---|---|---|---|
-   | app | hello | Hello | Ciao |
-   | app | list.developers | Developers | Sviluppatori |
-   | app | list.teachers | Teachers | Insegnanti |
    
+   | group | key             | en         | it           |
+   | ----- | --------------- | ---------- | ------------ |
+   | app   | hello           | Hello      | Ciao         |
+   | app   | list.developers | Developers | Sviluppatori |
+   | app   | list.teachers   | Teachers   | Insegnanti   |
+
 3. Run `php artisan larex:export` command
+
 4. You'll get the following files:
+   
    ```php
    //project-root/resources/lang/en/app.php
    
@@ -77,7 +81,9 @@ This step *can be skipped* if package auto-discovery is enabled.
            'teachers' => 'Teachers',
        ]
    ];
+   ```
    
+   ```php
    //project-root/resources/lang/it/app.php
    
    <?php
@@ -92,12 +98,15 @@ This step *can be skipped* if package auto-discovery is enabled.
    ```
 
 ## Testing
+
 ```bash
 composer test
 ```
 
 ## Changelog
+
 Please see the [CHANGELOG.md](https://github.com/Lukasss93/laravel-larex/blob/master/CHANGELOG.md) for more information on what has changed recently.
 
 ## License
+
 Please see the [LICENSE.md](https://github.com/Lukasss93/laravel-larex/blob/master/LICENSE.md) file for more information.
