@@ -8,6 +8,7 @@
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
          processIsolation="false"
+         cacheResult="false"
          stopOnFailure="false">
     <testsuites>
         <testsuite name="Test Suite">

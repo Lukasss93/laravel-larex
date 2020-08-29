@@ -205,8 +205,8 @@ class LarexExportTest extends TestCase
         
         self::assertFileExists(resource_path('lang/it/app.php'));
         self::assertFileExists(resource_path('lang/it/another.php'));
-        self::assertFileDoesNotExist(resource_path('lang/en/another.php'));
-        self::assertFileDoesNotExist(resource_path('lang/en/another.php'));
+        self::assertFalse(File::exists(resource_path('lang/en/app.php')));
+        self::assertFalse(File::exists(resource_path('lang/en/another.php')));
         
         self::assertEquals(
             $this->getTestStub('export/larex-output-it-app'),
@@ -270,8 +270,8 @@ class LarexExportTest extends TestCase
         
         self::assertFileExists(resource_path('lang/en/app.php'));
         self::assertFileExists(resource_path('lang/en/another.php'));
-        self::assertFileDoesNotExist(resource_path('lang/it/another.php'));
-        self::assertFileDoesNotExist(resource_path('lang/it/another.php'));
+        self::assertFalse(File::exists(resource_path('lang/it/app.php')));
+        self::assertFalse(File::exists(resource_path('lang/it/another.php')));
         
         self::assertEquals(
             $this->getTestStub('export/larex-output-en-app'),
