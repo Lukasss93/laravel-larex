@@ -1,4 +1,4 @@
-name: Notify
+name: PhpInsights
 on:
     push:
     release:
@@ -15,7 +15,7 @@ jobs:
             - name: Setup PHP
               uses: shivammathur/setup-php@v1
               with:
-                php-version: ${{ matrix.php }}
+                php-version: 7.3
                 extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
                 coverage: xdebug
 
