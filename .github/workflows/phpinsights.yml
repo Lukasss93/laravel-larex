@@ -26,7 +26,7 @@ jobs:
               run: composer phpinsights-analyse
 
             - name: Generate PhpInsights badges
-              uses: Lukasss93/phpinsights-badger@master
+              uses: Lukasss93/phpinsights-badger@v1
               with:
                   url: 'https://phpinsights.lucapatera.it/'
                   password: ${{ secrets.phpinsights_password }}

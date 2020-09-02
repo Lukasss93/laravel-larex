@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://i.imgur.com/CddZo0R.png"/>
+    <img src="https://i.imgur.com/oAegaoQ.png"/>
 </p>
 
 <p align="center">
@@ -11,19 +11,23 @@
   <a href="https://packagist.org/packages/lukasss93/laravel-larex">
     <img src="https://poser.pugx.org/lukasss93/laravel-larex/downloads"/>
   </a>
-</p>
-
-<p align="center">
   <a href="https://packagist.org/packages/lukasss93/laravel-larex">
     <img src="https://poser.pugx.org/lukasss93/laravel-larex/license"/>
-  </a>
-  <img src="https://img.shields.io/github/workflow/status/Lukasss93/laravel-larex/run-tests"/>
-  <a href="https://coveralls.io/github/Lukasss93/laravel-larex">
-    <img src="https://img.shields.io/coveralls/github/Lukasss93/laravel-larex"/>
   </a>
   <a href="https://t.me/Lukasss93">
     <img src="https://img.shields.io/badge/chat%20on-telegram-blue"/>
   </a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/github/workflow/status/Lukasss93/laravel-larex/run-tests"/>
+  <a href="https://coveralls.io/github/Lukasss93/laravel-larex">
+    <img src="https://img.shields.io/coveralls/github/Lukasss93/laravel-larex"/>
+  </a>
+  <img src="https://phpinsights.lucapatera.it/Lukasss93/laravel-larex/code"/>
+  <img src="https://phpinsights.lucapatera.it/Lukasss93/laravel-larex/architecture"/>
+  <img src="https://phpinsights.lucapatera.it/Lukasss93/laravel-larex/complexity"/>
+  <img src="https://phpinsights.lucapatera.it/Lukasss93/laravel-larex/style"/>
 </p>
 
 <p align="center">
