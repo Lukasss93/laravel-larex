@@ -182,6 +182,23 @@ class LarexExportTest extends TestCase
         );
     }
     
+    public function test_larex_command_with_enclosures(): void
+    {
+        $this->initFromStub('export/enclosure/input');
+        
+        $this->artisan('larex:export')
+            ->expectsOutput("Processing the '$this->file' file...")
+            ->expectsOutput("resources/lang/en/app.php created successfully.")
+            ->run();
+        
+        self::assertFileExists(resource_path('lang/en/app.php'));
+        
+        self::assertEquals(
+            $this->getTestStub('export/enclosure/output-en'),
+            File::get(resource_path('lang/en/app.php'))
+        );
+    }
+    
     public function test_larex_with_include_empty(): void
     {
         $this->initFromStub('export/larex-input');

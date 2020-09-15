@@ -1,0 +1,9 @@
+<?php
+
+return [
+
+    'first' => 'first cool sentence',
+    'second' => 'second "less" cool sentence',
+    'third' => 'third "worst" sentence',
+
+];

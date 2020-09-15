@@ -66,7 +66,11 @@ class Utils
         }
         
         $value = (string)$value;
-        $value = str_replace("'", "\'", $value);
+        $value = str_replace(
+            ["'", '\\' . config('larex.csv.enclosure')],
+            ["\'", config('larex.csv.enclosure')],
+            $value
+        );
         
         if (is_int($key) || (is_numeric($key) && ctype_digit($key))) {
             $key = (int)$key;
