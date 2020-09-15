@@ -9,21 +9,21 @@ use Lukasss93\Larex\Utils;
 class LarexInitCommand extends Command
 {
     protected $file;
-    
+
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
     protected $signature = 'larex:init {--base : Init the CSV file with default Laravel entries }';
-    
+
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'Init the CSV file';
-    
+
     /**
      * Create a new console command instance.
      *
@@ -32,9 +32,9 @@ class LarexInitCommand extends Command
     public function __construct()
     {
         parent::__construct();
-        $this->file=config('larex.path');
+        $this->file = config('larex.path');
     }
-    
+
     /**
      * Execute the console command.
      *
@@ -43,18 +43,18 @@ class LarexInitCommand extends Command
     public function handle(): void
     {
         $stub = 'default';
-        
-        if($this->option('base')) {
+
+        if ($this->option('base')) {
             $stub = 'base';
         }
-        
-        if(File::exists(base_path($this->file))) {
+
+        if (File::exists(base_path($this->file))) {
             $this->error($this->file . ' already exists.');
             return;
         }
-        
+
         File::put(base_path($this->file), Utils::getStub($stub));
-        
+
         $this->info($this->file . ' created successfully.');
     }
 }

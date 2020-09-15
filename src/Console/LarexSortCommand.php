@@ -9,21 +9,21 @@ use Lukasss93\Larex\Utils;
 class LarexSortCommand extends Command
 {
     protected $file;
-    
+
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
     protected $signature = 'larex:sort';
-    
+
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'Sort the CSV rows by group and key';
-    
+
     /**
      * Create a new console command instance.
      *
@@ -32,9 +32,9 @@ class LarexSortCommand extends Command
     public function __construct()
     {
         parent::__construct();
-        $this->file=config('larex.path');
+        $this->file = config('larex.path');
     }
-    
+
     /**
      * Execute the console command.
      *
@@ -43,26 +43,26 @@ class LarexSortCommand extends Command
     public function handle(): void
     {
         $this->warn('Sorting che CSV rows...');
-        
-        if(!File::exists(base_path($this->file))) {
+
+        if (!File::exists(base_path($this->file))) {
             $this->error("The '$this->file' does not exists.");
             $this->line('Please create it with: php artisan larex:init');
             return;
         }
-        
-        [$header, $rows] = Utils::csvToCollection(base_path($this->file))->partition(function($item, $key) {
+
+        [$header, $rows] = Utils::csvToCollection(base_path($this->file))->partition(function ($item, $key) {
             return $key === 0;
         });
-        
+
         $content = collect([])
             ->merge($header)
-            ->merge($rows->sortBy(function($item) {
+            ->merge($rows->sortBy(function ($item) {
                 return [$item[0], $item[1]];
             }))
             ->values();
-        
+
         Utils::collectionToCsv($content, base_path($this->file));
-        
+
         $this->info('Sorting completed.');
     }
 }

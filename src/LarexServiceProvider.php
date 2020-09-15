@@ -21,7 +21,7 @@ class LarexServiceProvider extends ServiceProvider
     {
         $configPath = __DIR__ . '/config/larex.php';
         $this->mergeConfigFrom($configPath, 'larex');
-        
+
         $this->commands([
             LarexInitCommand::class,
             LarexCommand::class,
@@ -31,7 +31,7 @@ class LarexServiceProvider extends ServiceProvider
             LarexInsertCommand::class,
         ]);
     }
-    
+
     /**
      * Bootstrap services.
      *
@@ -39,6 +39,5 @@ class LarexServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
     }
 }

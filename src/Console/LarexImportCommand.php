@@ -11,21 +11,21 @@ use RecursiveIteratorIterator;
 class LarexImportCommand extends Command
 {
     protected $file;
-    
+
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
     protected $signature = 'larex:import {--f|force : Overwrite csv file if already exists}';
-    
+
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'Import entries from resources/lang files';
-    
+
     /**
      * Create a new console command instance.
      *
@@ -34,9 +34,9 @@ class LarexImportCommand extends Command
     public function __construct()
     {
         parent::__construct();
-        $this->file=config('larex.path');
+        $this->file = config('larex.path');
     }
-    
+
     /**
      * Execute the console command.
      *
@@ -46,66 +46,66 @@ class LarexImportCommand extends Command
     {
         $languages = collect([]);
         $rawValues = collect([]);
-        
+
         $this->warn('Importing entries...');
-        
+
         //get all php files
         $files = File::glob(resource_path('lang/**/*.php'));
-        
-        foreach($files as $file) {
+
+        foreach ($files as $file) {
             $array = include $file;
             $group = pathinfo($file, PATHINFO_FILENAME);
             $lang = basename(dirname($file));
-            
-            if(!$languages->contains($lang)) {
+
+            if (!$languages->contains($lang)) {
                 $languages->push($lang);
             }
-            
+
             //loop through array recursive
             $iterator = new RecursiveIteratorIterator(
                 new RecursiveArrayIterator($array),
                 RecursiveIteratorIterator::SELF_FIRST
             );
             $path = [];
-            foreach($iterator as $key => $value) {
+            foreach ($iterator as $key => $value) {
                 $path[$iterator->getDepth()] = $key;
-                if(!is_array($value)) {
+                if (!is_array($value)) {
                     $rawValues->push([
                         'group' => $group,
                         'key' => implode('.', array_slice($path, 0, $iterator->getDepth() + 1)),
                         'lang' => $lang,
-                        'value' => $value
+                        'value' => $value,
                     ]);
                 }
             }
         }
-        
+
         //creating the csv file
         $header = collect(['group', 'key'])->merge($languages);
         $data = collect([]);
-        
-        foreach($rawValues as $rawValue) {
-            $index = $data->search(function($item, $key) use ($rawValue) {
+
+        foreach ($rawValues as $rawValue) {
+            $index = $data->search(function ($item) use ($rawValue) {
                 return $item[0] === $rawValue['group'] && $item[1] === $rawValue['key'];
             });
-            
-            if($index === false) {
+
+            if ($index === false) {
                 $output = [
                     $rawValue['group'],
-                    $rawValue['key']
+                    $rawValue['key'],
                 ];
-                
-                for($i = 2; $i < $header->count(); $i++) {
+
+                for ($i = 2; $i < $header->count(); $i++) {
                     $real = $rawValue['lang'] === $header->get($i) ? $rawValue['value'] : '';
                     $output[$i] = $real;
                 }
-                
+
                 $data->push($output);
             } else {
-                for($i = 2; $i < $header->count(); $i++) {
+                for ($i = 2; $i < $header->count(); $i++) {
                     $code = $rawValue['lang'] === $header->get($i) ? $rawValue['value'] : null;
-                    
-                    if($code !== null) {
+
+                    if ($code !== null) {
                         $new = $data->get($index);
                         $new[$i] = $rawValue['value'];
                         $data->put($index, $new);
@@ -113,19 +113,19 @@ class LarexImportCommand extends Command
                 }
             }
         }
-        
+
         //add header
         $data->prepend($header->toArray());
         $data = $data->values();
-        
+
         $force = $this->option('force');
-        
+
         //check file exists
-        if(File::exists(base_path($this->file)) && !$force) {
+        if (!$force && File::exists(base_path($this->file))) {
             $this->error("The '{$this->file}' already exists.");
             return;
         }
-        
+
         Utils::collectionToCsv($data, base_path($this->file));
         $this->info('Files imported successfully.');
     }
