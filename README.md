@@ -77,7 +77,7 @@ This step *can be skipped* if package auto-discovery is enabled.
 * Be careful when using the **dot notation**! Only the **last** entry will override the value.
 * You can use `php artisan larex:insert` to add new items via CLI too!
 * You can use `php artisan larex:export --include=en,it` to export only _"en"_ and _"it"_ columns.
-* You can use `php artisan larex:export --exclude=it` to export only _"en"_ column.
+* You can use `php artisan larex:export --exclude=it` to export all columns except _"it"_ column.
 
 ### 🔍 Example
 
