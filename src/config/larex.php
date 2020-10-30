@@ -7,14 +7,7 @@ return [
      | Larex Settings
      |--------------------------------------------------------------------------
      */
-    
+
     'path' => 'resources/lang/localization.csv',
-    
-    'watch_sleep' => 500 * 1000,
-    
-    'csv' => [
-        'delimiter' => ';',
-        'enclosure' => '"'
-    ]
     
 ];

@@ -11,6 +11,11 @@ use Symfony\Component\Console\Helper\TableSeparator;
 
 class LarexInsertCommand extends Command
 {
+    /**
+     * Localization file path
+     *
+     * @var string
+     */
     protected $file;
 
     /**
@@ -35,7 +40,7 @@ class LarexInsertCommand extends Command
     public function __construct()
     {
         parent::__construct();
-        $this->file = config('larex.path');
+        $this->file = config('larex.path', Utils::CSV_DEFAULT_PATH);
     }
 
     /**
@@ -46,7 +51,7 @@ class LarexInsertCommand extends Command
     public function handle(): void
     {
         if (!File::exists(base_path($this->file))) {
-            $this->error("The '$this->file' does not exists.");
+            $this->error("The '{$this->file}' does not exists.");
             $this->line('Please create it with: php artisan larex:init');
             return;
         }
@@ -71,7 +76,7 @@ class LarexInsertCommand extends Command
             ->pluck(1)
             ->unique()
             ->map(function ($item) {
-                return "$item.";
+                return "{$item}.";
             })
             ->toArray();
 
@@ -88,8 +93,8 @@ class LarexInsertCommand extends Command
         $data->put('key', $this->anticipate('Enter the key', $availableKeys));
 
         foreach ($languages as $i => $language) {
-            $n = $i + 1;
-            $value = $this->ask("[{$n}/{$languages->count()}] Enter the value for [$language] language");
+            $count = $i + 1;
+            $value = $this->ask("[{$count}/{$languages->count()}] Enter the value for [{$language}] language");
 
             $data->put($language, $value);
         }
@@ -102,12 +107,12 @@ class LarexInsertCommand extends Command
         $tableRows->push([new TableCell('<fg=yellow>Summary</>', ['colspan' => 2])]);
         $tableRows->push(new TableSeparator());
 
-        $n = 0;
+        $count = 0;
         foreach ($data as $i => $item) {
-            $n++;
-            $tableRows->push(["<info>$i</info>", $item]);
+            $count++;
+            $tableRows->push(["<info>{$i}</info>", $item]);
 
-            if ($n < $data->count()) {
+            if ($count < $data->count()) {
                 $tableRows->push(new TableSeparator());
             }
         }

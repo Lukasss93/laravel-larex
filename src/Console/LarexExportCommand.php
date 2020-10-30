@@ -10,8 +10,12 @@ use Lukasss93\Larex\Utils;
 
 class LarexExportCommand extends Command
 {
+    /**
+     * Localization file path
+     *
+     * @var string
+     */
     protected $file;
-    protected $watch_sleep;
 
     /**
      * The name and signature of the console command.
@@ -38,8 +42,7 @@ class LarexExportCommand extends Command
     public function __construct()
     {
         parent::__construct();
-        $this->file = config('larex.path');
-        $this->watch_sleep = config('larex.watch_sleep');
+        $this->file = config('larex.path', Utils::CSV_DEFAULT_PATH);
     }
 
     /**
@@ -72,7 +75,7 @@ class LarexExportCommand extends Command
                 $this->line('Waiting for changes...');
             }
 
-            usleep($this->watch_sleep);
+            usleep(500 * 1000);
         });
     }
 

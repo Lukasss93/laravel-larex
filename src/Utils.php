@@ -7,6 +7,10 @@ use Illuminate\Support\Str;
 
 class Utils
 {
+    public const CSV_DEFAULT_PATH = 'resources/lang/localization.csv';
+    private const CSV_DELIMITER = ';';
+    private const CSV_ENCLOSURE = '"';
+
     /**
      * Get a collection from csv file
      * @param string $filename
@@ -16,7 +20,7 @@ class Utils
     {
         $output = collect([]);
         $file = fopen($filename, 'rb');
-        while (($columns = fgetcsv($file, 0, config('larex.csv.delimiter'))) !== false) {
+        while (($columns = fgetcsv($file, 0, self::CSV_DELIMITER)) !== false) {
             $output->push($columns);
         }
         fclose($file);
@@ -35,28 +39,45 @@ class Utils
             self::fputcsv(
                 $file,
                 $row,
-                config('larex.csv.delimiter'),
-                config('larex.csv.enclosure')
+                self::CSV_DELIMITER,
+                self::CSV_ENCLOSURE
             );
         }
         fclose($file);
     }
 
+    /**
+     * Get a stub file
+     * @param string $name
+     * @return string
+     */
     public static function getStub(string $name): string
     {
         $content = file_get_contents(__DIR__ . '/Stubs/' . $name . '.stub');
         return self::normalizeEOLs($content);
     }
 
+    /**
+     * Normalize EOLs
+     * @param string $content
+     * @return string
+     */
     public static function normalizeEOLs(string $content): string
     {
         return preg_replace('/\r\n|\r|\n/', PHP_EOL, $content);
     }
 
+    /**
+     * Write key/value for php files
+     * @param $key
+     * @param $value
+     * @param $file
+     * @param int $level
+     */
     public static function writeKeyValue($key, $value, &$file, int $level = 1): void
     {
         if (is_array($value)) {
-            fwrite($file, str_repeat('    ', $level) . "'$key' => [" . PHP_EOL);
+            fwrite($file, str_repeat('    ', $level) . "'{$key}' => [" . PHP_EOL);
             $level++;
             foreach ($value as $childKey => $childValue) {
                 self::writeKeyValue($childKey, $childValue, $file, $level);
@@ -67,19 +88,23 @@ class Utils
 
         $value = (string)$value;
         $value = str_replace(
-            ["'", '\\' . config('larex.csv.enclosure')],
-            ["\'", config('larex.csv.enclosure')],
+            ["'", '\\' . self::CSV_ENCLOSURE],
+            ["\'", self::CSV_ENCLOSURE],
             $value
         );
 
         if (is_int($key) || (is_numeric($key) && ctype_digit($key))) {
             $key = (int)$key;
-            fwrite($file, str_repeat('    ', $level) . "$key => '$value'," . PHP_EOL);
+            fwrite($file, str_repeat('    ', $level) . "{$key} => '{$value}'," . PHP_EOL);
         } else {
-            fwrite($file, str_repeat('    ', $level) . "'$key' => '$value'," . PHP_EOL);
+            fwrite($file, str_repeat('    ', $level) . "'{$key}' => '{$value}'," . PHP_EOL);
         }
     }
 
+    /**
+     * Loop "forever"
+     * @param callable $callback
+     */
     public static function forever(callable $callback): void
     {
         $env = getenv('NOLOOP');
@@ -93,6 +118,15 @@ class Utils
         }
     }
 
+    /**
+     * Format line as CSV and write to file pointer
+     * @param $handle
+     * @param $array
+     * @param string $delimiter
+     * @param string $enclosure
+     * @param string $eol
+     * @return bool|int
+     */
     public static function fputcsv($handle, $array, $delimiter = ',', $enclosure = '"', $eol = PHP_EOL)
     {
         $output = '';

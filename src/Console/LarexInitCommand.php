@@ -8,6 +8,11 @@ use Lukasss93\Larex\Utils;
 
 class LarexInitCommand extends Command
 {
+    /**
+     * Localization file path
+     *
+     * @var string
+     */
     protected $file;
 
     /**
@@ -32,7 +37,7 @@ class LarexInitCommand extends Command
     public function __construct()
     {
         parent::__construct();
-        $this->file = config('larex.path');
+        $this->file = config('larex.path', Utils::CSV_DEFAULT_PATH);
     }
 
     /**

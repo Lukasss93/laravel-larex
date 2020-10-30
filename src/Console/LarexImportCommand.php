@@ -10,6 +10,11 @@ use RecursiveIteratorIterator;
 
 class LarexImportCommand extends Command
 {
+    /**
+     * Localization file path
+     *
+     * @var string
+     */
     protected $file;
 
     /**
@@ -34,7 +39,7 @@ class LarexImportCommand extends Command
     public function __construct()
     {
         parent::__construct();
-        $this->file = config('larex.path');
+        $this->file = config('larex.path', Utils::CSV_DEFAULT_PATH);
     }
 
     /**
@@ -82,6 +87,7 @@ class LarexImportCommand extends Command
 
         //creating the csv file
         $header = collect(['group', 'key'])->merge($languages);
+        $headerCount = $header->count();
         $data = collect([]);
 
         foreach ($rawValues as $rawValue) {
@@ -95,14 +101,14 @@ class LarexImportCommand extends Command
                     $rawValue['key'],
                 ];
 
-                for ($i = 2; $i < $header->count(); $i++) {
+                for ($i = 2; $i < $headerCount; $i++) {
                     $real = $rawValue['lang'] === $header->get($i) ? $rawValue['value'] : '';
                     $output[$i] = $real;
                 }
 
                 $data->push($output);
             } else {
-                for ($i = 2; $i < $header->count(); $i++) {
+                for ($i = 2; $i < $headerCount; $i++) {
                     $code = $rawValue['lang'] === $header->get($i) ? $rawValue['value'] : null;
 
                     if ($code !== null) {
