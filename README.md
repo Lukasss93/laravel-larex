@@ -24,10 +24,10 @@
 </p>
 
 <p align="center">
-  <img src="https://phpinsights.lucapatera.it/Lukasss93/laravel-larex/code"/>
-  <img src="https://phpinsights.lucapatera.it/Lukasss93/laravel-larex/architecture"/>
-  <img src="https://phpinsights.lucapatera.it/Lukasss93/laravel-larex/complexity"/>
-  <img src="https://phpinsights.lucapatera.it/Lukasss93/laravel-larex/style"/>
+  <img src="https://phpinsights.lucapatera.it/Lukasss93/laravel-larex/code?label=Code%20Quality"/>
+  <img src="https://phpinsights.lucapatera.it/Lukasss93/laravel-larex/architecture?label=Code%20Architecture"/>
+  <img src="https://phpinsights.lucapatera.it/Lukasss93/laravel-larex/complexity?label=Code%20Complexity"/>
+  <img src="https://phpinsights.lucapatera.it/Lukasss93/laravel-larex/style?label=Code%20Style"/>
 </p>
 
 <p align="center">
