@@ -39,7 +39,7 @@
 You can install the package using composer
 
 ```bash
-composer require lukasss93/laravel-larex  
+composer require lukasss93/laravel-larex --dev
 ```
 
 Then add the service provider to `config/app.php`.  
