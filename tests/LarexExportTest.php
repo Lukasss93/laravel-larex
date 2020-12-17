@@ -198,6 +198,79 @@ class LarexExportTest extends TestCase
             File::get(resource_path('lang/en/app.php'))
         );
     }
+
+    public function test_larex_command_with_space(): void
+    {
+        $this->initFromStub('export/space/input');
+
+        $this->artisan('larex:export')
+            ->expectsOutput("Processing the '$this->file' file...")
+            ->expectsOutput("resources/lang/en/app.php created successfully.")
+            ->expectsOutput("resources/lang/it/app.php created successfully.")
+            ->run();
+
+        self::assertFileExists(resource_path('lang/en/app.php'));
+        self::assertFileExists(resource_path('lang/it/app.php'));
+
+        self::assertEquals(
+            $this->getTestStub('export/space/output-en'),
+            File::get(resource_path('lang/en/app.php'))
+        );
+
+        self::assertEquals(
+            $this->getTestStub('export/space/output-it'),
+            File::get(resource_path('lang/it/app.php'))
+        );
+    }
+
+    public function test_larex_command_with_novalue_verbose(): void
+    {
+        $this->initFromStub('export/novalue/input');
+
+        $this->artisan('larex:export -v')
+            ->expectsOutput("Processing the '$this->file' file...")
+            ->expectsOutput('[app|2] on line 3, column 4 (it) is missing. It will be skipped.')
+            ->expectsOutput("resources/lang/en/app.php created successfully.")
+            ->expectsOutput("resources/lang/it/app.php created successfully.")
+            ->run();
+
+        self::assertFileExists(resource_path('lang/en/app.php'));
+        self::assertFileExists(resource_path('lang/it/app.php'));
+
+        self::assertEquals(
+            $this->getTestStub('export/novalue/output-en'),
+            File::get(resource_path('lang/en/app.php'))
+        );
+
+        self::assertEquals(
+            $this->getTestStub('export/novalue/output-it'),
+            File::get(resource_path('lang/it/app.php'))
+        );
+    }
+    
+    public function test_larex_command_with_novalue(): void
+    {
+        $this->initFromStub('export/novalue/input');
+
+        $this->artisan('larex:export -v')
+            ->expectsOutput("Processing the '$this->file' file...")
+            ->expectsOutput("resources/lang/en/app.php created successfully.")
+            ->expectsOutput("resources/lang/it/app.php created successfully.")
+            ->run();
+
+        self::assertFileExists(resource_path('lang/en/app.php'));
+        self::assertFileExists(resource_path('lang/it/app.php'));
+
+        self::assertEquals(
+            $this->getTestStub('export/novalue/output-en'),
+            File::get(resource_path('lang/en/app.php'))
+        );
+
+        self::assertEquals(
+            $this->getTestStub('export/novalue/output-it'),
+            File::get(resource_path('lang/it/app.php'))
+        );
+    }
     
     public function test_larex_with_include_empty(): void
     {

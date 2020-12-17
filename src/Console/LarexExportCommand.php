@@ -3,9 +3,11 @@
 namespace Lukasss93\Larex\Console;
 
 use ErrorException;
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
+use Lukasss93\Larex\Exceptions\MissingValueException;
 use Lukasss93\Larex\Utils;
 
 class LarexExportCommand extends Command
@@ -125,8 +127,16 @@ class LarexExportCommand extends Command
                     try {
                         if ($columns[$j] !== '') {
                             Arr::set($languages[$header[$j]][$group], $key, $columns[$j]);
+                        } else if ($this->option('verbose')) {
+                            throw new MissingValueException("Missing value in {$header[$j]} column.");
                         }
-                    } catch (ErrorException $e) {
+                    } catch (MissingValueException $e) {
+                        $this->warn(
+                            "[{$group}|{$key}] on line " . ($i + 1) .
+                            ', column ' . ($j + 1) .
+                            " ({$header[$j]}) is missing. It will be skipped."
+                        );
+                    } catch (Exception $e) {
                         $this->warn(
                             "[{$group}|{$key}] on line " . ($i + 1) .
                             ', column ' . ($j + 1) .
