@@ -10,6 +10,7 @@ class Utils
     public const CSV_DEFAULT_PATH = 'resources/lang/localization.csv';
     private const CSV_DELIMITER = ';';
     private const CSV_ENCLOSURE = '"';
+    private const CSV_ESCAPE = '\\';
 
     /**
      * Get a collection from csv file
@@ -40,7 +41,8 @@ class Utils
                 $file,
                 $row,
                 self::CSV_DELIMITER,
-                self::CSV_ENCLOSURE
+                self::CSV_ENCLOSURE,
+                self::CSV_ESCAPE
             );
         }
         fclose($file);
@@ -124,10 +126,11 @@ class Utils
      * @param $array
      * @param string $delimiter
      * @param string $enclosure
+     * @param string $escape
      * @param string $eol
      * @return bool|int
      */
-    public static function fputcsv($handle, $array, $delimiter = ',', $enclosure = '"', $eol = PHP_EOL)
+    public static function fputcsv($handle, $array, $delimiter = ',', $enclosure = '"', $escape = '\\', $eol = PHP_EOL)
     {
         $output = '';
 
@@ -136,7 +139,7 @@ class Utils
             $item = self::normalizeEOLs($item);
 
             if (Str::contains($item, $enclosure)) {
-                $item = str_replace($enclosure, '\\' . $enclosure, $item);
+                $item = $enclosure . str_replace($enclosure, $escape . $enclosure, $item) . $enclosure;
             }
 
             if (Str::contains($item, [$delimiter, PHP_EOL])) {
