@@ -19,7 +19,7 @@
   </a>
   <img src="https://img.shields.io/github/workflow/status/Lukasss93/laravel-larex/run-tests"/>
   <a href="https://codecov.io/gh/Lukasss93/laravel-larex">
-    <img src="https://codecov.io/gh/Lukasss93/laravel-larex/branch/master/graph/badge.svg?token=XcLU2ccFQ7"/>
+    <img src="https://img.shields.io/codecov/c/github/lukasss93/laravel-larex?token=XcLU2ccFQ7"/>
   </a>
 </p>
 
