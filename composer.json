@@ -48,7 +48,7 @@
             "@php vendor/phpunit/phpunit/phpunit --colors=always"
         ],
         "test-coverage": [
-            "@php vendor/phpunit/phpunit/phpunit --colors=always --bootstrap vendor/autoload.php --configuration phpunit.xml.dist --coverage-clover tests/logs/clover.xml"
+            "@php vendor/phpunit/phpunit/phpunit --colors=always --bootstrap vendor/autoload.php --configuration phpunit.xml.dist --coverage-clover coverage.xml"
         ]
     }
 }

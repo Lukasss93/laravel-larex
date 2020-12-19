@@ -1,3 +1,4 @@
 composer.lock
 /vendor/
 phpinsights.json
+coverage.xml
