@@ -45,3 +45,6 @@ jobs:
 
             - name: Execute tests
               run: composer test-coverage
+              
+            - name: Send coverage
+              run: bash <(curl -s https://codecov.io/bash)
