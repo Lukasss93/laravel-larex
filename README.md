@@ -18,9 +18,9 @@
     <img src="https://img.shields.io/badge/chat%20on-telegram-blue"/>
   </a>
   <img src="https://img.shields.io/github/workflow/status/Lukasss93/laravel-larex/run-tests"/>
-    <a href="https://coveralls.io/github/Lukasss93/laravel-larex">
-      <img src="https://img.shields.io/coveralls/github/Lukasss93/laravel-larex"/>
-    </a>
+  <a href="https://codecov.io/gh/Lukasss93/laravel-larex">
+    <img src="https://codecov.io/gh/Lukasss93/laravel-larex/branch/master/graph/badge.svg?token=XcLU2ccFQ7"/>
+  </a>
 </p>
 
 <p align="center">
