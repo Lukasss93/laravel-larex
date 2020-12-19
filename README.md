@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/php-%3E%3D%207.2-blue"/>
+  <img src="https://img.shields.io/badge/php-%3E%3D%207.3-blue"/>
   <img src="https://img.shields.io/badge/laravel-%3E%3D%206.0-orange"/>
   <a href="https://packagist.org/packages/lukasss93/laravel-larex">
     <img src="https://poser.pugx.org/lukasss93/laravel-larex/v/stable"/>
