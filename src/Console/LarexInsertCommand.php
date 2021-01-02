@@ -40,7 +40,7 @@ class LarexInsertCommand extends Command
     public function __construct()
     {
         parent::__construct();
-        $this->file = config('larex.path', Utils::CSV_DEFAULT_PATH);
+        $this->file = config('larex.csv.path');
     }
 
     /**
