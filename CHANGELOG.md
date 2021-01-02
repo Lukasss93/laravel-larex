@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Config values inaccessible when project is optimized before installing larex
 - Missing enclosures when string contains escaped enclosures
 
+### Removed
+- Dropped support for PHP 7.2
+
+
 ## v1.5.1 - 2020-09-15
 ### Fixed
 - Fixed invalid escaping on export command
