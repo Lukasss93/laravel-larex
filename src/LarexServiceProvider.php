@@ -14,15 +14,27 @@ use Lukasss93\Larex\Console\LarexSortCommand;
 class LarexServiceProvider extends ServiceProvider
 {
     /**
+     * Bootstrap services.
+     */
+    public function boot(): void
+    {
+        $this->registerPublishables();
+    }
+    
+    /**
      * Register services.
      *
      * @return void
      */
     public function register(): void
     {
-        $configPath = __DIR__ . '/config/larex.php';
-        $this->mergeConfigFrom($configPath, 'larex');
-
+        $this->mergeConfigFrom(__DIR__ . '/config/larex.php', 'larex');
+        
+        $this->registerCommands();
+    }
+    
+    protected function registerCommands(): void
+    {
         $this->commands([
             LarexInitCommand::class,
             LarexCommand::class,
@@ -33,11 +45,11 @@ class LarexServiceProvider extends ServiceProvider
             LarexLintCommand::class,
         ]);
     }
-
-    /**
-     * Bootstrap services.
-     */
-    public function boot(): void
+    
+    protected function registerPublishables(): void
     {
+        $this->publishes([
+            __DIR__ . '/config/larex.php' => config_path('larex.php'),
+        ], 'larex-config');
     }
 }
