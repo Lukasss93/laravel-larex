@@ -25,11 +25,11 @@ return [
         Lukasss93\Larex\Linters\ValidHeaderLinter::class,
         Lukasss93\Larex\Linters\ValidLanguageCodeLinter::class,
         Lukasss93\Larex\Linters\DuplicateKeyLinter::class,
-        //TODO: Lukasss93\Larex\Linters\ConcurrentKeyLinter::class,
+        Lukasss93\Larex\Linters\ConcurrentKeyLinter::class,
         Lukasss93\Larex\Linters\NoValueLinter::class,
         Lukasss93\Larex\Linters\DuplicateValueLinter::class,
         Lukasss93\Larex\Linters\UntranslatedStringsLinter::class,
-        Lukasss93\Larex\Linters\UnusedStringsLinter::class,
+        // Lukasss93\Larex\Linters\UnusedStringsLinter::class,
         // Lukasss93\Larex\Linters\ValidHtmlValueLinter::class,
     ],
     
@@ -40,13 +40,14 @@ return [
      */
     'search' => [
         /**
-         * Directories which should be looked inside (it's recursive).
+         * Directories which should be looked inside.
+         * NOTE: It's recursive.
          */
         'dirs' => ['resources/views'],
         
         /**
          * Patterns by which files should be queried.
-         * The values can be a regular expresion, glob, or just a string.
+         * The values can be a regular expression, glob, or just a string.
          */
         'patterns' => ['*.php'],
         

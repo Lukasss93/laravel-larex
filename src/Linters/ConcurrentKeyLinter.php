@@ -3,6 +3,7 @@
 namespace Lukasss93\Larex\Linters;
 
 use Illuminate\Support\Collection;
+use Lukasss93\Larex\Exceptions\LintException;
 
 class ConcurrentKeyLinter implements Linter
 {
@@ -19,7 +20,7 @@ class ConcurrentKeyLinter implements Linter
      */
     public function handle(Collection $rows): void
     {
-        //get positions + children
+        //get keys position
         $count = [];
         $rows->skip(1)->each(function ($columns, $rowN) use (&$count) {
             [$group, $key] = $columns;
@@ -31,38 +32,46 @@ class ConcurrentKeyLinter implements Linter
             $this->setKeyPositions($key, $key, $rowN, $count[$group]);
         });
         
-        //get errors
-        $errors=[];
-        foreach ($count as $group=>$keys){
-            foreach ($keys as $key=>$item){
-                $s=0;
+        //get raw errors
+        $rawErrors = [];
+        collect($count)->each(function ($keys, $group) use (&$rawErrors) {
+            $this->parseErrors($group, $keys, $rawErrors);
+        });
+        
+        //build errors
+        $errors = [];
+        collect($rawErrors)->each(function ($keys, $group) use (&$errors) {
+            foreach ($keys as $key) {
+                $error = [];
+                $this->buildErrors($key, $error);
+                $errors[$group][] = $error;
+            }
+            
+        });
+        
+        //print errors
+        $messages = [];
+        foreach ($errors as $group => $keys) {
+            foreach ($keys as $subkeys) {
+                $text = 'rows ';
+                $errorKeys = collect($subkeys)->sort();
+                $i = 0;
+                foreach ($errorKeys as $key => $row) {
+                    $text .= "{$row} ({$group}.{$key})";
+                    
+                    if ($i < $errorKeys->count() - 1) {
+                        $text .= ', ';
+                    }
+                    $i++;
+                }
+                $text .= ';';
+                $messages[] = $text;
             }
         }
         
-        $s = 0;
-        /*
-        $duplicates = collect($count)->filter(function ($items) {
-            return count($items) > 1;
-        });
-
-        if ($duplicates->isNotEmpty()) {
-            $message = '';
-            foreach ($duplicates as $duplicate => $positions) {
-                foreach ($positions as $p => $position) {
-                    $message .= $position;
-
-                    if ($p < count($positions) - 1) {
-                        $message .= ', ';
-                    }
-                }
-                $message .= " ({$duplicate}); ";
-            }
-
-            throw new LintException('Concurrent keys found:',[
-                'rows 1 (x), 2 (x.y)',
-                'rows 3 (a), 4 (a.b)',
-            ]);
-        }*/
+        if (count($messages) > 0) {
+            throw new LintException('Concurrent keys found:', $messages);
+        }
     }
     
     private function setKeyPositions($originalKey, $currentKey, $n, &$array): void
@@ -84,6 +93,36 @@ class ConcurrentKeyLinter implements Linter
         $otherKeys = $keys->skip(1);
         if ($otherKeys->isNotEmpty()) {
             $this->setKeyPositions($originalKey, $otherKeys->implode('.'), $n, $array[$firstKey]['children']);
+        }
+    }
+    
+    private function parseErrors(string $group, array $keys, &$errors): void
+    {
+        foreach ($keys as $key) {
+            
+            if (count($key['children']) === 0) {
+                continue;
+            }
+            
+            if ($key['row'] !== null) {
+                $errors[$group][] = $key;
+                continue;
+            }
+            
+            if ($key['row'] === null) {
+                $this->parseErrors($group, $key['children'], $errors);
+            }
+        }
+    }
+    
+    private function buildErrors(array $key, &$error): void
+    {
+        if ($key['row'] !== null) {
+            $error[$key['key']] = $key['row'];
+        }
+        
+        foreach ($key['children'] as $child) {
+            $this->buildErrors($child, $error);
         }
     }
 }
