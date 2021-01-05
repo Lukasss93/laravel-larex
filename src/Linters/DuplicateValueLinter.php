@@ -16,7 +16,7 @@ class DuplicateValueLinter implements Linter
      */
     public function description(): string
     {
-        return 'Checking duplicated values on same row...';
+        return 'Checking duplicated values in the same row...';
     }
     
     /**
