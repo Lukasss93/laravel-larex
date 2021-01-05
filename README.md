@@ -44,6 +44,14 @@ This step *can be skipped* if package auto-discovery is enabled.
 ];
 ```
 
+## ⚙ Publishing the config file
+
+Publishing the config file is optional:
+
+```bash
+php artisan vendor:publish --provider="Lukasss93\Larex\LarexServiceProvider" --tag="larex-config"
+```
+
 ## 👓 Usage
 
 1. First, you must create the initial CSV file with `php artisan larex:init`.<br>
@@ -72,7 +80,7 @@ This step *can be skipped* if package auto-discovery is enabled.
 * You can use `php artisan larex:export --include=en,it` to export only _"en"_ and _"it"_ columns.
 * You can use `php artisan larex:export --exclude=it` to export all columns except _"it"_ column.
 
-### 🔍 Example
+### 📝 Example
 
 1. Run `php artisan larex:init` command
 
@@ -115,6 +123,31 @@ This step *can be skipped* if package auto-discovery is enabled.
        ]
    ];
    ```
+
+### 🔍 Linters
+
+Larex provides a linting system by using the `php artisan larex:lint` command 
+to validate your CSV file.
+
+##### Available linters:
+
+| Linter                    | Enabled by default | Description                                       |
+| ------------------------- | ------------------ | ------------------------------------------------- |
+| ValidHeaderLinter         | Yes                | Validate the header structure                     |
+| ValidLanguageCodeLinter   | Yes                | Validate the language codes in the header columns |
+| DuplicateKeyLinter        | Yes                | Find duplicated keys                              |
+| ConcurrentKeyLinter       | Yes                | Find concurrent keys                              |
+| NoValueLinter             | Yes                | Find missing values                               |
+| DuplicateValueLinter      | Yes                | Find duplicated values in the same row            |
+| UntranslatedStringsLinter | No                 | Find untranslated strings                         |
+| UntranslatedStringsLinter | No                 | Find unused strings                               |
+| ValidHtmlValueLinter      | No                 | Check valid html values                           |
+
+You can enable/disable any linter you want by comment/uncomment it inside the larex config.
+
+##### How to create a linter:
+1. Create a class that implements the `Lukasss93\Larex\Linters\Linter` interface 
+2. Add your linter inside the larex config
 
 ## ⚗️ Testing
 
