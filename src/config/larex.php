@@ -28,7 +28,7 @@ return [
         Lukasss93\Larex\Linters\ConcurrentKeyLinter::class,
         Lukasss93\Larex\Linters\NoValueLinter::class,
         Lukasss93\Larex\Linters\DuplicateValueLinter::class,
-        Lukasss93\Larex\Linters\UntranslatedStringsLinter::class,
+        // Lukasss93\Larex\Linters\UntranslatedStringsLinter::class,
         // Lukasss93\Larex\Linters\UnusedStringsLinter::class,
         // Lukasss93\Larex\Linters\ValidHtmlValueLinter::class,
     ],
