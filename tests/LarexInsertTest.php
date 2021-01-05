@@ -38,7 +38,7 @@ class LarexInsertTest extends TestCase
             ->expectsQuestion('[2/2] Enter the value for [it] language', 'Zio')
             ->expectsOutput('Item added successfully.')
             ->expectsOutput('')
-            ->expectsOutput("Processing the '" . config('larex.path', Utils::CSV_DEFAULT_PATH) . "' file...")
+            ->expectsOutput("Processing the '" . config('larex.csv.path') . "' file...")
             ->expectsOutput('resources/lang/en/app.php created successfully.')
             ->expectsOutput('resources/lang/it/app.php created successfully.')
             ->run();

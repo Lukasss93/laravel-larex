@@ -28,28 +28,22 @@ abstract class TestCase extends OrchestraTestCase
     {
         parent::setUp();
         
+        
         $this->afterApplicationCreated(function () {
             if (File::exists(resource_path('lang/en'))) {
                 File::deleteDirectory(resource_path('lang/en'));
             }
             
-            File::makeDirectory(resource_path('lang/en'), 0755, true, true);
-        });
-        
-        $this->beforeApplicationDestroyed(function () {
+            //delete csv file
             if (File::exists(base_path($this->file))) {
                 File::delete(base_path($this->file));
             }
             
-            if (File::exists(resource_path('lang/it'))) {
-                File::deleteDirectory(resource_path('lang/it'));
+            //delete lang folders
+            $folders = glob(resource_path('lang/*'), GLOB_ONLYDIR);
+            foreach ($folders as $folder) {
+                File::deleteDirectory($folder);
             }
-            
-            if (File::exists(resource_path('lang/en'))) {
-                File::deleteDirectory(resource_path('lang/en'));
-            }
-            
-            File::makeDirectory(resource_path('lang/en'), 0755, true, true);
         });
     }
     

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\File;
 
 class LarexExportTest extends TestCase
 {
-    public function test_larex_command_without_entries(): void
+    public function test_larex_export_without_entries(): void
     {
         $this->artisan('larex:init')->run();
         
@@ -16,7 +16,7 @@ class LarexExportTest extends TestCase
             ->run();
     }
     
-    public function test_larex_command_fail_when_localization_file_not_exists(): void
+    public function test_larex_export_fail_when_localization_file_not_exists(): void
     {
         $this->artisan('larex:export')
             ->expectsOutput("Processing the '$this->file' file...")
@@ -25,7 +25,7 @@ class LarexExportTest extends TestCase
             ->run();
     }
     
-    public function test_larex_command_fail_when_include_exclude_are_together(): void
+    public function test_larex_export_fail_when_include_exclude_are_together(): void
     {
         $this->initFromStub('export/larex-input');
         
@@ -39,7 +39,7 @@ class LarexExportTest extends TestCase
      * @param string $stub
      * @param string $output
      */
-    public function test_larex_command_with_warning(string $stub, string $output): void
+    public function test_larex_export_with_warning(string $stub, string $output): void
     {
         $this->initFromStub($stub);
         
@@ -57,7 +57,7 @@ class LarexExportTest extends TestCase
         );
     }
     
-    public function test_larex_command(): void
+    public function test_larex_export(): void
     {
         $this->initFromStub('export/larex-input');
         
@@ -95,7 +95,7 @@ class LarexExportTest extends TestCase
         );
     }
     
-    public function test_larex_watch(): void
+    public function test_larex_export_with_watch(): void
     {
         $this->initFromStub('export/larex-input');
         
@@ -134,7 +134,7 @@ class LarexExportTest extends TestCase
         );
     }
     
-    public function test_larex_command_with_numeric_keys(): void
+    public function test_larex_export_with_numeric_keys(): void
     {
         $this->initFromStub('export/numeric/input');
         
@@ -158,7 +158,7 @@ class LarexExportTest extends TestCase
         );
     }
     
-    public function test_larex_command_with_empty_values(): void
+    public function test_larex_export_with_empty_values(): void
     {
         $this->initFromStub('export/empty/input');
         
@@ -182,7 +182,7 @@ class LarexExportTest extends TestCase
         );
     }
     
-    public function test_larex_command_with_enclosures(): void
+    public function test_larex_export_with_enclosures(): void
     {
         $this->initFromStub('export/enclosure/input');
         
@@ -199,7 +199,7 @@ class LarexExportTest extends TestCase
         );
     }
 
-    public function test_larex_command_with_space(): void
+    public function test_larex_export_with_space(): void
     {
         $this->initFromStub('export/space/input');
 
@@ -223,7 +223,7 @@ class LarexExportTest extends TestCase
         );
     }
 
-    public function test_larex_command_with_novalue_verbose(): void
+    public function test_larex_export_with_novalue_verbose(): void
     {
         $this->initFromStub('export/novalue/input');
 
@@ -248,7 +248,7 @@ class LarexExportTest extends TestCase
         );
     }
     
-    public function test_larex_command_with_novalue(): void
+    public function test_larex_export_with_novalue(): void
     {
         $this->initFromStub('export/novalue/input');
 
@@ -272,7 +272,7 @@ class LarexExportTest extends TestCase
         );
     }
     
-    public function test_larex_with_include_empty(): void
+    public function test_larex_export_with_include_empty(): void
     {
         $this->initFromStub('export/larex-input');
         
@@ -283,7 +283,7 @@ class LarexExportTest extends TestCase
         
     }
     
-    public function test_larex_with_include(): void
+    public function test_larex_export_with_include(): void
     {
         $this->initFromStub('export/larex-input');
         
@@ -309,7 +309,7 @@ class LarexExportTest extends TestCase
         );
     }
     
-    public function test_larex_with_exclude_empty(): void
+    public function test_larex_export_with_exclude_empty(): void
     {
         $this->initFromStub('export/larex-input');
     
@@ -348,7 +348,7 @@ class LarexExportTest extends TestCase
         
     }
     
-    public function test_larex_with_exclude(): void
+    public function test_larex_export_with_exclude(): void
     {
         $this->initFromStub('export/larex-input');
         
