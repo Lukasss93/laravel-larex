@@ -10,7 +10,7 @@ use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 abstract class TestCase extends OrchestraTestCase
 {
-    protected $file = 'resources/lang/localization.csv';
+    protected $file;
     
     /**
      * @param Application $app
@@ -28,6 +28,7 @@ abstract class TestCase extends OrchestraTestCase
     {
         parent::setUp();
         
+        $this->file = config('larex.csv.path');
         
         $this->afterApplicationCreated(function () {
             if (File::exists(resource_path('lang/en'))) {
