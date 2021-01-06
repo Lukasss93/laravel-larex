@@ -3,6 +3,7 @@
 namespace Lukasss93\Larex\Console;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 use Lukasss93\Larex\Exceptions\LintException;
 use Lukasss93\Larex\Linters\Linter;
 use Lukasss93\Larex\Utils;
@@ -58,7 +59,6 @@ class LarexLintCommand extends Command
         $memoryStart = memory_get_usage();
         
         foreach ($linters as $linter) {
-            $className = last(explode('\\', $linter));
             $instance = new $linter;
             
             if ($instance instanceof Linter) {
@@ -110,7 +110,8 @@ class LarexLintCommand extends Command
         }
         
         //all test passes
-        $this->line("<bg=green>OK ({$pass} linters)</>");
+        $linters = Str::plural('linter', $pass);
+        $this->line("<bg=green>OK ({$pass} {$linters})</>");
         return 0;
     }
 }
