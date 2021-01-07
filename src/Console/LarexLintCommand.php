@@ -3,6 +3,7 @@
 namespace Lukasss93\Larex\Console;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Lukasss93\Larex\Contracts\Linter;
 use Lukasss93\Larex\Exceptions\LintException;
@@ -49,6 +50,12 @@ class LarexLintCommand extends Command
      */
     public function handle(): int
     {
+        if (!File::exists(base_path($this->file))) {
+            $this->error("The '$this->file' does not exists.");
+            $this->line('Please create it with: php artisan larex:init');
+            return 1;
+        }
+        
         //get linters
         /** @var Linter[] $linters */
         $linters = config('larex.linters');

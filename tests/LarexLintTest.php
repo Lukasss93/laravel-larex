@@ -8,9 +8,21 @@ use Lukasss93\Larex\Linters\ValidHeaderLinter;
 
 class LarexLintTest extends TestCase
 {
+    public function test_lint_command_no_csv(): void
+    {
+        config(['larex.linters' => []]);
+        
+        $this->artisan(LarexLintCommand::class)
+            ->expectsOutput("The '$this->file' does not exists.")
+            ->expectsOutput('Please create it with: php artisan larex:init')
+            ->run();
+    }
+    
     public function test_lint_command_no_linters(): void
     {
-        config(['larex.linters'=>[]]);
+        config(['larex.linters' => []]);
+        
+        $this->initFromStub('lint/no-linters');
         
         $this->artisan(LarexLintCommand::class)
             ->expectsOutput('No linters executed!')
@@ -19,11 +31,11 @@ class LarexLintTest extends TestCase
     
     public function test_lint_command_failure(): void
     {
-        config(['larex.linters'=>[
+        config(['larex.linters' => [
             DuplicateKeyLinter::class,
         ]]);
         
-        $this->initFromStub('lint/base-failure');
+        $this->initFromStub('lint/failure');
         
         $this->artisan(LarexLintCommand::class)
             ->expectsOutput(' FAIL  1 duplicate key found:')
@@ -33,13 +45,13 @@ class LarexLintTest extends TestCase
             ->run();
     }
     
-    public function test_lint_command_ok(): void
+    public function test_lint_command_success(): void
     {
-        config(['larex.linters'=>[
+        config(['larex.linters' => [
             ValidHeaderLinter::class,
         ]]);
         
-        $this->initFromStub('lint/base-ok');
+        $this->initFromStub('lint/success');
         
         $this->artisan(LarexLintCommand::class)
             ->expectsOutput('OK (1 linter)')
