@@ -48,7 +48,7 @@ class UnusedStringsLinterTest extends TestCase
     public function beforeAll(): void
     {
         //create a test blade file with @lang functions
-        $testFilePath = resource_path('views' . PHP_EOL . 'test.blade.php');
+        $testFilePath = resource_path('views' . DIRECTORY_SEPARATOR . 'test.blade.php');
         
         if (File::exists($testFilePath)) {
             File::delete($testFilePath);
