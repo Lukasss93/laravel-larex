@@ -4,8 +4,8 @@ namespace Lukasss93\Larex\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
+use Lukasss93\Larex\Contracts\Linter;
 use Lukasss93\Larex\Exceptions\LintException;
-use Lukasss93\Larex\Linters\Linter;
 use Lukasss93\Larex\Utils;
 
 class LarexLintCommand extends Command

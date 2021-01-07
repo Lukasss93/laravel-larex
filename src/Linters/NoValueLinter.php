@@ -6,6 +6,7 @@ namespace Lukasss93\Larex\Linters;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Lukasss93\Larex\Contracts\Linter;
 use Lukasss93\Larex\Exceptions\LintException;
 
 class NoValueLinter implements Linter

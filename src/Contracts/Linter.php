@@ -1,6 +1,6 @@
 <?php
 
-namespace Lukasss93\Larex\Linters;
+namespace Lukasss93\Larex\Contracts;
 
 use Illuminate\Support\Collection;
 use Lukasss93\Larex\Exceptions\LintException;
@@ -12,7 +12,7 @@ interface Linter
      * @return string
      */
     public function description(): string;
-
+    
     /**
      * Linter logic
      * @param Collection $rows

@@ -146,7 +146,7 @@ to validate your CSV file.
 You can enable/disable any linter you want by comment/uncomment it inside the larex config.
 
 ##### How to create a linter:
-1. Create a class that implements the `Lukasss93\Larex\Linters\Linter` interface 
+1. Create a class that implements the `Lukasss93\Larex\Contracts\Linter` interface 
 2. Add your linter inside the larex config
 
 ## ⚗️ Testing
