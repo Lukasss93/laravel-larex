@@ -80,11 +80,9 @@ class ConcurrentKeyLinter implements Linter
         
         $firstKey = $keys->first();
         if (!array_key_exists($firstKey, $array)) {
-            $array[$firstKey] = [
-                'key' => $currentKey === $firstKey ? $originalKey : null,
-                'row' => $currentKey === $firstKey ? $n + 1 : null,
-                'children' => [],
-            ];
+            $key = $currentKey === $firstKey ? $originalKey : null;
+            $row = $currentKey === $firstKey ? $n + 1 : null;
+            $array[$firstKey] = ['key' => $key, 'row' => $row, 'children' => []];
         } else if (array_key_exists($originalKey, $array)) {
             $array[$firstKey]['key'] = $originalKey;
             $array[$firstKey]['row'] = $n + 1;

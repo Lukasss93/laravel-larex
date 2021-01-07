@@ -1,0 +1,17 @@
+group;key;en;it
+add;a.b;filled;riempito
+add;a.b.c;filled;riempito
+add;a;filled;riempito
+app;b;filled;riempito
+app;c.a;filled;riempito
+app;c.b;filled;riempito
+add;d;filled;riempito
+add;d.a;filled;riempito
+app;e.a;filled;riempito
+app;e;filled;riempito
+app;f;filled;riempito
+app;f.a;filled;riempito
+app;f.b;filled;riempito
+app;g.a;filled;riempito
+app;g.b;filled;riempito
+app;g.a.b;filled;riempito
