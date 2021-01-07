@@ -45,9 +45,9 @@ class LarexImportCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return void
+     * @return int
      */
-    public function handle(): void
+    public function handle(): int
     {
         $languages = collect([]);
         $rawValues = collect([]);
@@ -129,10 +129,12 @@ class LarexImportCommand extends Command
         //check file exists
         if (!$force && File::exists(base_path($this->file))) {
             $this->error("The '{$this->file}' already exists.");
-            return;
+            return 1;
         }
 
         Utils::collectionToCsv($data, base_path($this->file));
         $this->info('Files imported successfully.');
+        
+        return 0;
     }
 }

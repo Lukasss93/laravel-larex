@@ -16,9 +16,11 @@ class DuplicateValueLinterTest extends TestCase
         
         $this->initFromStub('linters/duplicate-value/success');
         
-        $this->artisan(LarexLintCommand::class)
+        $result = $this->artisan(LarexLintCommand::class)
             ->expectsOutput('OK (1 linter)')
             ->run();
+        
+        self::assertEquals(0, $result);
     }
     
     public function test_failure(): void
@@ -29,11 +31,13 @@ class DuplicateValueLinterTest extends TestCase
         
         $this->initFromStub('linters/duplicate-value/failure');
         
-        $this->artisan(LarexLintCommand::class)
+        $result = $this->artisan(LarexLintCommand::class)
             ->expectsOutput(' FAIL  1 duplicate value found:')
             ->expectsOutput('└ row 3 (app.ark), columns: 3 (en), 4 (it)')
             ->expectsOutput('FAILURES!')
             ->expectsOutput('Linters: 1, Failures: 1')
             ->run();
+        
+        self::assertEquals(1, $result);
     }
 }

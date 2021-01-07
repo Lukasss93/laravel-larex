@@ -42,18 +42,18 @@ class LarexInsertCommand extends Command
         parent::__construct();
         $this->file = config('larex.csv.path');
     }
-
+    
     /**
      * Execute the console command.
      *
-     * @return void
+     * @return int
      */
-    public function handle(): void
+    public function handle(): int
     {
         if (!File::exists(base_path($this->file))) {
             $this->error("The '{$this->file}' does not exists.");
             $this->line('Please create it with: php artisan larex:init');
-            return;
+            return 1;
         }
 
         //get the csv
@@ -126,5 +126,7 @@ class LarexInsertCommand extends Command
             $this->line('');
             $this->call('larex:export');
         }
+        
+        return 0;
     }
 }

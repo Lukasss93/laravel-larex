@@ -17,9 +17,11 @@ class UnusedStringsLinterTest extends TestCase
         
         $this->initFromStub('linters/unused-strings/success');
         
-        $this->artisan(LarexLintCommand::class)
+        $result = $this->artisan(LarexLintCommand::class)
             ->expectsOutput('OK (1 linter)')
             ->run();
+        
+        self::assertEquals(0, $result);
     }
     
     public function test_failure(): void
@@ -30,12 +32,14 @@ class UnusedStringsLinterTest extends TestCase
         
         $this->initFromStub('linters/unused-strings/failure');
         
-        $this->artisan(LarexLintCommand::class)
+        $result = $this->artisan(LarexLintCommand::class)
             ->expectsOutput(' FAIL  1 unused string found:')
             ->expectsOutput('└ app.apple is unused at line 4')
             ->expectsOutput('FAILURES!')
             ->expectsOutput('Linters: 1, Failures: 1')
             ->run();
+        
+        self::assertEquals(1, $result);
     }
     
     /**

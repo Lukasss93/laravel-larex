@@ -43,9 +43,9 @@ class LarexInitCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return void
+     * @return int
      */
-    public function handle(): void
+    public function handle(): int
     {
         $stub = 'default';
 
@@ -55,11 +55,13 @@ class LarexInitCommand extends Command
 
         if (File::exists(base_path($this->file))) {
             $this->error($this->file . ' already exists.');
-            return;
+            return 1;
         }
 
         File::put(base_path($this->file), Utils::getStub($stub));
 
         $this->info($this->file . ' created successfully.');
+        
+        return 0;
     }
 }
