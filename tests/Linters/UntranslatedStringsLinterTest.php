@@ -9,6 +9,20 @@ use Lukasss93\Larex\Tests\TestCase;
 
 class UntranslatedStringsLinterTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        
+        //create a test blade file with @lang functions
+        $testFilePath = resource_path('views' . DIRECTORY_SEPARATOR . 'test.blade.php');
+    
+        if (File::exists($testFilePath)) {
+            File::delete($testFilePath);
+        }
+    
+        File::put($testFilePath, $this->getTestStub('linters/untranslated-strings/blade'));
+    }
+    
     public function test_successful(): void
     {
         config(['larex.linters' => [
@@ -42,20 +56,5 @@ class UntranslatedStringsLinterTest extends TestCase
             ->run();
         
         self::assertEquals(1, $result);
-    }
-    
-    /**
-     * @beforeClass
-     */
-    public function beforeAll(): void
-    {
-        //create a test blade file with @lang functions
-        $testFilePath = resource_path('views' . DIRECTORY_SEPARATOR . 'test.blade.php');
-        
-        if (File::exists($testFilePath)) {
-            File::delete($testFilePath);
-        }
-        
-        File::put($testFilePath, $this->getTestStub('linters/untranslated-strings/blade'));
     }
 }
