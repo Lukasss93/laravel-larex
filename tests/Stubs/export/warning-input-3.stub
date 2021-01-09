@@ -1,3 +1,3 @@
-group;key;en
-app;first;First
-app;second
+group,key,en
+app,first,First
+app,second

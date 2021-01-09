@@ -13,9 +13,9 @@ return [
      */
     'csv' => [
         'path' => 'resources/lang/localization.csv',
-        'delimiter' => ';',
+        'delimiter' => ',',
         'enclosure' => '"',
-        'escape' => '\\',
+        'escape' => '"',
     ],
     
     /**

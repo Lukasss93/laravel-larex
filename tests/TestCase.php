@@ -31,6 +31,21 @@ abstract class TestCase extends OrchestraTestCase
         $this->file = config('larex.csv.path');
         
         $this->afterApplicationCreated(function () {
+            //set global csv settings
+            config([
+                'larex.csv' => [
+                    'path' => 'resources/lang/localization.csv',
+                    'delimiter' => ',',
+                    'enclosure' => '"',
+                    'escape' => '"',
+                ],
+                'larex.search' => [
+                    'dirs' => ['resources/views'],
+                    'patterns' => ['*.php'],
+                    'functions' => ['__', 'trans', '@lang']
+                ],
+            ]);
+            
             if (File::exists(resource_path('lang/en'))) {
                 File::deleteDirectory(resource_path('lang/en'));
             }

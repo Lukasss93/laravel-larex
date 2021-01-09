@@ -1,4 +1,4 @@
-group;key;en;it
-app;docs;Documentation;Documentazione
-app;news;News;Notizie
-app;apple;Apple;Mela
+group,key,en,it
+app,docs,Documentation,Documentazione
+app,news,News,Notizie
+app,apple,Apple,Mela
