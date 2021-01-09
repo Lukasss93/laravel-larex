@@ -116,12 +116,6 @@ class LarexExportCommand extends Command
             //get first two columns values
             [$group, $key] = $columns;
             
-            //check if group is filled
-            if ($group === '') {
-                $this->warn("Missing group name at line {$line}. The row will be skipped.");
-                continue;
-            }
-            
             //check if key is filled
             if ($key === '') {
                 $this->warn("Missing key name at line {$line}. The row will be skipped.");
@@ -142,11 +136,6 @@ class LarexExportCommand extends Command
                     $this->warn(
                         "{$group}.{$key} at line {$line}, column {$column} ({$header[$j]}) " .
                         "is missing. It will be skipped."
-                    );
-                } catch (Exception $e) {
-                    $this->warn(
-                        "{$group}.{$key} at line {$line}, column {$column} ({$header[$j]}) " .
-                        "is not valid. It will be skipped."
                     );
                 }
             }
