@@ -1,7 +1,13 @@
 {
     "name": "lukasss93/laravel-larex",
     "description": "Translate your Laravel application from a single CSV file!",
-    "keywords": ["laravel", "localization", "translation", "i18n", "csv"],
+    "keywords": [
+        "laravel",
+        "localization",
+        "translation",
+        "i18n",
+        "csv"
+    ],
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -16,7 +22,9 @@
     "prefer-stable": true,
     "require": {
         "php": "^8.0|^7.4|^7.3",
-        "illuminate/support": "^6.0|^7.0|^8.0"
+        "ext-dom": "*",
+        "illuminate/support": "^6.0|^7.0|^8.0",
+        "loilo/fuse": "^4.0"
     },
     "require-dev": {
         "guzzlehttp/guzzle": "^6.5",

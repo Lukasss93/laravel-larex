@@ -37,22 +37,22 @@ class LarexSortCommand extends Command
     public function __construct()
     {
         parent::__construct();
-        $this->file = config('larex.path', Utils::CSV_DEFAULT_PATH);
+        $this->file = config('larex.csv.path');
     }
-
+    
     /**
      * Execute the console command.
      *
-     * @return void
+     * @return int
      */
-    public function handle(): void
+    public function handle(): int
     {
         $this->warn('Sorting che CSV rows...');
 
         if (!File::exists(base_path($this->file))) {
             $this->error("The '{$this->file}' does not exists.");
             $this->line('Please create it with: php artisan larex:init');
-            return;
+            return 1;
         }
 
         [$header, $rows] = Utils::csvToCollection(base_path($this->file))->partition(function ($item, $key) {
@@ -69,5 +69,6 @@ class LarexSortCommand extends Command
         Utils::collectionToCsv($content, base_path($this->file));
 
         $this->info('Sorting completed.');
+        return 0;
     }
 }

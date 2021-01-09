@@ -10,7 +10,7 @@ use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 abstract class TestCase extends OrchestraTestCase
 {
-    protected $file = 'resources/lang/localization.csv';
+    protected $file;
     
     /**
      * @param Application $app
@@ -28,28 +28,38 @@ abstract class TestCase extends OrchestraTestCase
     {
         parent::setUp();
         
+        $this->file = config('larex.csv.path');
+        
         $this->afterApplicationCreated(function () {
+            //set global csv settings
+            config([
+                'larex.csv' => [
+                    'path' => 'resources/lang/localization.csv',
+                    'delimiter' => ',',
+                    'enclosure' => '"',
+                    'escape' => '"',
+                ],
+                'larex.search' => [
+                    'dirs' => ['resources/views'],
+                    'patterns' => ['*.php'],
+                    'functions' => ['__', 'trans', '@lang']
+                ],
+            ]);
+            
             if (File::exists(resource_path('lang/en'))) {
                 File::deleteDirectory(resource_path('lang/en'));
             }
             
-            File::makeDirectory(resource_path('lang/en'), 0755, true, true);
-        });
-        
-        $this->beforeApplicationDestroyed(function () {
+            //delete csv file
             if (File::exists(base_path($this->file))) {
                 File::delete(base_path($this->file));
             }
             
-            if (File::exists(resource_path('lang/it'))) {
-                File::deleteDirectory(resource_path('lang/it'));
+            //delete lang folders
+            $folders = glob(resource_path('lang/*'), GLOB_ONLYDIR);
+            foreach ($folders as $folder) {
+                File::deleteDirectory($folder);
             }
-            
-            if (File::exists(resource_path('lang/en'))) {
-                File::deleteDirectory(resource_path('lang/en'));
-            }
-            
-            File::makeDirectory(resource_path('lang/en'), 0755, true, true);
         });
     }
     

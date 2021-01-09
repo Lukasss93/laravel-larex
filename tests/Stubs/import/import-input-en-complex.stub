@@ -12,7 +12,7 @@ return [
             'limousine' => 'It\'s a very long limousine'
         ]
     ],
-    'spaced key' => 'there is a column; separator in this string',
+    'spaced key' => 'there is a column, separator in this string',
     "another" => "different style",
     'ohno' => 'how "it" works now?',
 
