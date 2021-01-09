@@ -49,7 +49,7 @@ class LarexExportTest extends TestCase
     {
         $this->initFromStub($stub);
         
-        $result = $this->artisan('larex:export')
+        $result = $this->artisan('larex:export -v')
             ->expectsOutput("Processing the '$this->file' file...")
             ->expectsOutput($output)
             ->expectsOutput('resources/lang/en/app.php created successfully.')
@@ -249,7 +249,7 @@ class LarexExportTest extends TestCase
         
         $result = $this->artisan('larex:export -v')
             ->expectsOutput("Processing the '$this->file' file...")
-            ->expectsOutput('[app|2] on line 3, column 4 (it) is missing. It will be skipped.')
+            ->expectsOutput('app.2 at line 3, column 4 (it) is missing. It will be skipped.')
             ->expectsOutput("resources/lang/en/app.php created successfully.")
             ->expectsOutput("resources/lang/it/app.php created successfully.")
             ->run();
@@ -407,11 +407,11 @@ class LarexExportTest extends TestCase
     public function providerWarning(): array
     {
         return [
-            'blank line' => ['export/warning-input-1', 'Line 3 is not valid. It will be skipped.'],
-            'missing key' => ['export/warning-input-2', 'Line 3 is not valid. It will be skipped.'],
+            'blank line' => ['export/warning-input-1', 'Invalid row at line 3. The row will be skipped.'],
+            'missing key' => ['export/warning-input-2', 'Missing key name at line 3. The row will be skipped.'],
             'missing column' => [
                 'export/warning-input-3',
-                '[app|second] on line 3, column 3 (en) is not valid. It will be skipped.'
+                'app.second at line 3, column 3 (en) is missing. It will be skipped.'
             ],
         ];
     }

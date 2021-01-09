@@ -2,10 +2,10 @@
 
 namespace Lukasss93\Larex\Console;
 
-use ErrorException;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Lukasss93\Larex\Exceptions\MissingValueException;
 use Lukasss93\Larex\Utils;
@@ -98,58 +98,60 @@ class LarexExportCommand extends Command
         }
         
         $languages = [];
-        $header = [];
-        $columnsCount = 0;
         
         //file parsing
-        $file = fopen(base_path($this->file), 'rb');
-        $i = -1;
-        while (($columns = fgetcsv($file, 0, ';')) !== false) {
-            $i++;
+        $csv = Utils::csvToCollection(base_path($this->file))->mapInto(Collection::class);
+        $header = $csv->get(0);
+        $columnsCount = $header->count();
+        $rows = $csv->skip(1);
+        foreach ($rows as $i => $columns) {
+            $line = $i + 1;
             
-            //get the header
-            if ($i === 0) {
-                $header = $columns;
-                $columnsCount = count($header);
+            //check if row is blank
+            if ($columns->count() <= 1 && $columns->get(0) === null) {
+                $this->warn("Invalid row at line {$line}. The row will be skipped.");
                 continue;
             }
             
-            try {
-                unset($group, $key);
-                
-                //get first two columns values
-                [$group, $key] = $columns;
-                
-                if ($key === '') {
-                    throw new ErrorException();
-                }
-                
-                for ($j = 2; $j < $columnsCount; $j++) {
-                    try {
-                        if ($columns[$j] !== '') {
-                            Arr::set($languages[$header[$j]][$group], $key, $columns[$j]);
-                        } else if ($this->option('verbose')) {
-                            throw new MissingValueException("Missing value in {$header[$j]} column.");
-                        }
-                    } catch (MissingValueException $e) {
-                        $this->warn(
-                            "[{$group}|{$key}] on line " . ($i + 1) .
-                            ', column ' . ($j + 1) .
-                            " ({$header[$j]}) is missing. It will be skipped."
-                        );
-                    } catch (Exception $e) {
-                        $this->warn(
-                            "[{$group}|{$key}] on line " . ($i + 1) .
-                            ', column ' . ($j + 1) .
-                            " ({$header[$j]}) is not valid. It will be skipped."
-                        );
-                    }
-                }
-            } catch (ErrorException $ee) {
-                $this->warn('Line ' . ($i + 1) . ' is not valid. It will be skipped.');
+            //get first two columns values
+            [$group, $key] = $columns;
+            
+            //check if group is filled
+            if ($group === '') {
+                $this->warn("Missing group name at line {$line}. The row will be skipped.");
+                continue;
             }
+            
+            //check if key is filled
+            if ($key === '') {
+                $this->warn("Missing key name at line {$line}. The row will be skipped.");
+                continue;
+            }
+            
+            //loop columns
+            for ($j = 2; $j < $columnsCount; $j++) {
+                $item = $columns->get($j) ?? '';
+                $column = $j + 1;
+                try {
+                    if ($item !== '') {
+                        Arr::set($languages[$header[$j]][$group], $key, $item);
+                    } else if ($this->option('verbose')) {
+                        throw new MissingValueException("Missing value in {$header[$j]} column.");
+                    }
+                } catch (MissingValueException $e) {
+                    $this->warn(
+                        "{$group}.{$key} at line {$line}, column {$column} ({$header[$j]}) " .
+                        "is missing. It will be skipped."
+                    );
+                } catch (Exception $e) {
+                    $this->warn(
+                        "{$group}.{$key} at line {$line}, column {$column} ({$header[$j]}) " .
+                        "is not valid. It will be skipped."
+                    );
+                }
+            }
+            
         }
-        fclose($file);
         
         if ($this->option('include') !== null) {
             $allowed = explode(',', $this->option('include'));
