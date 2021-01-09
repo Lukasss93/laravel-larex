@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v2.0 - 2021-01-09
+Please check the [UPGRADING.md](https://github.com/Lukasss93/laravel-larex/blob/master/UPGRADING.md) file before updagrading to this major version!
+## Added
+- Added new command `php artisan larex:lint`
+
+## Changed
+- Changed default csv format:
+    - Delimiter changed from `;` to `,`
+    - Escape character changed from `\"` to `""`
+
+
 ## v1.6 - 2021-01-02
 ### Added
 - Added warning message in export command when used with -v option
@@ -21,10 +32,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixed invalid escaping on export command
 
+
 ## v1.5 - 2020-08-29
 ### Added
 - Added **--include** option to `larex:export` command
 - Added **--exclude** option to `larex:export` command
+
 
 ## v1.4 - 2020-08-28
 ### Added
@@ -34,10 +47,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed `larex --watch` command not working
 - Fixed exporting empty column value
 
+
 ## v1.3.1 - 2020-08-11
 ### Fixed
 - Missing language folders creation
 - Integer keys are treated as strings
+
 
 ## v1.3 - 2020-08-08
 ### Added
@@ -49,10 +64,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Sentences with line break aren't escaped.
 
+
 ## v1.2 - 2020-07-18
 ### Added
 - Added `larex:import` command
 - Added PHPUnit tests
+
 
 ## v1.1 - 2020-07-07
 ### Added
@@ -60,6 +77,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Failed to parse some rows
+
 
 ## v1.0 - 2020-07-04
 ### Added
