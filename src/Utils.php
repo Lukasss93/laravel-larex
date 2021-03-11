@@ -63,7 +63,7 @@ class Utils
      * @param string $replace
      * @return string
      */
-    public static function normalizeEOLs(string $content, $replace = PHP_EOL): string
+    public static function normalizeEOLs(string $content, $replace = "\n"): string
     {
         return preg_replace('/\r\n|\r|\n/', $replace, $content);
     }
@@ -80,12 +80,12 @@ class Utils
         $enclosure = config('larex.csv.enclosure');
         
         if (is_array($value)) {
-            fwrite($file, str_repeat('    ', $level) . "'{$key}' => [" . PHP_EOL);
+            fwrite($file, str_repeat('    ', $level) . "'{$key}' => [\n");
             $level++;
             foreach ($value as $childKey => $childValue) {
                 self::writeKeyValue($childKey, $childValue, $file, $level);
             }
-            fwrite($file, str_repeat('    ', $level - 1) . '],' . PHP_EOL);
+            fwrite($file, str_repeat('    ', $level - 1) . "],\n");
             return;
         }
         
@@ -94,9 +94,9 @@ class Utils
         
         if (is_int($key) || (is_numeric($key) && ctype_digit($key))) {
             $key = (int)$key;
-            fwrite($file, str_repeat('    ', $level) . "{$key} => '{$value}'," . PHP_EOL);
+            fwrite($file, str_repeat('    ', $level) . "{$key} => '{$value}',\n");
         } else {
-            fwrite($file, str_repeat('    ', $level) . "'{$key}' => '{$value}'," . PHP_EOL);
+            fwrite($file, str_repeat('    ', $level) . "'{$key}' => '{$value}',\n");
         }
     }
     
@@ -127,19 +127,19 @@ class Utils
      * @param string $eol
      * @return bool|int
      */
-    public static function fputcsv($handle, $array, $delimiter = ',', $enclosure = '"', $escape = '\\', $eol = PHP_EOL)
+    public static function fputcsv($handle, $array, $delimiter = ',', $enclosure = '"', $escape = '\\', $eol = "\n")
     {
         $output = '';
         
         $count = count($array);
         foreach ($array as $i => $item) {
-            $item = self::normalizeEOLs($item);
+            $item = self::normalizeEOLs($item, $eol);
             
             if (Str::contains($item, $enclosure)) {
                 $item = $enclosure . str_replace($enclosure, $escape . $enclosure, $item) . $enclosure;
             }
             
-            if (Str::contains($item, [$delimiter, PHP_EOL])) {
+            if (Str::contains($item, [$delimiter, $eol])) {
                 $item = $enclosure . $item . $enclosure;
             }
             
@@ -259,7 +259,7 @@ class Utils
     {
         $strings = collect();
         foreach ($functions as $function) {
-            $content = self::normalizeEOLs($file->getContents(), "\n");
+            $content = self::normalizeEOLs($file->getContents());
             $regex = '/(' . $function . ')\(\h*[\'"](.+)[\'"]\h*[),]/U';
             if (preg_match_all($regex, $content, $matches, PREG_OFFSET_CAPTURE)) {
                 foreach ($matches[2] as $match) {

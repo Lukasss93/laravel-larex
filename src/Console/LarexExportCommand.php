@@ -171,13 +171,13 @@ class LarexExportCommand extends Command
             
             foreach ($groups as $group => $keys) {
                 $write = fopen(resource_path('lang/' . $language . '/' . $group . '.php'), 'wb');
-                fwrite($write, '<?php' . PHP_EOL . PHP_EOL . 'return [' . PHP_EOL . PHP_EOL);
+                fwrite($write, "<?php\n\nreturn [\n\n");
                 
                 foreach ($keys as $key => $value) {
                     Utils::writeKeyValue($key, $value, $write);
                 }
                 
-                fwrite($write, PHP_EOL . '];' . PHP_EOL);
+                fwrite($write, "\n];\n");
                 
                 fclose($write);
                 $this->info("resources/lang/$language/$group.php created successfully.");
