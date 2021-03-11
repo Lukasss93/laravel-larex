@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://i.imgur.com/GrpbNU4.png"/>
+    <img style="max-height:400px" src="https://banners.beyondco.de/Laravel%20Larex.png?theme=dark&packageManager=composer+require&packageName=lukasss93%2Flaravel-larex+--dev&pattern=graphPaper&style=style_1&description=Translate+your+Laravel+application+from+a+single+CSV+file%21+&md=1&showWatermark=0&fontSize=125px&images=table"/>
 </p>
 
 <p align="center">
@@ -13,9 +13,6 @@
   </a>
   <a href="https://packagist.org/packages/lukasss93/laravel-larex">
     <img src="https://poser.pugx.org/lukasss93/laravel-larex/license"/>
-  </a>
-  <a href="https://t.me/Lukasss93">
-    <img src="https://img.shields.io/badge/chat%20on-telegram-blue"/>
   </a>
   <img src="https://img.shields.io/github/workflow/status/Lukasss93/laravel-larex/run-tests"/>
   <a href="https://codecov.io/gh/Lukasss93/laravel-larex">
