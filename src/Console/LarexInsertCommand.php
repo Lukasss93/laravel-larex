@@ -86,18 +86,24 @@ class LarexInsertCommand extends Command
         //initialize data
         $data = collect([]);
 
-        //get group
-        $data->put('group', $this->anticipate('Enter the group', $availableGroups));
+        // iterate until user confirm the inserted data
+        do {
+            //get group
+            $data->put('group', $this->anticipate('Enter the group', $availableGroups, $data->get('group')));
 
-        //get key
-        $data->put('key', $this->anticipate('Enter the key', $availableKeys));
+            //get key
+            $data->put('key', $this->anticipate('Enter the key', $availableKeys, $data->get('key')));
 
-        foreach ($languages as $i => $language) {
-            $count = $i + 1;
-            $value = $this->ask("[{$count}/{$languages->count()}] Enter the value for [{$language}] language");
+            foreach ($languages as $i => $language) {
+                $count = $i + 1;
+                $value = $this->ask(
+                    "[{$count}/{$languages->count()}] Enter the value for [{$language}] language",
+                    $data->get($language)
+                );
 
-            $data->put($language, $value);
-        }
+                $data->put($language, $value);
+            }
+        } while ($this->askWithCompletion('Are you sure?', ['yes', 'no'], 'yes') !== 'yes');
 
         //append to csv
         $csv->push($data->values()->toArray());
