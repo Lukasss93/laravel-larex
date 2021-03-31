@@ -45,20 +45,15 @@ abstract class TestCase extends OrchestraTestCase
                     'functions' => ['__', 'trans', '@lang']
                 ],
             ]);
-            
-            if (File::exists(resource_path('lang/en'))) {
-                File::deleteDirectory(resource_path('lang/en'));
-            }
-            
-            //delete csv file
-            if (File::exists(base_path($this->file))) {
-                File::delete(base_path($this->file));
-            }
-            
-            //delete lang folders
-            $folders = glob(resource_path('lang/*'), GLOB_ONLYDIR);
-            foreach ($folders as $folder) {
-                File::deleteDirectory($folder);
+
+            //clear lang folder
+            $items = glob(resource_path('lang/*'));
+            foreach ($items as $item) {
+                if(is_dir($item)){
+                    File::deleteDirectory($item);
+                } else {
+                    File::delete($item);
+                }
             }
         });
     }
