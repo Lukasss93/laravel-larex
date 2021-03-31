@@ -31,11 +31,6 @@ class CsvParser
         return $this;
     }
 
-    public function hasWarnings(): bool
-    {
-        return count($this->warning) > 0;
-    }
-
     public function getWarnings(): array
     {
         return $this->warning;
@@ -84,6 +79,13 @@ class CsvParser
                 }
             }
         }
+
+        //sort languages by column order
+        $languages = collect($languages)
+            ->sortBy(function ($item, $key) use ($header) {
+                return array_search($key, $header->skip(2)->toArray(), true);
+            })
+            ->toArray();
 
         return $languages;
     }
