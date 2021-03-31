@@ -6,7 +6,9 @@ use DOMDocument;
 use Exception;
 use Fuse\Fuse;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use JsonException;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -332,5 +334,15 @@ class Utils
             $bytes /= 1024;
         }
         return round($bytes, 2) . ' ' . $units[$i];
+    }
+
+    /**
+     * Create a json file
+     * @param string $path
+     * @param $data
+     * @throws JsonException
+     */
+    public static function putJson(string $path, $data):void{
+        File::put($path, json_encode($data, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
     }
 }
