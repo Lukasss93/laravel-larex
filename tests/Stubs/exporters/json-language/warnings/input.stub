@@ -1,0 +1,9 @@
+group,key,en,it
+
+app,
+app,zero,,Zero
+app,first,First,Primo
+app,second,Second,Secondo
+another,third,Third,Terzo
+sub,multi.a,A,a
+sub,multi.b,B,b

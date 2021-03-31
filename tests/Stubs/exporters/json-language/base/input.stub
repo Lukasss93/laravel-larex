@@ -1,0 +1,14 @@
+group,key,en,it
+app,first,First,Primo
+app,second,Second,Secondo
+another,third,Third,Terzo
+sub,multi.a,A,a
+sub,multi.b,B,b
+empty,escape.yes,nope,""
+empty,escape.no,nope,
+special,enclosure,nope,"è ""molto"" bello"
+numeric,months.1,January,Gennaio
+numeric,months.2,February,Febbraio
+numeric,months.3,March,Marzo
+space,escape.yes,nope," "
+space,escape.no,nope, 

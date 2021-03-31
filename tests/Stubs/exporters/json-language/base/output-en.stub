@@ -1,0 +1,15 @@
+{
+    "app.first": "First",
+    "app.second": "Second",
+    "another.third": "Third",
+    "sub.multi.a": "A",
+    "sub.multi.b": "B",
+    "empty.escape.yes": "nope",
+    "empty.escape.no": "nope",
+    "special.enclosure": "nope",
+    "numeric.months.1": "January",
+    "numeric.months.2": "February",
+    "numeric.months.3": "March",
+    "space.escape.yes": "nope",
+    "space.escape.no": "nope"
+}
