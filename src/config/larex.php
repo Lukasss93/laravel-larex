@@ -19,6 +19,21 @@ return [
     ],
     
     /**
+     * Exporters
+     */
+    'exporters' => [
+        // Default exporter
+        'default' => 'laravel',
+        
+        // Available exporters
+        'list' => [
+            'laravel' => Lukasss93\Larex\Exporters\LaravelExporter::class,
+            'json:lang' => Lukasss93\Larex\Exporters\JsonLanguagesExporter::class,
+            'json:group' => Lukasss93\Larex\Exporters\JsonGroupsExporter::class,
+        ],
+    ],
+    
+    /**
      * Linters to run with larex:lint command
      */
     'linters' => [
