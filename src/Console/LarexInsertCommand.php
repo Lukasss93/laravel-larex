@@ -103,7 +103,7 @@ class LarexInsertCommand extends Command
 
                 $data->put($language, $value);
             }
-        } while (!$this->confirm('Are you sure?', true));
+        } while ($this->askWithCompletion('Are you sure?', ['yes', 'no'], 'yes') !== 'yes');
 
         //append to csv
         $csv->push($data->values()->toArray());
