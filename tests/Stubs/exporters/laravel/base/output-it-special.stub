@@ -1,0 +1,20 @@
+<?php
+
+return [
+
+    'multi' => [
+        'a' => 'a',
+        'b' => 'b',
+    ],
+    'enclosure' => 'è "molto" bello',
+    'numeric' => [
+        1 => 'Gennaio',
+        2 => 'Febbraio',
+        3 => 'Marzo',
+    ],
+    'space' => [
+        'escape' => ' ',
+        'noescape' => ' ',
+    ],
+
+];

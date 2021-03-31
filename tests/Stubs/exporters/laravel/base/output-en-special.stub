@@ -1,0 +1,24 @@
+<?php
+
+return [
+
+    'multi' => [
+        'a' => 'A',
+        'b' => 'B',
+    ],
+    'empty' => [
+        'escape' => 'nope',
+        'noescape' => 'nope',
+    ],
+    'enclosure' => 'nope',
+    'numeric' => [
+        1 => 'January',
+        2 => 'February',
+        3 => 'March',
+    ],
+    'space' => [
+        'escape' => 'nope',
+        'noescape' => 'nope',
+    ],
+
+];
