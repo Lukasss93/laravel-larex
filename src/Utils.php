@@ -59,13 +59,13 @@ class Utils
     
     /**
      * Normalize EOLs
-     * @param string $content
+     * @param string|null $content
      * @param string $replace
      * @return string
      */
-    public static function normalizeEOLs(string $content, $replace = "\n"): string
+    public static function normalizeEOLs(?string $content, string $replace = "\n"): string
     {
-        return preg_replace('/\r\n|\r|\n/', $replace, $content);
+        return preg_replace('/\r\n|\r|\n/', $replace, $content ?? '');
     }
     
     /**
