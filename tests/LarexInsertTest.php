@@ -30,6 +30,26 @@ class LarexInsertTest extends TestCase
         self::assertEquals(0, $result);
     }
     
+    public function test_insert_command_with_group_and_key_empty(): void
+    {
+        $this->initFromStub('insert/input');
+        
+        $result = $this->artisan('larex:insert')
+            ->expectsQuestion('Enter the group', '')
+            ->expectsOutput('Please enter a group!')
+            ->expectsQuestion('Enter the group', 'app')
+            ->expectsQuestion('Enter the key', '')
+            ->expectsOutput('Please enter a key!')
+            ->expectsQuestion('Enter the key', 'uncle')
+            ->expectsQuestion('[1/2] Enter the value for [en] language', 'Uncle')
+            ->expectsQuestion('[2/2] Enter the value for [it] language', 'Zio')
+            ->expectsQuestion('Are you sure?', 'yes')
+            ->expectsOutput('Item added successfully.')
+            ->run();
+        
+        self::assertEquals(0, $result);
+    }
+    
     public function test_insert_command_with_export(): void
     {
         $this->initFromStub('insert/input');
@@ -95,4 +115,6 @@ class LarexInsertTest extends TestCase
 
         self::assertEquals(0, $result);
     }
+    
+    
 }
