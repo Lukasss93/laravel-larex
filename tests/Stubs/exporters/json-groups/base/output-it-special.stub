@@ -1,0 +1,10 @@
+{
+    "multi.a": "a",
+    "multi.b": "b",
+    "enclosure": "è \"molto\" bello",
+    "numeric.1": "Gennaio",
+    "numeric.2": "Febbraio",
+    "numeric.3": "Marzo",
+    "space.escape": " ",
+    "space.noescape": " "
+}

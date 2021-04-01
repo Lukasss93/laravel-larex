@@ -1,0 +1,12 @@
+{
+    "multi.a": "A",
+    "multi.b": "B",
+    "empty.escape": "nope",
+    "empty.noescape": "nope",
+    "enclosure": "nope",
+    "numeric.1": "January",
+    "numeric.2": "February",
+    "numeric.3": "March",
+    "space.escape": "nope",
+    "space.noescape": "nope"
+}
