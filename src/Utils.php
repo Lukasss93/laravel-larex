@@ -151,6 +151,8 @@ class Utils
         }
         $output .= $eol;
         
+        $output = mb_convert_encoding($output, 'UTF-8');
+        
         return fwrite($handle, $output);
     }
     
