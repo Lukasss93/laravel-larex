@@ -137,9 +137,7 @@ class Utils
             
             if (Str::contains($item, $enclosure)) {
                 $item = $enclosure . str_replace($enclosure, $escape . $enclosure, $item) . $enclosure;
-            }
-            
-            if (Str::contains($item, [$delimiter, $eol])) {
+            } elseif (Str::contains($item, [$delimiter, $eol])) {
                 $item = $enclosure . $item . $enclosure;
             }
             
