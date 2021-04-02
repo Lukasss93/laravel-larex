@@ -3,8 +3,22 @@ root = true
 [*]
 charset = utf-8
 end_of_line = lf
-indent_size = 4
+insert_final_newline = true
 indent_style = space
-insert_final_newline = false
+indent_size = 4
+trim_trailing_whitespace = true
 max_line_length = 120
-tab_width = 4
+
+[*.md]
+trim_trailing_whitespace = false
+
+[*.{yml,yaml}]
+indent_size = 2
+
+[*.blade.php]
+trim_trailing_whitespace = false
+
+[*.php]
+ij_php_align_key_value_pairs = false
+ij_php_comma_after_last_array_element = true
+ij_php_keep_indents_on_empty_lines = false
