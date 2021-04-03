@@ -48,6 +48,52 @@ class LarexInsertTest extends TestCase
         self::assertEquals(0, $result);
     }
 
+    public function test_insert_command_exists_continue_yes(): void
+    {
+        $this->initFromStub('insert/exists/input');
+
+        $result = $this->artisan('larex:insert')
+            ->expectsQuestion('Enter the group', 'app')
+            ->expectsQuestion('Enter the key', 'standard')
+            ->expectsQuestion('The group/key pair already exists. Do you want to continue?', 'yes')
+            ->expectsQuestion('[1/2] Enter the value for [en] language', 'Uncle')
+            ->expectsQuestion('[2/2] Enter the value for [it] language', 'Zio')
+            ->expectsQuestion('Are you sure?', 'yes')
+            ->expectsOutput('Item added successfully.')
+            ->run();
+
+        self::assertEquals(
+            $this->getTestStub('insert/exists/output-continue-yes'),
+            File::get(base_path($this->file))
+        );
+
+        self::assertEquals(0, $result);
+    }
+
+    public function test_insert_command_exists_continue_no(): void
+    {
+        $this->initFromStub('insert/exists/input');
+
+        $result = $this->artisan('larex:insert')
+            ->expectsQuestion('Enter the group', 'app')
+            ->expectsQuestion('Enter the key', 'standard')
+            ->expectsQuestion('The group/key pair already exists. Do you want to continue?', 'no')
+            ->expectsQuestion('Enter the group', 'app')
+            ->expectsQuestion('Enter the key', 'uncle')
+            ->expectsQuestion('[1/2] Enter the value for [en] language', 'Uncle')
+            ->expectsQuestion('[2/2] Enter the value for [it] language', 'Zio')
+            ->expectsQuestion('Are you sure?', 'yes')
+            ->expectsOutput('Item added successfully.')
+            ->run();
+
+        self::assertEquals(
+            $this->getTestStub('insert/exists/output-continue-no'),
+            File::get(base_path($this->file))
+        );
+
+        self::assertEquals(0, $result);
+    }
+
     public function test_insert_command_if_file_does_not_exists(): void
     {
         $result = $this->artisan('larex:insert')
