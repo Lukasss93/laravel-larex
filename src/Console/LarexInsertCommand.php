@@ -114,7 +114,7 @@ class LarexInsertCommand extends Command
                 $data->put('key', $key);
 
                 if ($rows->where(0, $group)->where(1, $key)->isNotEmpty()) {
-                    $continue = $this->askWithCompletion('The group/key pair already exists. Do you want to continue?', ['yes', 'no'], 'no') === 'yes';
+                    $continue = $this->askWithCompletion('<fg=red>The group/key pair already exists. Do you want to continue?</>', ['yes', 'no'], 'no') === 'yes';
                 }
             } while (!$continue);
 
