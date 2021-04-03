@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v2.1 - 2021-04-03
+### Added
+- Added a confirmation in larex:insert command
+- Added check if group/key already exists when using the larex:insert command
+
+### Fixed
+- Fix null values to group and key questions in larex:insert command
+- Fix "Insert command has problems with utf-8 characters"
+- Fix "Wrong enclosure with larex:insert"
+
+
 ## v2.0.1- 2021-03-11
 ### Changed
 - Forced eol to LF
