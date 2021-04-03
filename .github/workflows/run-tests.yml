@@ -4,13 +4,12 @@ on: [push, pull_request]
 
 jobs:
     test:
-        runs-on: ${{ matrix.os }}
+        runs-on: ubuntu-latest
         strategy:
             fail-fast: false
             matrix:
                 php: [8.0, 7.4, 7.3]
                 laravel: [8.*, 7.*, 6.*]
-                os: [ubuntu-latest]
                 include:
                     -   laravel: 8.*
                         testbench: 6.*
@@ -19,7 +18,7 @@ jobs:
                     -   laravel: 6.*
                         testbench: 4.*
 
-        name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.os }}
+        name:  Laravel ${{ matrix.laravel }} with PHP ${{ matrix.php }}
 
         steps:
             - name: Checkout code
@@ -45,6 +44,6 @@ jobs:
 
             - name: Execute tests
               run: composer test-coverage
-              
+
             - name: Send coverage
               run: bash <(curl -s https://codecov.io/bash)
