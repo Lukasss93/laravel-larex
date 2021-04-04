@@ -1,0 +1,8 @@
+<?php
+
+return [
+
+    'standard' => 'one',
+    'dad' => 'Dad',
+
+];

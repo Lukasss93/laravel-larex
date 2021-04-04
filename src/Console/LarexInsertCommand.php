@@ -42,7 +42,7 @@ class LarexInsertCommand extends Command
         parent::__construct();
         $this->file = config('larex.csv.path');
     }
-    
+
     /**
      * Execute the console command.
      *
@@ -86,38 +86,70 @@ class LarexInsertCommand extends Command
         //initialize data
         $data = collect([]);
 
-        //get group
-        $data->put('group', $this->anticipate('Enter the group', $availableGroups));
+        //iterate until user confirm the inserted data
+        do {
+            do {
+                $continue = true;
 
-        //get key
-        $data->put('key', $this->anticipate('Enter the key', $availableKeys));
+                //get group
+                $group = '';
+                do {
+                    $group = trim($this->anticipate('Enter the group', $availableGroups, $data->get('group')));
 
-        foreach ($languages as $i => $language) {
-            $count = $i + 1;
-            $value = $this->ask("[{$count}/{$languages->count()}] Enter the value for [{$language}] language");
+                    if ($group === '') {
+                        $this->error('Please enter a group!');
+                    }
+                } while ($group === '');
+                $data->put('group', $group);
 
-            $data->put($language, $value);
-        }
+                //get key
+                $key = '';
+                do {
+                    $key = trim($this->anticipate('Enter the key', $availableKeys, $data->get('key')));
+
+                    if ($key === '') {
+                        $this->error('Please enter a key!');
+                    }
+                } while ($key === '');
+                $data->put('key', $key);
+
+                if ($rows->where(0, $group)->where(1, $key)->isNotEmpty()) {
+                    $continue = $this->askWithCompletion('<fg=red>The group/key pair already exists. Do you want to continue?</>', ['yes', 'no'], 'no') === 'yes';
+                }
+            } while (!$continue);
+
+
+            foreach ($languages as $i => $language) {
+                $count = $i + 1;
+                $value = $this->ask(
+                    "[{$count}/{$languages->count()}] Enter the value for [{$language}] language",
+                    $data->get($language)
+                );
+
+                $data->put($language, $value);
+            }
+
+            $table = new Table($this->output);
+            $tableRows = collect([]);
+            $tableRows->push([new TableCell('<fg=yellow>Summary</>', ['colspan' => 2])]);
+            $tableRows->push(new TableSeparator());
+
+            $count = 0;
+            foreach ($data as $i => $item) {
+                $count++;
+                $tableRows->push(["<info>{$i}</info>", $item]);
+
+                if ($count < $data->count()) {
+                    $tableRows->push(new TableSeparator());
+                }
+            }
+            $table->setRows($tableRows->toArray());
+            $table->render();
+
+        } while ($this->askWithCompletion('Are you sure?', ['yes', 'no'], 'yes') !== 'yes');
 
         //append to csv
         $csv->push($data->values()->toArray());
-
-        $table = new Table($this->output);
-        $tableRows = collect([]);
-        $tableRows->push([new TableCell('<fg=yellow>Summary</>', ['colspan' => 2])]);
-        $tableRows->push(new TableSeparator());
-
-        $count = 0;
-        foreach ($data as $i => $item) {
-            $count++;
-            $tableRows->push(["<info>{$i}</info>", $item]);
-
-            if ($count < $data->count()) {
-                $tableRows->push(new TableSeparator());
-            }
-        }
-        $table->setRows($tableRows->toArray());
-        $table->render();
 
         Utils::collectionToCsv($csv, base_path($this->file));
         $this->info('Item added successfully.');
@@ -126,7 +158,7 @@ class LarexInsertCommand extends Command
             $this->line('');
             $this->call('larex:export');
         }
-        
+
         return 0;
     }
 }

@@ -61,13 +61,13 @@ class Utils
     
     /**
      * Normalize EOLs
-     * @param string $content
+     * @param string|null $content
      * @param string $replace
      * @return string
      */
-    public static function normalizeEOLs(string $content, $replace = "\n"): string
+    public static function normalizeEOLs(?string $content, string $replace = "\n"): string
     {
-        return preg_replace('/\r\n|\r|\n/', $replace, $content);
+        return preg_replace('/\r\n|\r|\n/', $replace, $content ?? '');
     }
     
     /**
@@ -139,9 +139,7 @@ class Utils
             
             if (Str::contains($item, $enclosure)) {
                 $item = $enclosure . str_replace($enclosure, $escape . $enclosure, $item) . $enclosure;
-            }
-            
-            if (Str::contains($item, [$delimiter, $eol])) {
+            } elseif (Str::contains($item, [$delimiter, $eol])) {
                 $item = $enclosure . $item . $enclosure;
             }
             
@@ -152,6 +150,8 @@ class Utils
             }
         }
         $output .= $eol;
+        
+        $output = mb_convert_encoding($output, 'UTF-8');
         
         return fwrite($handle, $output);
     }
