@@ -22,7 +22,7 @@ class LarexExportCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'larex:export 
+    protected $signature = 'larex:export
                             {exporter? : Exporter}
                             {--watch : Watch the CSV file from changes}
                             {--include= : Languages allowed to export in the application}
@@ -33,7 +33,7 @@ class LarexExportCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Convert the CSV file to Laravel lang files';
+    protected $description = 'Export entries from CSV file';
 
     /**
      * Create a new console command instance.
