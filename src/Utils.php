@@ -30,7 +30,7 @@ class Utils
         fclose($file);
         return $output;
     }
-    
+
     /**
      * Write a collection to csv file
      * @param Collection $array
@@ -47,7 +47,7 @@ class Utils
         }
         fclose($file);
     }
-    
+
     /**
      * Get a stub file
      * @param string $name
@@ -58,7 +58,7 @@ class Utils
         $content = file_get_contents(__DIR__ . '/Stubs/' . $name . '.stub');
         return self::normalizeEOLs($content);
     }
-    
+
     /**
      * Normalize EOLs
      * @param string|null $content
@@ -69,7 +69,7 @@ class Utils
     {
         return preg_replace('/\r\n|\r|\n/', $replace, $content ?? '');
     }
-    
+
     /**
      * Write key/value for php files
      * @param $key
@@ -80,7 +80,7 @@ class Utils
     public static function writeKeyValue($key, $value, &$file, int $level = 1): void
     {
         $enclosure = config('larex.csv.enclosure');
-        
+
         if (is_array($value)) {
             fwrite($file, str_repeat('    ', $level) . "'{$key}' => [\n");
             $level++;
@@ -90,10 +90,10 @@ class Utils
             fwrite($file, str_repeat('    ', $level - 1) . "],\n");
             return;
         }
-        
+
         $value = (string)$value;
         $value = str_replace(["'", '\\' . $enclosure], ["\'", $enclosure], $value);
-        
+
         if (is_int($key) || (is_numeric($key) && ctype_digit($key))) {
             $key = (int)$key;
             fwrite($file, str_repeat('    ', $level) . "{$key} => '{$value}',\n");
@@ -101,7 +101,7 @@ class Utils
             fwrite($file, str_repeat('    ', $level) . "'{$key}' => '{$value}',\n");
         }
     }
-    
+
     /**
      * Loop "forever"
      * @param callable $callback
@@ -109,7 +109,7 @@ class Utils
     public static function forever(callable $callback): void
     {
         $env = getenv('NOLOOP');
-        
+
         if ($env !== '1') {
             while (true) {
                 $callback();
@@ -118,7 +118,7 @@ class Utils
             $callback();
         }
     }
-    
+
     /**
      * Format line as CSV and write to file pointer
      * @param $handle
@@ -132,30 +132,40 @@ class Utils
     public static function fputcsv($handle, $array, $delimiter = ',', $enclosure = '"', $escape = '\\', $eol = "\n")
     {
         $output = '';
-        
+
         $count = count($array);
-        foreach ($array as $i => $item) {
+        $i=-1;
+        foreach ($array as $item) {
+            $i++;
             $item = self::normalizeEOLs($item, $eol);
-            
+
+            $toEnclosure=false;
+
+            if (Str::contains($item, [$enclosure, $delimiter, $eol])) {
+                $toEnclosure=true;
+            }
+
             if (Str::contains($item, $enclosure)) {
-                $item = $enclosure . str_replace($enclosure, $escape . $enclosure, $item) . $enclosure;
-            } elseif (Str::contains($item, [$delimiter, $eol])) {
+                $item = str_replace($enclosure, $escape . $enclosure, $item);
+            }
+
+            if ($toEnclosure) {
                 $item = $enclosure . $item . $enclosure;
             }
-            
+
             $output .= $item;
-            
+
             if ($i < $count - 1) {
                 $output .= $delimiter;
             }
         }
         $output .= $eol;
-        
+
         $output = mb_convert_encoding($output, 'UTF-8');
-        
+
         return fwrite($handle, $output);
     }
-    
+
     /**
      * Returns an array of duplicated values from an array of values
      * @param $values
@@ -171,7 +181,7 @@ class Utils
             return count($items) > 1;
         })->toArray();
     }
-    
+
     /**
      * Check if the value is a valid language code and suggest correct
      * @param string $code
@@ -180,24 +190,24 @@ class Utils
     public static function isValidLanguageCode(string $code)
     {
         $languages = collect(require("Languages.php"));
-        
+
         if ($languages->containsStrict($code)) {
             return true;
         }
-        
+
         $fuse = new Fuse($languages->map(function ($item) {
             return ['code' => $item];
         })->toArray(), ['keys' => ['code']]);
-        
+
         $search = $fuse->search($code);
-        
+
         if (count($search) === 0) {
             return false;
         }
-        
+
         return $search[0]['code'];
     }
-    
+
     /**
      * Check if the value is a valid HTML
      * @param $string
@@ -213,7 +223,7 @@ class Utils
             return false;
         }
     }
-    
+
     /**
      * Returns a collection of files by paths and patterns
      * @param array $paths
@@ -225,7 +235,7 @@ class Utils
         $directories = array_map(static function ($dir) {
             return base_path($dir);
         }, $paths);
-        
+
         $finder = new Finder();
         $files = $finder
             ->in($directories)
@@ -233,7 +243,7 @@ class Utils
             ->files();
         return new Collection($files);
     }
-    
+
     /**
      * Returns a collection of localization strings from a collection of files
      * @param Collection|SplFileInfo[] $files
@@ -250,7 +260,7 @@ class Utils
                 return $collection->all();
             })->values();
     }
-    
+
     /**
      * Returns a collection of localization strings from a file
      * @param SplFileInfo $file
@@ -277,33 +287,33 @@ class Utils
         }
         return $strings;
     }
-    
+
     public static function msToHuman($inputMs): string
     {
         $msInASecond = 1000;
         $msInAMinute = 60 * $msInASecond;
         $msInAnHour = 60 * $msInAMinute;
         $msInADay = 24 * $msInAnHour;
-        
+
         // Extract days
         $days = floor($inputMs / $msInADay);
-        
+
         // Extract hours
         $hourSeconds = $inputMs % $msInADay;
         $hours = floor($hourSeconds / $msInAnHour);
-        
+
         // Extract minutes
         $minuteSeconds = $hourSeconds % $msInAnHour;
         $minutes = floor($minuteSeconds / $msInAMinute);
-        
+
         // Extract seconds
         $secondMilliseconds = $minuteSeconds % $msInAMinute;
         $seconds = floor($secondMilliseconds / $msInASecond);
-        
+
         // Extract the remaining milliseconds
         $remainingMilliseconds = $secondMilliseconds % $msInASecond;
         $milliseconds = ceil($remainingMilliseconds);
-        
+
         // Format and return
         $timeParts = [];
         $sections = [
@@ -313,20 +323,20 @@ class Utils
             'second' => (int)$seconds,
             'millisecond' => (int)$milliseconds,
         ];
-        
+
         foreach ($sections as $name => $value) {
             if ($value > 0) {
                 $timeParts[] = $value . ' ' . $name . ($value === 1 ? '' : 's');
             }
         }
-        
+
         if (count($timeParts) === 0) {
             return '0 milliseconds';
         }
-        
+
         return implode(', ', $timeParts);
     }
-    
+
     public static function bytesToHuman($bytes): string
     {
         $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
