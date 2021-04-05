@@ -1,0 +1,10 @@
+{
+    "complex.hello": "Hello",
+    "complex.this.car": "This car",
+    "complex.this.bus": "This bus",
+    "complex.very.long.limousine": "It's a very long limousine",
+    "complex.spaced key": "there is a column, separator in this string",
+    "complex.another": "different style",
+    "complex.ohno": "how \"it\" works now?",
+    "simple.hello": "Hello"
+}
