@@ -55,6 +55,7 @@ class Utils
      */
     public static function getStub(string $name): string
     {
+        $name = str_replace('.', '/', $name);
         $path = dirname(__DIR__).'/Stubs/'.$name.'.stub';
         $content = file_get_contents($path);
         return self::normalizeEOLs($content);

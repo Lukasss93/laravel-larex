@@ -9,7 +9,7 @@ class LaravelExporterTest extends TestCase
 {
     public function test_exporter(): void
     {
-        $this->initFromStub('exporters/laravel/base/input');
+        $this->initFromStub('exporters.laravel.base.input');
 
         $result = $this->artisan('larex:export')
             ->expectsOutput("Processing the '$this->file' file...")
@@ -25,22 +25,22 @@ class LaravelExporterTest extends TestCase
         self::assertFileExists(resource_path('lang/it/special.php'));
 
         self::assertEquals(
-            $this->getTestStub('exporters/laravel/base/output-en-app'),
+            $this->getTestStub('exporters.laravel.base.output-en-app'),
             File::get(resource_path('lang/en/app.php'))
         );
 
         self::assertEquals(
-            $this->getTestStub('exporters/laravel/base/output-en-special'),
+            $this->getTestStub('exporters.laravel.base.output-en-special'),
             File::get(resource_path('lang/en/special.php'))
         );
 
         self::assertEquals(
-            $this->getTestStub('exporters/laravel/base/output-it-app'),
+            $this->getTestStub('exporters.laravel.base.output-it-app'),
             File::get(resource_path('lang/it/app.php'))
         );
 
         self::assertEquals(
-            $this->getTestStub('exporters/laravel/base/output-it-special'),
+            $this->getTestStub('exporters.laravel.base.output-it-special'),
             File::get(resource_path('lang/it/special.php'))
         );
 
@@ -49,7 +49,7 @@ class LaravelExporterTest extends TestCase
 
     public function test_exporter_with_watch(): void
     {
-        $this->initFromStub('exporters/laravel/base/input');
+        $this->initFromStub('exporters.laravel.base.input');
 
         $result = $this->artisan('larex:export --watch')
             ->expectsOutput("Processing the '$this->file' file...")
@@ -66,22 +66,22 @@ class LaravelExporterTest extends TestCase
         self::assertFileExists(resource_path('lang/it/special.php'));
 
         self::assertEquals(
-            $this->getTestStub('exporters/laravel/base/output-en-app'),
+            $this->getTestStub('exporters.laravel.base.output-en-app'),
             File::get(resource_path('lang/en/app.php'))
         );
 
         self::assertEquals(
-            $this->getTestStub('exporters/laravel/base/output-en-special'),
+            $this->getTestStub('exporters.laravel.base.output-en-special'),
             File::get(resource_path('lang/en/special.php'))
         );
 
         self::assertEquals(
-            $this->getTestStub('exporters/laravel/base/output-it-app'),
+            $this->getTestStub('exporters.laravel.base.output-it-app'),
             File::get(resource_path('lang/it/app.php'))
         );
 
         self::assertEquals(
-            $this->getTestStub('exporters/laravel/base/output-it-special'),
+            $this->getTestStub('exporters.laravel.base.output-it-special'),
             File::get(resource_path('lang/it/special.php'))
         );
 
@@ -90,7 +90,7 @@ class LaravelExporterTest extends TestCase
 
     public function test_exporter_with_include(): void
     {
-        $this->initFromStub('exporters/laravel/include-exclude/input');
+        $this->initFromStub('exporters.laravel.include-exclude.input');
 
         $result = $this->artisan('larex:export --include=en')
             ->expectsOutput("Processing the '$this->file' file...")
@@ -104,12 +104,12 @@ class LaravelExporterTest extends TestCase
         self::assertFileDoesNotExist(resource_path('lang/it/another.php'));
 
         self::assertEquals(
-            $this->getTestStub('exporters/laravel/include-exclude/output-en-app'),
+            $this->getTestStub('exporters.laravel.include-exclude.output-en-app'),
             File::get(resource_path('lang/en/app.php'))
         );
 
         self::assertEquals(
-            $this->getTestStub('exporters/laravel/include-exclude/output-en-another'),
+            $this->getTestStub('exporters.laravel.include-exclude.output-en-another'),
             File::get(resource_path('lang/en/another.php'))
         );
 
@@ -118,7 +118,7 @@ class LaravelExporterTest extends TestCase
 
     public function test_exporter_with_exclude(): void
     {
-        $this->initFromStub('exporters/laravel/include-exclude/input');
+        $this->initFromStub('exporters.laravel.include-exclude.input');
 
         $result = $this->artisan('larex:export --exclude=en')
             ->expectsOutput("Processing the '$this->file' file...")
@@ -132,21 +132,21 @@ class LaravelExporterTest extends TestCase
         self::assertFileExists(resource_path('lang/it/another.php'));
 
         self::assertEquals(
-            $this->getTestStub('exporters/laravel/include-exclude/output-it-app'),
+            $this->getTestStub('exporters.laravel.include-exclude.output-it-app'),
             File::get(resource_path('lang/it/app.php'))
         );
 
         self::assertEquals(
-            $this->getTestStub('exporters/laravel/include-exclude/output-it-another'),
+            $this->getTestStub('exporters.laravel.include-exclude.output-it-another'),
             File::get(resource_path('lang/it/another.php'))
         );
 
         self::assertEquals(0, $result);
     }
-    
+
     public function test_exporter_with_warning(): void
     {
-        $this->initFromStub('exporters/laravel/warnings/input');
+        $this->initFromStub('exporters.laravel.warnings.input');
 
         $result = $this->artisan('larex:export -v')
             ->expectsOutput("Processing the '$this->file' file...")
@@ -161,7 +161,7 @@ class LaravelExporterTest extends TestCase
         self::assertFileExists(resource_path('lang/it/app.php'));
 
         self::assertEquals(
-            $this->getTestStub('exporters/laravel/warnings/output-it'),
+            $this->getTestStub('exporters.laravel.warnings.output-it'),
             File::get(resource_path('lang/it/app.php'))
         );
 

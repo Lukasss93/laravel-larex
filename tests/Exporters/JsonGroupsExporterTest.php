@@ -9,7 +9,7 @@ class JsonGroupsExporterTest extends TestCase
 {
     public function test_exporter(): void
     {
-        $this->initFromStub('exporters/json-groups/base/input');
+        $this->initFromStub('exporters.json-groups.base.input');
 
         $result = $this->artisan('larex:export json:group')
             ->expectsOutput("Processing the '$this->file' file...")
@@ -25,22 +25,22 @@ class JsonGroupsExporterTest extends TestCase
         self::assertFileExists(resource_path('lang/it/special.json'));
 
         self::assertEquals(
-            $this->getTestStub('exporters/json-groups/base/output-en-app'),
+            $this->getTestStub('exporters.json-groups.base.output-en-app'),
             File::get(resource_path('lang/en/app.json'))
         );
 
         self::assertEquals(
-            $this->getTestStub('exporters/json-groups/base/output-en-special'),
+            $this->getTestStub('exporters.json-groups.base.output-en-special'),
             File::get(resource_path('lang/en/special.json'))
         );
 
         self::assertEquals(
-            $this->getTestStub('exporters/json-groups/base/output-it-app'),
+            $this->getTestStub('exporters.json-groups.base.output-it-app'),
             File::get(resource_path('lang/it/app.json'))
         );
 
         self::assertEquals(
-            $this->getTestStub('exporters/json-groups/base/output-it-special'),
+            $this->getTestStub('exporters.json-groups.base.output-it-special'),
             File::get(resource_path('lang/it/special.json'))
         );
 
@@ -49,7 +49,7 @@ class JsonGroupsExporterTest extends TestCase
 
     public function test_exporter_with_watch(): void
     {
-        $this->initFromStub('exporters/json-groups/base/input');
+        $this->initFromStub('exporters.json-groups.base.input');
 
         $result = $this->artisan('larex:export json:group --watch')
             ->expectsOutput("Processing the '$this->file' file...")
@@ -66,31 +66,31 @@ class JsonGroupsExporterTest extends TestCase
         self::assertFileExists(resource_path('lang/it/special.json'));
 
         self::assertEquals(
-            $this->getTestStub('exporters/json-groups/base/output-en-app'),
+            $this->getTestStub('exporters.json-groups.base.output-en-app'),
             File::get(resource_path('lang/en/app.json'))
         );
 
         self::assertEquals(
-            $this->getTestStub('exporters/json-groups/base/output-en-special'),
+            $this->getTestStub('exporters.json-groups.base.output-en-special'),
             File::get(resource_path('lang/en/special.json'))
         );
 
         self::assertEquals(
-            $this->getTestStub('exporters/json-groups/base/output-it-app'),
+            $this->getTestStub('exporters.json-groups.base.output-it-app'),
             File::get(resource_path('lang/it/app.json'))
         );
 
         self::assertEquals(
-            $this->getTestStub('exporters/json-groups/base/output-it-special'),
+            $this->getTestStub('exporters.json-groups.base.output-it-special'),
             File::get(resource_path('lang/it/special.json'))
         );
 
         self::assertEquals(0, $result);
     }
-    
+
     public function test_exporter_with_include(): void
     {
-        $this->initFromStub('exporters/json-groups/base/input');
+        $this->initFromStub('exporters.json-groups.base.input');
 
         $result = $this->artisan('larex:export json:group --include=en')
             ->expectsOutput("Processing the '$this->file' file...")
@@ -104,12 +104,12 @@ class JsonGroupsExporterTest extends TestCase
         self::assertFileDoesNotExist(resource_path('lang/it/special.json'));
 
         self::assertEquals(
-            $this->getTestStub('exporters/json-groups/base/output-en-app'),
+            $this->getTestStub('exporters.json-groups.base.output-en-app'),
             File::get(resource_path('lang/en/app.json'))
         );
 
         self::assertEquals(
-            $this->getTestStub('exporters/json-groups/base/output-en-special'),
+            $this->getTestStub('exporters.json-groups.base.output-en-special'),
             File::get(resource_path('lang/en/special.json'))
         );
 
@@ -118,7 +118,7 @@ class JsonGroupsExporterTest extends TestCase
 
     public function test_exporter_with_exclude(): void
     {
-        $this->initFromStub('exporters/json-groups/base/input');
+        $this->initFromStub('exporters.json-groups.base.input');
 
         $result = $this->artisan('larex:export json:group --exclude=en')
             ->expectsOutput("Processing the '$this->file' file...")
@@ -130,23 +130,23 @@ class JsonGroupsExporterTest extends TestCase
         self::assertFileDoesNotExist(resource_path('lang/en/special.json'));
         self::assertFileExists(resource_path('lang/it/app.json'));
         self::assertFileExists(resource_path('lang/it/special.json'));
-        
+
         self::assertEquals(
-            $this->getTestStub('exporters/json-groups/base/output-it-app'),
+            $this->getTestStub('exporters.json-groups.base.output-it-app'),
             File::get(resource_path('lang/it/app.json'))
         );
 
         self::assertEquals(
-            $this->getTestStub('exporters/json-groups/base/output-it-special'),
+            $this->getTestStub('exporters.json-groups.base.output-it-special'),
             File::get(resource_path('lang/it/special.json'))
         );
 
         self::assertEquals(0, $result);
     }
-    
+
     public function test_exporter_with_warning(): void
     {
-        $this->initFromStub('exporters/json-groups/warnings/input');
+        $this->initFromStub('exporters.json-groups.warnings.input');
 
         $result = $this->artisan('larex:export json:group')
             ->expectsOutput("Processing the '$this->file' file...")
@@ -161,18 +161,18 @@ class JsonGroupsExporterTest extends TestCase
         self::assertFileExists(resource_path('lang/it/app.json'));
 
         self::assertEquals(
-            $this->getTestStub('exporters/json-groups/warnings/output-en-app'),
+            $this->getTestStub('exporters.json-groups.warnings.output-en-app'),
             File::get(resource_path('lang/en/app.json'))
         );
 
         self::assertEquals(
-            $this->getTestStub('exporters/json-groups/warnings/output-it-app'),
+            $this->getTestStub('exporters.json-groups.warnings.output-it-app'),
             File::get(resource_path('lang/it/app.json'))
         );
 
         self::assertEquals(0, $result);
     }
-    
+
     public function test_exporter_with_no_entries(): void
     {
         $this->artisan('larex:init')->run();

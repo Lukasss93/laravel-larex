@@ -60,6 +60,7 @@ abstract class TestCase extends OrchestraTestCase
 
     public function getTestStub(string $name): string
     {
+        $name = str_replace('.', '/', $name);
         $content = file_get_contents(__DIR__ . '/Stubs/' . $name . '.stub');
         return Utils::normalizeEOLs($content);
     }

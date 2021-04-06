@@ -13,24 +13,24 @@ class ValidHtmlValueLinterTest extends TestCase
         config(['larex.linters' => [
             ValidHtmlValueLinter::class,
         ]]);
-        
-        $this->initFromStub('linters/valid-html-value/success');
-        
+
+        $this->initFromStub('linters.valid-html-value.success');
+
         $result = $this->artisan(LarexLintCommand::class)
             ->expectsOutput('OK (1 linter)')
             ->run();
-        
+
         self::assertEquals(0, $result);
     }
-    
+
     public function test_failure(): void
     {
         config(['larex.linters' => [
             ValidHtmlValueLinter::class,
         ]]);
-        
-        $this->initFromStub('linters/valid-html-value/failure');
-        
+
+        $this->initFromStub('linters.valid-html-value.failure');
+
         $result = $this->artisan(LarexLintCommand::class)
             ->expectsOutput(' FAIL  2 invalid html strings found:')
             ->expectsOutput('├ line 2 (app.apple), column: 3 (en)')
@@ -38,7 +38,7 @@ class ValidHtmlValueLinterTest extends TestCase
             ->expectsOutput('FAILURES!')
             ->expectsOutput('Linters: 1, Failures: 1')
             ->run();
-        
+
         self::assertEquals(1, $result);
     }
 }

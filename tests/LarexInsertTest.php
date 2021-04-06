@@ -8,7 +8,7 @@ class LarexInsertTest extends TestCase
 {
     public function test_insert_command(): void
     {
-        $this->initFromStub('insert/base/input');
+        $this->initFromStub('insert.base.input');
 
         $result = $this->artisan('larex:insert')
             ->expectsQuestion('Enter the group', 'app')
@@ -20,7 +20,7 @@ class LarexInsertTest extends TestCase
             ->run();
 
         self::assertEquals(
-            $this->getTestStub('insert/base/output'),
+            $this->getTestStub('insert.base.output'),
             File::get(base_path($this->file))
         );
 
@@ -29,7 +29,7 @@ class LarexInsertTest extends TestCase
 
     public function test_insert_command_with_special_chars(): void
     {
-        $this->initFromStub('insert/special/input');
+        $this->initFromStub('insert.special.input');
 
         $result = $this->artisan('larex:insert')
             ->expectsQuestion('Enter the group', 'app')
@@ -41,7 +41,7 @@ class LarexInsertTest extends TestCase
             ->run();
 
         self::assertEquals(
-            $this->getTestStub('insert/special/output'),
+            $this->getTestStub('insert.special.output'),
             File::get(base_path($this->file))
         );
 
@@ -50,7 +50,7 @@ class LarexInsertTest extends TestCase
 
     public function test_insert_command_exists_continue_yes(): void
     {
-        $this->initFromStub('insert/exists/input');
+        $this->initFromStub('insert.exists.input');
 
         $result = $this->artisan('larex:insert')
             ->expectsQuestion('Enter the group', 'app')
@@ -63,7 +63,7 @@ class LarexInsertTest extends TestCase
             ->run();
 
         self::assertEquals(
-            $this->getTestStub('insert/exists/output-continue-yes'),
+            $this->getTestStub('insert.exists.output-continue-yes'),
             File::get(base_path($this->file))
         );
 
@@ -72,7 +72,7 @@ class LarexInsertTest extends TestCase
 
     public function test_insert_command_exists_continue_no(): void
     {
-        $this->initFromStub('insert/exists/input');
+        $this->initFromStub('insert.exists.input');
 
         $result = $this->artisan('larex:insert')
             ->expectsQuestion('Enter the group', 'app')
@@ -87,7 +87,7 @@ class LarexInsertTest extends TestCase
             ->run();
 
         self::assertEquals(
-            $this->getTestStub('insert/exists/output-continue-no'),
+            $this->getTestStub('insert.exists.output-continue-no'),
             File::get(base_path($this->file))
         );
 
@@ -106,7 +106,7 @@ class LarexInsertTest extends TestCase
 
     public function test_insert_command_with_group_and_key_empty(): void
     {
-        $this->initFromStub('insert/base/input');
+        $this->initFromStub('insert.base.input');
 
         $result = $this->artisan('larex:insert')
             ->expectsQuestion('Enter the group', '')
@@ -122,7 +122,7 @@ class LarexInsertTest extends TestCase
             ->run();
 
         self::assertEquals(
-            $this->getTestStub('insert/base/output'),
+            $this->getTestStub('insert.base.output'),
             File::get(base_path($this->file))
         );
 
@@ -131,7 +131,7 @@ class LarexInsertTest extends TestCase
 
     public function test_insert_command_with_export(): void
     {
-        $this->initFromStub('insert/base/input');
+        $this->initFromStub('insert.base.input');
 
         $result = $this->artisan('larex:insert --export')
             ->expectsQuestion('Enter the group', 'app')
@@ -147,17 +147,17 @@ class LarexInsertTest extends TestCase
             ->run();
 
         self::assertEquals(
-            $this->getTestStub('insert/base/output'),
+            $this->getTestStub('insert.base.output'),
             File::get(base_path($this->file))
         );
 
         self::assertEquals(
-            $this->getTestStub('insert/base/output-app-en'),
+            $this->getTestStub('insert.base.output-app-en'),
             File::get(resource_path('lang/en/app.php'))
         );
 
         self::assertEquals(
-            $this->getTestStub('insert/base/output-app-it'),
+            $this->getTestStub('insert.base.output-app-it'),
             File::get(resource_path('lang/it/app.php'))
         );
 
@@ -166,7 +166,7 @@ class LarexInsertTest extends TestCase
 
     public function test_insert_command_with_correction(): void
     {
-        $this->initFromStub('insert/correction/input');
+        $this->initFromStub('insert.correction.input');
 
         $result = $this->artisan('larex:insert')
             ->expectsQuestion('Enter the group', 'app')
@@ -183,7 +183,7 @@ class LarexInsertTest extends TestCase
             ->run();
 
         self::assertEquals(
-            $this->getTestStub('insert/correction/output'),
+            $this->getTestStub('insert.correction.output'),
             File::get(base_path($this->file))
         );
 
@@ -192,7 +192,7 @@ class LarexInsertTest extends TestCase
 
     public function test_insert_command_with_correction_and_export(): void
     {
-        $this->initFromStub('insert/correction/input');
+        $this->initFromStub('insert.correction.input');
 
         $result = $this->artisan('larex:insert --export')
             ->expectsQuestion('Enter the group', 'app')
@@ -213,17 +213,17 @@ class LarexInsertTest extends TestCase
             ->run();
 
         self::assertEquals(
-            $this->getTestStub('insert/correction/output'),
+            $this->getTestStub('insert.correction.output'),
             File::get(base_path($this->file))
         );
 
         self::assertEquals(
-            $this->getTestStub('insert/correction/output-app-en'),
+            $this->getTestStub('insert.correction.output-app-en'),
             File::get(resource_path('lang/en/app.php'))
         );
 
         self::assertEquals(
-            $this->getTestStub('insert/correction/output-app-it'),
+            $this->getTestStub('insert.correction.output-app-it'),
             File::get(resource_path('lang/it/app.php'))
         );
 

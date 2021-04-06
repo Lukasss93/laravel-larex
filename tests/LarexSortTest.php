@@ -8,21 +8,21 @@ class LarexSortTest extends TestCase
 {
     public function test_sort_command(): void
     {
-        $this->initFromStub('sort/sort-input');
-        
+        $this->initFromStub('sort.sort-input');
+
         $result = $this->artisan('larex:sort')
             ->expectsOutput('Sorting che CSV rows...')
             ->expectsOutput('Sorting completed.')
             ->run();
-        
+
         self::assertEquals(
-            $this->getTestStub('sort/sort-output'),
+            $this->getTestStub('sort.sort-output'),
             File::get(base_path($this->file))
         );
-        
+
         self::assertEquals(0, $result);
     }
-    
+
     public function test_sort_command_if_file_does_not_exists(): void
     {
         $result = $this->artisan('larex:sort')
@@ -30,7 +30,7 @@ class LarexSortTest extends TestCase
             ->expectsOutput("The '$this->file' does not exists.")
             ->expectsOutput('Please create it with: php artisan larex:init')
             ->run();
-        
+
         self::assertEquals(1, $result);
     }
 }

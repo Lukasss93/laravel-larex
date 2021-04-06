@@ -9,7 +9,7 @@ class JsonLanguagesExporterTest extends TestCase
 {
     public function test_exporter(): void
     {
-        $this->initFromStub('exporters/json-language/base/input');
+        $this->initFromStub('exporters.json-language.base.input');
 
         $result = $this->artisan('larex:export json:lang')
             ->expectsOutput("Processing the '$this->file' file...")
@@ -21,12 +21,12 @@ class JsonLanguagesExporterTest extends TestCase
         self::assertFileExists(resource_path('lang/it.json'));
 
         self::assertEquals(
-            $this->getTestStub('exporters/json-language/base/output-en'),
+            $this->getTestStub('exporters.json-language.base.output-en'),
             File::get(resource_path('lang/en.json'))
         );
 
         self::assertEquals(
-            $this->getTestStub('exporters/json-language/base/output-it'),
+            $this->getTestStub('exporters.json-language.base.output-it'),
             File::get(resource_path('lang/it.json'))
         );
 
@@ -35,7 +35,7 @@ class JsonLanguagesExporterTest extends TestCase
 
     public function test_exporter_with_watch(): void
     {
-        $this->initFromStub('exporters/json-language/base/input');
+        $this->initFromStub('exporters.json-language.base.input');
 
         $result = $this->artisan('larex:export json:lang --watch')
             ->expectsOutput("Processing the '$this->file' file...")
@@ -48,12 +48,12 @@ class JsonLanguagesExporterTest extends TestCase
         self::assertFileExists(resource_path('lang/it.json'));
 
         self::assertEquals(
-            $this->getTestStub('exporters/json-language/base/output-en'),
+            $this->getTestStub('exporters.json-language.base.output-en'),
             File::get(resource_path('lang/en.json'))
         );
 
         self::assertEquals(
-            $this->getTestStub('exporters/json-language/base/output-it'),
+            $this->getTestStub('exporters.json-language.base.output-it'),
             File::get(resource_path('lang/it.json'))
         );
 
@@ -62,7 +62,7 @@ class JsonLanguagesExporterTest extends TestCase
 
     public function test_exporter_with_include(): void
     {
-        $this->initFromStub('exporters/json-language/include-exclude/input');
+        $this->initFromStub('exporters.json-language.include-exclude.input');
 
         $result = $this->artisan('larex:export json:lang --include=en')
             ->expectsOutput("Processing the '$this->file' file...")
@@ -73,7 +73,7 @@ class JsonLanguagesExporterTest extends TestCase
         self::assertFileDoesNotExist(resource_path('lang/it.json'));
 
         self::assertEquals(
-            $this->getTestStub('exporters/json-language/include-exclude/output-en'),
+            $this->getTestStub('exporters.json-language.include-exclude.output-en'),
             File::get(resource_path('lang/en.json'))
         );
 
@@ -82,7 +82,7 @@ class JsonLanguagesExporterTest extends TestCase
 
     public function test_exporter_with_exclude(): void
     {
-        $this->initFromStub('exporters/json-language/include-exclude/input');
+        $this->initFromStub('exporters.json-language.include-exclude.input');
 
         $result = $this->artisan('larex:export json:lang --exclude=en')
             ->expectsOutput("Processing the '$this->file' file...")
@@ -93,7 +93,7 @@ class JsonLanguagesExporterTest extends TestCase
         self::assertFileExists(resource_path('lang/it.json'));
 
         self::assertEquals(
-            $this->getTestStub('exporters/json-language/include-exclude/output-it'),
+            $this->getTestStub('exporters.json-language.include-exclude.output-it'),
             File::get(resource_path('lang/it.json'))
         );
 
@@ -102,7 +102,7 @@ class JsonLanguagesExporterTest extends TestCase
 
     public function test_exporter_with_warning(): void
     {
-        $this->initFromStub('exporters/json-language/warnings/input');
+        $this->initFromStub('exporters.json-language.warnings.input');
 
         $result = $this->artisan('larex:export json:lang')
             ->expectsOutput("Processing the '$this->file' file...")
@@ -117,12 +117,12 @@ class JsonLanguagesExporterTest extends TestCase
         self::assertFileExists(resource_path('lang/it.json'));
 
         self::assertEquals(
-            $this->getTestStub('exporters/json-language/warnings/output-en'),
+            $this->getTestStub('exporters.json-language.warnings.output-en'),
             File::get(resource_path('lang/en.json'))
         );
 
         self::assertEquals(
-            $this->getTestStub('exporters/json-language/warnings/output-it'),
+            $this->getTestStub('exporters.json-language.warnings.output-it'),
             File::get(resource_path('lang/it.json'))
         );
 
