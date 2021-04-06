@@ -73,38 +73,6 @@ class Utils
     }
 
     /**
-     * Write key/value for php files
-     * @param $key
-     * @param $value
-     * @param $file
-     * @param int $level
-     */
-    public static function writeKeyValue($key, $value, &$file, int $level = 1): void
-    {
-        $enclosure = config('larex.csv.enclosure');
-
-        if (is_array($value)) {
-            fwrite($file, str_repeat('    ', $level)."'{$key}' => [\n");
-            $level++;
-            foreach ($value as $childKey => $childValue) {
-                self::writeKeyValue($childKey, $childValue, $file, $level);
-            }
-            fwrite($file, str_repeat('    ', $level - 1)."],\n");
-            return;
-        }
-
-        $value = (string) $value;
-        $value = str_replace(["'", '\\'.$enclosure], ["\'", $enclosure], $value);
-
-        if (is_int($key) || (is_numeric($key) && ctype_digit($key))) {
-            $key = (int) $key;
-            fwrite($file, str_repeat('    ', $level)."{$key} => '{$value}',\n");
-        } else {
-            fwrite($file, str_repeat('    ', $level)."'{$key}' => '{$value}',\n");
-        }
-    }
-
-    /**
      * Loop "forever"
      * @param callable $callback
      */

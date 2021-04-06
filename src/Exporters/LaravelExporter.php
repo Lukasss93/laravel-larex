@@ -54,7 +54,7 @@ class LaravelExporter implements Exporter
                 fwrite($write, "<?php\n\nreturn [\n\n");
 
                 foreach ($keys as $key => $value) {
-                    Utils::writeKeyValue($key, $value, $write);
+                    self::writeKeyValue($key, $value, $write);
                 }
 
                 fwrite($write, "\n];\n");
@@ -69,5 +69,30 @@ class LaravelExporter implements Exporter
         }
 
         return 0;
+    }
+
+    public static function writeKeyValue($key, $value, &$file, int $level = 1): void
+    {
+        $enclosure = config('larex.csv.enclosure');
+
+        if (is_array($value)) {
+            fwrite($file, str_repeat('    ', $level)."'{$key}' => [\n");
+            $level++;
+            foreach ($value as $childKey => $childValue) {
+                self::writeKeyValue($childKey, $childValue, $file, $level);
+            }
+            fwrite($file, str_repeat('    ', $level - 1)."],\n");
+            return;
+        }
+
+        $value = (string) $value;
+        $value = str_replace(["'", '\\'.$enclosure], ["\'", $enclosure], $value);
+
+        if (is_int($key) || (is_numeric($key) && ctype_digit($key))) {
+            $key = (int) $key;
+            fwrite($file, str_repeat('    ', $level)."{$key} => '{$value}',\n");
+        } else {
+            fwrite($file, str_repeat('    ', $level)."'{$key}' => '{$value}',\n");
+        }
     }
 }
