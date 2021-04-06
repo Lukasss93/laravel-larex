@@ -4,7 +4,6 @@ namespace Lukasss93\Larex\Importers;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
 use Lukasss93\Larex\Console\LarexImportCommand;
 use Lukasss93\Larex\Contracts\Importer;
 
@@ -38,9 +37,9 @@ class JsonLanguagesImporter implements Importer
             }
 
             foreach ($items as $keys => $value) {
-                $composite = Str::of($keys)->explode('.');
-                $group = $composite->get(0);
-                $key = $composite->skip(1)->implode('.');
+                $composite = explode('.', $keys);
+                $group = $composite[0];
+                $key = implode('.', array_slice($composite, 1));
 
                 $rawValues->push([
                     'group' => $group,
