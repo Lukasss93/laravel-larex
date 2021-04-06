@@ -4,7 +4,7 @@
 namespace Lukasss93\Larex\Support;
 
 use InvalidArgumentException;
-use Lukasss93\Larex\Utils;
+use Lukasss93\Larex\Support\Utils;
 use RuntimeException;
 
 class CsvWriter

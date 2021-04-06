@@ -1,6 +1,6 @@
 <?php
 
-namespace Lukasss93\Larex;
+namespace Lukasss93\Larex\Support;
 
 use DOMDocument;
 use Exception;
@@ -55,7 +55,8 @@ class Utils
      */
     public static function getStub(string $name): string
     {
-        $content = file_get_contents(__DIR__ . '/Stubs/' . $name . '.stub');
+        $path = dirname(__DIR__).'/Stubs/'.$name.'.stub';
+        $content = file_get_contents($path);
         return self::normalizeEOLs($content);
     }
 
@@ -82,23 +83,23 @@ class Utils
         $enclosure = config('larex.csv.enclosure');
 
         if (is_array($value)) {
-            fwrite($file, str_repeat('    ', $level) . "'{$key}' => [\n");
+            fwrite($file, str_repeat('    ', $level)."'{$key}' => [\n");
             $level++;
             foreach ($value as $childKey => $childValue) {
                 self::writeKeyValue($childKey, $childValue, $file, $level);
             }
-            fwrite($file, str_repeat('    ', $level - 1) . "],\n");
+            fwrite($file, str_repeat('    ', $level - 1)."],\n");
             return;
         }
 
-        $value = (string)$value;
-        $value = str_replace(["'", '\\' . $enclosure], ["\'", $enclosure], $value);
+        $value = (string) $value;
+        $value = str_replace(["'", '\\'.$enclosure], ["\'", $enclosure], $value);
 
         if (is_int($key) || (is_numeric($key) && ctype_digit($key))) {
-            $key = (int)$key;
-            fwrite($file, str_repeat('    ', $level) . "{$key} => '{$value}',\n");
+            $key = (int) $key;
+            fwrite($file, str_repeat('    ', $level)."{$key} => '{$value}',\n");
         } else {
-            fwrite($file, str_repeat('    ', $level) . "'{$key}' => '{$value}',\n");
+            fwrite($file, str_repeat('    ', $level)."'{$key}' => '{$value}',\n");
         }
     }
 
@@ -134,23 +135,23 @@ class Utils
         $output = '';
 
         $count = count($array);
-        $i=-1;
+        $i = -1;
         foreach ($array as $item) {
             $i++;
             $item = self::normalizeEOLs($item, $eol);
 
-            $toEnclosure=false;
+            $toEnclosure = false;
 
             if (Str::contains($item, [$enclosure, $delimiter, $eol])) {
-                $toEnclosure=true;
+                $toEnclosure = true;
             }
 
             if (Str::contains($item, $enclosure)) {
-                $item = str_replace($enclosure, $escape . $enclosure, $item);
+                $item = str_replace($enclosure, $escape.$enclosure, $item);
             }
 
             if ($toEnclosure) {
-                $item = $enclosure . $item . $enclosure;
+                $item = $enclosure.$item.$enclosure;
             }
 
             $output .= $item;
@@ -272,7 +273,7 @@ class Utils
         $strings = collect();
         foreach ($functions as $function) {
             $content = self::normalizeEOLs($file->getContents());
-            $regex = '/(' . $function . ')\(\h*[\'"](.+)[\'"]\h*[),]/U';
+            $regex = '/('.$function.')\(\h*[\'"](.+)[\'"]\h*[),]/U';
             if (preg_match_all($regex, $content, $matches, PREG_OFFSET_CAPTURE)) {
                 foreach ($matches[2] as $match) {
                     [$string, $offset] = $match;
@@ -317,16 +318,16 @@ class Utils
         // Format and return
         $timeParts = [];
         $sections = [
-            'day' => (int)$days,
-            'hour' => (int)$hours,
-            'minute' => (int)$minutes,
-            'second' => (int)$seconds,
-            'millisecond' => (int)$milliseconds,
+            'day' => (int) $days,
+            'hour' => (int) $hours,
+            'minute' => (int) $minutes,
+            'second' => (int) $seconds,
+            'millisecond' => (int) $milliseconds,
         ];
 
         foreach ($sections as $name => $value) {
             if ($value > 0) {
-                $timeParts[] = $value . ' ' . $name . ($value === 1 ? '' : 's');
+                $timeParts[] = $value.' '.$name.($value === 1 ? '' : 's');
             }
         }
 
@@ -343,7 +344,7 @@ class Utils
         for ($i = 0; $bytes > 1024; $i++) {
             $bytes /= 1024;
         }
-        return round($bytes, 2) . ' ' . $units[$i];
+        return round($bytes, 2).' '.$units[$i];
     }
 
     /**
@@ -352,7 +353,8 @@ class Utils
      * @param $data
      * @throws JsonException
      */
-    public static function putJson(string $path, $data):void{
+    public static function putJson(string $path, $data): void
+    {
         File::put($path, json_encode($data, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
     }
 }

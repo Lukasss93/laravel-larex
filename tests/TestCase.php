@@ -5,13 +5,13 @@ namespace Lukasss93\Larex\Tests;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\File;
 use Lukasss93\Larex\LarexServiceProvider;
-use Lukasss93\Larex\Utils;
+use Lukasss93\Larex\Support\Utils;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 abstract class TestCase extends OrchestraTestCase
 {
     protected $file;
-    
+
     /**
      * @param Application $app
      *
@@ -23,13 +23,13 @@ abstract class TestCase extends OrchestraTestCase
             LarexServiceProvider::class,
         ];
     }
-    
+
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->file = config('larex.csv.path');
-        
+
         $this->afterApplicationCreated(function () {
             //set global csv settings
             config([
@@ -57,19 +57,19 @@ abstract class TestCase extends OrchestraTestCase
             }
         });
     }
-    
+
     public function getTestStub(string $name): string
     {
         $content = file_get_contents(__DIR__ . '/Stubs/' . $name . '.stub');
         return Utils::normalizeEOLs($content);
     }
-    
+
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
         putenv('NOLOOP=1');
     }
-    
+
     public function initFromStub(string $stub): void
     {
         File::put(base_path($this->file), $this->getTestStub($stub));

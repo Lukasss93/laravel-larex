@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\File;
 use Lukasss93\Larex\Console\LarexExportCommand;
 use Lukasss93\Larex\Contracts\Exporter;
 use Lukasss93\Larex\Support\CsvParser;
-use Lukasss93\Larex\Utils;
+use Lukasss93\Larex\Support\Utils;
 
 class LaravelExporter implements Exporter
 {
@@ -30,7 +30,7 @@ class LaravelExporter implements Exporter
         foreach ($parser->getWarnings() as $warning){
             $command->warn($warning);
         }
-        
+
         $include = $command->option('include') !== null ? (explode(',', $command->option('include'))) : [];
         $exclude = $command->option('exclude') !== null ? explode(',', $command->option('exclude')) : [];
 

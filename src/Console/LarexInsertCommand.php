@@ -4,7 +4,7 @@ namespace Lukasss93\Larex\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use Lukasss93\Larex\Utils;
+use Lukasss93\Larex\Support\Utils;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Helper\TableCell;
 use Symfony\Component\Console\Helper\TableSeparator;

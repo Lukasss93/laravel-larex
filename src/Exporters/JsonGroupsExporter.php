@@ -8,7 +8,7 @@ use JsonException;
 use Lukasss93\Larex\Console\LarexExportCommand;
 use Lukasss93\Larex\Contracts\Exporter;
 use Lukasss93\Larex\Support\CsvParser;
-use Lukasss93\Larex\Utils;
+use Lukasss93\Larex\Support\Utils;
 
 class JsonGroupsExporter implements Exporter
 {
@@ -28,7 +28,7 @@ class JsonGroupsExporter implements Exporter
     {
         $parser=new CsvParser($rows);
         $languages = $parser->setHandleSubKey(false)->parse();
-        
+
         foreach ($parser->getWarnings() as $warning){
             $command->warn($warning);
         }
@@ -50,7 +50,7 @@ class JsonGroupsExporter implements Exporter
             if (!File::exists(resource_path("lang/$language/"))) {
                 File::makeDirectory(resource_path("lang/$language/"));
             }
-            
+
             foreach ($groups as $group => $keys) {
                 Utils::putJson(resource_path("lang/$language/$group.json"), $keys);
                 $command->info("resources/lang/$language/$group.json created successfully.");

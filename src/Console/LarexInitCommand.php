@@ -4,7 +4,7 @@ namespace Lukasss93\Larex\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use Lukasss93\Larex\Utils;
+use Lukasss93\Larex\Support\Utils;
 
 class LarexInitCommand extends Command
 {
@@ -61,7 +61,7 @@ class LarexInitCommand extends Command
         File::put(base_path($this->file), Utils::getStub($stub));
 
         $this->info($this->file . ' created successfully.');
-        
+
         return 0;
     }
 }

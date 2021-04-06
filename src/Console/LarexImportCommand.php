@@ -4,9 +4,8 @@ namespace Lukasss93\Larex\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use Lukasss93\Larex\Utils;
-use RecursiveArrayIterator;
-use RecursiveIteratorIterator;
+use Lukasss93\Larex\Contracts\Importer;
+use Lukasss93\Larex\Support\Utils;
 
 class LarexImportCommand extends Command
 {
@@ -22,14 +21,16 @@ class LarexImportCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'larex:import {--f|force : Overwrite csv file if already exists}';
+    protected $signature = 'larex:import
+                            {importer? : Importer}
+                            {--f|force : Overwrite CSV file if already exists}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Import entries from resources/lang files';
+    protected $description = 'Import entries into CSV file';
 
     /**
      * Create a new console command instance.
@@ -49,92 +50,50 @@ class LarexImportCommand extends Command
      */
     public function handle(): int
     {
-        $languages = collect([]);
-        $rawValues = collect([]);
+        //get the importer name
+        $importerKey = $this->argument('importer') ?? config('larex.importers.default');
+        $importers = config('larex.importers.list');
 
-        $this->warn('Importing entries...');
-
-        //get all php files
-        $files = File::glob(resource_path('lang/**/*.php'));
-
-        foreach ($files as $file) {
-            $array = include $file;
-            $group = pathinfo($file, PATHINFO_FILENAME);
-            $lang = basename(dirname($file));
-
-            if (!$languages->contains($lang)) {
-                $languages->push($lang);
+        //check if importer exists
+        if (!array_key_exists($importerKey, $importers)) {
+            $this->error("Importer '$importerKey' not found.");
+            $this->line('');
+            $this->info('Available importers:');
+            foreach ($importers as $key => $importer) {
+                $this->line("<fg=yellow>$key</> - {$importer::description()}");
             }
-
-            //loop through array recursive
-            $iterator = new RecursiveIteratorIterator(
-                new RecursiveArrayIterator($array),
-                RecursiveIteratorIterator::SELF_FIRST
-            );
-            $path = [];
-            foreach ($iterator as $key => $value) {
-                $path[$iterator->getDepth()] = $key;
-                if (!is_array($value)) {
-                    $rawValues->push([
-                        'group' => $group,
-                        'key' => implode('.', array_slice($path, 0, $iterator->getDepth() + 1)),
-                        'lang' => $lang,
-                        'value' => $value,
-                    ]);
-                }
-            }
+            $this->line('');
+            return 1;
         }
 
-        //creating the csv file
-        $header = collect(['group', 'key'])->merge($languages);
-        $headerCount = $header->count();
-        $data = collect([]);
+        //initialize importer
+        $importer = new $importers[$importerKey]();
 
-        foreach ($rawValues as $rawValue) {
-            $index = $data->search(function ($item) use ($rawValue) {
-                return $item[0] === $rawValue['group'] && $item[1] === $rawValue['key'];
-            });
-
-            if ($index === false) {
-                $output = [
-                    $rawValue['group'],
-                    $rawValue['key'],
-                ];
-
-                for ($i = 2; $i < $headerCount; $i++) {
-                    $real = $rawValue['lang'] === $header->get($i) ? $rawValue['value'] : '';
-                    $output[$i] = $real;
-                }
-
-                $data->push($output);
-            } else {
-                for ($i = 2; $i < $headerCount; $i++) {
-                    $code = $rawValue['lang'] === $header->get($i) ? $rawValue['value'] : null;
-
-                    if ($code !== null) {
-                        $new = $data->get($index);
-                        $new[$i] = $rawValue['value'];
-                        $data->put($index, $new);
-                    }
-                }
-            }
+        //check if importer is valid
+        if (!($importer instanceof Importer)) {
+            $this->error(sprintf("Importer '%s' must implements %s interface.", $importerKey, Importer::class));
+            return 1;
         }
-
-        //add header
-        $data->prepend($header->toArray());
-        $data = $data->values();
-
-        $force = $this->option('force');
 
         //check file exists
-        if (!$force && File::exists(base_path($this->file))) {
+        if (!$this->option('force') && File::exists(base_path($this->file))) {
             $this->error("The '{$this->file}' already exists.");
             return 1;
         }
 
-        Utils::collectionToCsv($data, base_path($this->file));
-        $this->info('Files imported successfully.');
-        
+        $this->warn('Importing entries...');
+
+        //call the importer
+        $items = $importer->handle($this);
+
+        //validate items structure
+        //TODO
+
+        //write csv
+        Utils::collectionToCsv($items, base_path($this->file));
+
+        $this->info('Data imported successfully.');
+
         return 0;
     }
 }

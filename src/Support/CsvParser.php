@@ -25,6 +25,11 @@ class CsvParser
         $this->handleSubKeys = true;
     }
 
+    public static function create(Collection $rows): self
+    {
+        return new self($rows);
+    }
+
     public function setHandleSubKey(bool $value): self
     {
         $this->handleSubKeys = $value;
@@ -90,4 +95,10 @@ class CsvParser
         return $languages;
     }
 
+    public function validate(): bool
+    {
+        //TODO: group, key, langs
+
+
+    }
 }

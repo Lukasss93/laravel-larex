@@ -4,7 +4,7 @@ namespace Lukasss93\Larex\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use Lukasss93\Larex\Utils;
+use Lukasss93\Larex\Support\Utils;
 
 class LarexSortCommand extends Command
 {
@@ -39,7 +39,7 @@ class LarexSortCommand extends Command
         parent::__construct();
         $this->file = config('larex.csv.path');
     }
-    
+
     /**
      * Execute the console command.
      *

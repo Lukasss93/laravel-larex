@@ -2,79 +2,48 @@
 
 namespace Lukasss93\Larex\Tests;
 
-use Illuminate\Support\Facades\File;
+use Lukasss93\Larex\Console\LarexImportCommand;
+use Lukasss93\Larex\Console\LarexInitCommand;
 
 class LarexImportTest extends TestCase
 {
-    /**
-     * @param string $firstFile
-     * @param string $secondFile
-     * @param string $outputFile
-     * @dataProvider providerImportCommand
-     */
-    public function test_larex_import_command(string $firstFile, string $secondFile, string $outputFile): void
+    public function test_import_with_missing_importer(): void
     {
-        File::makeDirectory(resource_path('lang/en'), 0755, true, true);
-        File::makeDirectory(resource_path('lang/it'), 0755, true, true);
-        File::put(resource_path('lang/en/app.php'), $this->getTestStub($firstFile));
-        File::put(resource_path('lang/it/app.php'), $this->getTestStub($secondFile));
-        
-        $result = $this->artisan('larex:import')
-            ->expectsOutput('Importing entries...')
-            ->expectsOutput('Files imported successfully.')
-            ->run();
-        
-        self::assertFileExists(base_path($this->file));
-        self::assertEquals($this->getTestStub($outputFile), File::get(base_path($this->file)));
-        self::assertEquals(0, $result);
+        $this->artisan(LarexImportCommand::class, ['importer' => 'foo'])
+            ->expectsOutput("Importer 'foo' not found.")
+            ->expectsOutput('')
+            ->expectsOutput('Available importers:')
+            ->expectsOutput('laravel - Import data from Laravel localization files to CSV')
+            //->expectsOutput('json:lang - Import data from JSON by language to CSV')
+            //->expectsOutput('json:group - Import data from JSON by group to CSV')
+            ->expectsOutput('')
+            ->assertExitCode(1);
     }
-    
-    public function test_larex_import_command_with_no_force(): void
+
+    public function test_import_with_invalid_importer(): void
     {
-        $this->artisan('larex:init')->run();
-        
-        File::makeDirectory(resource_path('lang/en'), 0755, true, true);
-        File::makeDirectory(resource_path('lang/it'), 0755, true, true);
-        File::put(resource_path('lang/en/app.php'), $this->getTestStub('import/import-input-en-simple'));
-        File::put(resource_path('lang/it/app.php'), $this->getTestStub('import/import-input-it-simple'));
-        
-        $result = $this->artisan('larex:import')
-            ->expectsOutput('Importing entries...')
-            ->expectsOutput("The '{$this->file}' already exists.")
-            ->run();
-        
-        self::assertFileExists(base_path($this->file));
-        self::assertNotEquals(
-            $this->getTestStub('import/import-output-simple'),
-            File::get(base_path($this->file))
-        );
-        self::assertEquals(1, $result);
+        config(['larex.importers.list.foo' => new class() {
+        }]);
+
+        $this->artisan(LarexImportCommand::class, ['importer' => 'foo'])
+            ->expectsOutput("Importer 'foo' must implements Lukasss93\Larex\Contracts\Importer interface.")
+            ->assertExitCode(1);
     }
-    
-    public function test_larex_import_command_with_force(): void
+
+    public function test_import_with_existing_file(): void
     {
-        $this->artisan('larex:init')->run();
-        
-        File::makeDirectory(resource_path('lang/en'), 0755, true, true);
-        File::makeDirectory(resource_path('lang/it'), 0755, true, true);
-        File::put(resource_path('lang/en/app.php'), $this->getTestStub('import/import-input-en-simple'));
-        File::put(resource_path('lang/it/app.php'), $this->getTestStub('import/import-input-it-simple'));
-        
-        $result = $this->artisan('larex:import -f')
-            ->expectsOutput('Importing entries...')
-            ->expectsOutput('Files imported successfully.')
-            ->run();
-        
-        self::assertFileExists(base_path($this->file));
-        self::assertEquals($this->getTestStub('import/import-output-simple'), File::get(base_path($this->file)));
-        self::assertEquals(0, $result);
+        $this->artisan(LarexInitCommand::class)->run();
+
+        $this->artisan(LarexImportCommand::class)
+            ->expectsOutput(sprintf("The '%s' already exists.", config('larex.csv.path')))
+            ->assertExitCode(1);
     }
-    
-    public function providerImportCommand(): array
+
+    public function test_import_with_existing_file_and_force(): void
     {
-        return [
-            'simple' => ['import/import-input-en-simple', 'import/import-input-it-simple', 'import/import-output-simple'],
-            'complex' => ['import/import-input-en-complex', 'import/import-input-it-complex', 'import/import-output-complex']
-        ];
+        $this->artisan(LarexInitCommand::class)->run();
+
+        $this->artisan(LarexImportCommand::class, ['--force' => true])
+            ->assertExitCode(0);
     }
 }
