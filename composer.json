@@ -23,8 +23,10 @@
     "require": {
         "php": "^8.0|^7.4|^7.3",
         "ext-dom": "*",
+        "ext-json": "*",
         "illuminate/support": "^6.0|^7.0|^8.0",
         "loilo/fuse": "^4.0"
+
     },
     "require-dev": {
         "guzzlehttp/guzzle": "^6.5",
