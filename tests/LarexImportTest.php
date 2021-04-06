@@ -14,8 +14,8 @@ class LarexImportTest extends TestCase
             ->expectsOutput('')
             ->expectsOutput('Available importers:')
             ->expectsOutput('laravel - Import data from Laravel localization files to CSV')
-            //->expectsOutput('json:lang - Import data from JSON by language to CSV')
-            //->expectsOutput('json:group - Import data from JSON by group to CSV')
+            ->expectsOutput('json:lang - Import data from JSON by language to CSV')
+            ->expectsOutput('json:group - Import data from JSON by group to CSV')
             ->expectsOutput('')
             ->assertExitCode(1);
     }

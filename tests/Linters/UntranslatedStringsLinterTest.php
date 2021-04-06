@@ -31,11 +31,9 @@ class UntranslatedStringsLinterTest extends TestCase
 
         $this->initFromStub('linters.untranslated-strings.success');
 
-        $result = $this->artisan(LarexLintCommand::class)
+        $this->artisan(LarexLintCommand::class)
             ->expectsOutput('OK (1 linter)')
-            ->run();
-
-        self::assertEquals(0, $result);
+            ->assertExitCode(0);
     }
 
     public function test_failure(): void
@@ -48,13 +46,11 @@ class UntranslatedStringsLinterTest extends TestCase
 
         $this->initFromStub('linters.untranslated-strings.failure');
 
-        $result = $this->artisan(LarexLintCommand::class)
+        $this->artisan(LarexLintCommand::class)
             ->expectsOutput(' FAIL  1 untranslated string found:')
             ->expectsOutput('└ app.news is untranslated at line 90, column 63 in ' . $testFilePath)
             ->expectsOutput('FAILURES!')
             ->expectsOutput('Linters: 1, Failures: 1')
-            ->run();
-
-        self::assertEquals(1, $result);
+            ->assertExitCode(1);
     }
 }

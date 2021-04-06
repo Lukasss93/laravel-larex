@@ -16,11 +16,9 @@ class ValidLanguageCodeLinterTest extends TestCase
 
         $this->initFromStub('linters.valid-language-code.success');
 
-        $result = $this->artisan(LarexLintCommand::class)
+        $this->artisan(LarexLintCommand::class)
             ->expectsOutput('OK (1 linter)')
-            ->run();
-
-        self::assertEquals(0, $result);
+            ->assertExitCode(0);
     }
 
     public function test_failure(): void
@@ -31,13 +29,11 @@ class ValidLanguageCodeLinterTest extends TestCase
 
         $this->initFromStub('linters.valid-language-code.failure');
 
-        $result = $this->artisan(LarexLintCommand::class)
+        $this->artisan(LarexLintCommand::class)
             ->expectsOutput(' FAIL  Language code not valid in column 3 (xxx).')
             ->expectsOutput('FAILURES!')
             ->expectsOutput('Linters: 1, Failures: 1')
-            ->run();
-
-        self::assertEquals(1, $result);
+            ->assertExitCode(1);
     }
 
     public function test_failure_and_suggest(): void
@@ -48,12 +44,10 @@ class ValidLanguageCodeLinterTest extends TestCase
 
         $this->initFromStub('linters.valid-language-code.failure-and-suggest');
 
-        $result = $this->artisan(LarexLintCommand::class)
+        $this->artisan(LarexLintCommand::class)
             ->expectsOutput(' FAIL  Language code not valid in column 3 (it_IF). Did you mean: it_IT')
             ->expectsOutput('FAILURES!')
             ->expectsOutput('Linters: 1, Failures: 1')
-            ->run();
-
-        self::assertEquals(1, $result);
+            ->assertExitCode(1);
     }
 }

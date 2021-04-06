@@ -3,6 +3,7 @@
 namespace Lukasss93\Larex\Tests;
 
 use Illuminate\Support\Facades\File;
+use Lukasss93\Larex\Console\LarexSortCommand;
 
 class LarexSortTest extends TestCase
 {
@@ -10,27 +11,23 @@ class LarexSortTest extends TestCase
     {
         $this->initFromStub('sort.sort-input');
 
-        $result = $this->artisan('larex:sort')
+        $this->artisan(LarexSortCommand::class)
             ->expectsOutput('Sorting che CSV rows...')
             ->expectsOutput('Sorting completed.')
-            ->run();
+            ->assertExitCode(0);
 
         self::assertEquals(
             $this->getTestStub('sort.sort-output'),
             File::get(base_path($this->file))
         );
-
-        self::assertEquals(0, $result);
     }
 
     public function test_sort_command_if_file_does_not_exists(): void
     {
-        $result = $this->artisan('larex:sort')
+        $this->artisan(LarexSortCommand::class)
             ->expectsOutput('Sorting che CSV rows...')
             ->expectsOutput("The '$this->file' does not exists.")
             ->expectsOutput('Please create it with: php artisan larex:init')
-            ->run();
-
-        self::assertEquals(1, $result);
+            ->assertExitCode(1);
     }
 }

@@ -16,11 +16,9 @@ class ConcurrentKeyLinterTest extends TestCase
 
         $this->initFromStub('linters.concurrent-key.success');
 
-        $result = $this->artisan(LarexLintCommand::class)
+        $this->artisan(LarexLintCommand::class)
             ->expectsOutput('OK (1 linter)')
-            ->run();
-
-        self::assertEquals(0, $result);
+            ->assertExitCode(0);
     }
 
     public function test_failure(): void
@@ -31,7 +29,7 @@ class ConcurrentKeyLinterTest extends TestCase
 
         $this->initFromStub('linters.concurrent-key.failure');
 
-        $result = $this->artisan(LarexLintCommand::class)
+        $this->artisan(LarexLintCommand::class)
             ->expectsOutput(' FAIL  Concurrent keys found:')
             ->expectsOutput('├ rows 2 (add.a.b), 3 (add.a.b.c), 4 (add.a);')
             ->expectsOutput('├ rows 8 (add.d), 9 (add.d.a);')
@@ -40,8 +38,6 @@ class ConcurrentKeyLinterTest extends TestCase
             ->expectsOutput('└ rows 15 (app.g.a), 17 (app.g.a.b);')
             ->expectsOutput('FAILURES!')
             ->expectsOutput('Linters: 1, Failures: 1')
-            ->run();
-
-        self::assertEquals(1, $result);
+            ->assertExitCode(1);
     }
 }

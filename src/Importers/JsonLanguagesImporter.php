@@ -14,7 +14,7 @@ class JsonLanguagesImporter implements Importer
      */
     public static function description(): string
     {
-        return 'Import data from JSON by group to CSV';
+        return 'Import data from JSON by language to CSV';
     }
 
     /**

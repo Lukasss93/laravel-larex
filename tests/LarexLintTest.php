@@ -12,12 +12,10 @@ class LarexLintTest extends TestCase
     {
         config(['larex.linters' => []]);
 
-        $result = $this->artisan(LarexLintCommand::class)
+        $this->artisan(LarexLintCommand::class)
             ->expectsOutput("The '$this->file' does not exists.")
             ->expectsOutput('Please create it with: php artisan larex:init')
-            ->run();
-
-        self::assertEquals(1, $result);
+            ->assertExitCode(1);
     }
 
     public function test_lint_command_no_linters(): void
@@ -26,11 +24,9 @@ class LarexLintTest extends TestCase
 
         $this->initFromStub('lint.no-linters');
 
-        $result = $this->artisan(LarexLintCommand::class)
+        $this->artisan(LarexLintCommand::class)
             ->expectsOutput('No linters executed!')
-            ->run();
-
-        self::assertEquals(-1, $result);
+            ->assertExitCode(-1);
     }
 
     public function test_lint_command_failure(): void
@@ -41,14 +37,12 @@ class LarexLintTest extends TestCase
 
         $this->initFromStub('lint.failure');
 
-        $result = $this->artisan(LarexLintCommand::class)
+        $this->artisan(LarexLintCommand::class)
             ->expectsOutput(' FAIL  1 duplicate key found:')
             ->expectsOutput('└ 2, 3 (app.a)')
             ->expectsOutput('FAILURES!')
             ->expectsOutput('Linters: 1, Failures: 1')
-            ->run();
-
-        self::assertEquals(1, $result);
+            ->assertExitCode(1);
     }
 
     public function test_lint_command_success(): void
@@ -59,10 +53,8 @@ class LarexLintTest extends TestCase
 
         $this->initFromStub('lint.success');
 
-        $result = $this->artisan(LarexLintCommand::class)
+        $this->artisan(LarexLintCommand::class)
             ->expectsOutput('OK (1 linter)')
-            ->run();
-
-        self::assertEquals(0, $result);
+            ->assertExitCode(0);
     }
 }

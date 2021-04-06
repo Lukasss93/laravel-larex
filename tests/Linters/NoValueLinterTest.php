@@ -16,11 +16,9 @@ class NoValueLinterTest extends TestCase
 
         $this->initFromStub('linters.no-value.success');
 
-        $result = $this->artisan(LarexLintCommand::class)
+        $this->artisan(LarexLintCommand::class)
             ->expectsOutput('OK (1 linter)')
-            ->run();
-
-        self::assertEquals(0, $result);
+            ->assertExitCode(0);
     }
 
     public function test_failure(): void
@@ -31,7 +29,7 @@ class NoValueLinterTest extends TestCase
 
         $this->initFromStub('linters.no-value.failure');
 
-        $result = $this->artisan(LarexLintCommand::class)
+        $this->artisan(LarexLintCommand::class)
             ->expectsOutput(' FAIL  4 missing values found:')
             ->expectsOutput('├ row 2 (app.a), column 3 (en)')
             ->expectsOutput('├ row 3 (app.b), column 4 (it)')
@@ -39,8 +37,6 @@ class NoValueLinterTest extends TestCase
             ->expectsOutput('└ row 4 (app.c), column 4 (it)')
             ->expectsOutput('FAILURES!')
             ->expectsOutput('Linters: 1, Failures: 1')
-            ->run();
-
-        self::assertEquals(1, $result);
+            ->assertExitCode(1);
     }
 }
