@@ -2,12 +2,11 @@
 
 namespace Lukasss93\Larex\Exporters;
 
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Lukasss93\Larex\Console\LarexExportCommand;
 use Lukasss93\Larex\Contracts\Exporter;
 use Lukasss93\Larex\Support\CsvParser;
-use Lukasss93\Larex\Support\Utils;
+use Lukasss93\Larex\Support\CsvReader;
 
 class LaravelExporter implements Exporter
 {
@@ -22,12 +21,12 @@ class LaravelExporter implements Exporter
     /**
      * @inheritDoc
      */
-    public function handle(LarexExportCommand $command, Collection $rows): int
+    public function handle(LarexExportCommand $command, CsvReader $reader): int
     {
-        $parser=new CsvParser($rows);
+        $parser = CsvParser::create($reader);
         $languages = $parser->parse();
 
-        foreach ($parser->getWarnings() as $warning){
+        foreach ($parser->getWarnings() as $warning) {
             $command->warn($warning);
         }
 
@@ -51,7 +50,7 @@ class LaravelExporter implements Exporter
 
             foreach ($groups as $group => $keys) {
                 $write = fopen(resource_path("lang/$language/$group.php"), 'wb');
-                fwrite($write, "<?php\n\nreturn [\n\n");
+                fwrite($write, /** @lang text */ "<?php\n\nreturn [\n\n");
 
                 foreach ($keys as $key => $value) {
                     self::writeKeyValue($key, $value, $write);
@@ -76,7 +75,7 @@ class LaravelExporter implements Exporter
         $enclosure = config('larex.csv.enclosure');
 
         if (is_array($value)) {
-            fwrite($file, str_repeat('    ', $level)."'{$key}' => [\n");
+            fwrite($file, str_repeat('    ', $level)."'$key' => [\n");
             $level++;
             foreach ($value as $childKey => $childValue) {
                 self::writeKeyValue($childKey, $childValue, $file, $level);
@@ -90,9 +89,9 @@ class LaravelExporter implements Exporter
 
         if (is_int($key) || (is_numeric($key) && ctype_digit($key))) {
             $key = (int) $key;
-            fwrite($file, str_repeat('    ', $level)."{$key} => '{$value}',\n");
+            fwrite($file, str_repeat('    ', $level)."$key => '$value',\n");
         } else {
-            fwrite($file, str_repeat('    ', $level)."'{$key}' => '{$value}',\n");
+            fwrite($file, str_repeat('    ', $level)."'$key' => '$value',\n");
         }
     }
 }

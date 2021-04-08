@@ -144,7 +144,6 @@ class JsonGroupsExporterTest extends TestCase
 
         $this->artisan(LarexExportCommand::class, ['exporter' => 'json:group'])
             ->expectsOutput("Processing the '$this->file' file...")
-            ->expectsOutput('Invalid row at line 3. The row will be skipped.')
             ->expectsOutput('Missing key name at line 4. The row will be skipped.')
             ->expectsOutput('app.second at line 5, column 3 (en) is missing. It will be skipped.')
             ->expectsOutput('resources/lang/en/app.json created successfully.')

@@ -32,4 +32,14 @@ class CsvReader
     {
         return $this->reader->getRows()->mapInto(Collection::class);
     }
+
+    public function getReader(): SimpleExcelReader
+    {
+        return $this->reader;
+    }
+
+    public function getPath(): string
+    {
+        return $this->reader->getPath();
+    }
 }

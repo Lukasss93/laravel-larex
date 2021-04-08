@@ -2,12 +2,12 @@
 
 namespace Lukasss93\Larex\Exporters;
 
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use JsonException;
 use Lukasss93\Larex\Console\LarexExportCommand;
 use Lukasss93\Larex\Contracts\Exporter;
 use Lukasss93\Larex\Support\CsvParser;
+use Lukasss93\Larex\Support\CsvReader;
 use Lukasss93\Larex\Support\Utils;
 
 class JsonGroupsExporter implements Exporter
@@ -24,12 +24,12 @@ class JsonGroupsExporter implements Exporter
      * @inheritDoc
      * @throws JsonException
      */
-    public function handle(LarexExportCommand $command, Collection $rows): int
+    public function handle(LarexExportCommand $command, CsvReader $reader): int
     {
-        $parser=new CsvParser($rows);
+        $parser = CsvParser::create($reader);
         $languages = $parser->setHandleSubKey(false)->parse();
 
-        foreach ($parser->getWarnings() as $warning){
+        foreach ($parser->getWarnings() as $warning) {
             $command->warn($warning);
         }
 

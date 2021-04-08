@@ -3,9 +3,9 @@
 namespace Lukasss93\Larex\Console;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Lukasss93\Larex\Contracts\Exporter;
+use Lukasss93\Larex\Support\CsvReader;
 use Lukasss93\Larex\Support\Utils;
 
 class LarexExportCommand extends Command
@@ -98,8 +98,8 @@ class LarexExportCommand extends Command
             return 1;
         }
 
-        //file parsing
-        $csv = Utils::csvToCollection(base_path($this->file))->mapInto(Collection::class);
+        //csv reader
+        $reader = CsvReader::create(base_path($this->file));
 
         //get the exporter name
         $exporterKey = $this->argument('exporter') ?? config('larex.exporters.default');
@@ -128,6 +128,6 @@ class LarexExportCommand extends Command
         }
 
         //call the exporter
-        return $exporter->handle($this, $csv);
+        return $exporter->handle($this, $reader);
     }
 }

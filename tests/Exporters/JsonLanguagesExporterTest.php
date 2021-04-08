@@ -100,7 +100,6 @@ class JsonLanguagesExporterTest extends TestCase
 
         $this->artisan(LarexExportCommand::class, ['exporter' => 'json:lang'])
             ->expectsOutput("Processing the '$this->file' file...")
-            ->expectsOutput('Invalid row at line 2. The row will be skipped.')
             ->expectsOutput('Missing key name at line 3. The row will be skipped.')
             ->expectsOutput('app.zero at line 4, column 3 (en) is missing. It will be skipped.')
             ->expectsOutput('resources/lang/en.json created successfully.')

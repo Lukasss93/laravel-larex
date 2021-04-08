@@ -2,8 +2,8 @@
 
 namespace Lukasss93\Larex\Contracts;
 
-use Illuminate\Support\Collection;
 use Lukasss93\Larex\Console\LarexExportCommand;
+use Lukasss93\Larex\Support\CsvReader;
 
 interface Exporter
 {
@@ -12,12 +12,12 @@ interface Exporter
      * @return string
      */
     public static function description(): string;
-    
+
     /**
      * Exporter logic
      * @param LarexExportCommand $command
-     * @param Collection $rows
+     * @param CsvReader $reader
      * @return int
      */
-    public function handle(LarexExportCommand $command, Collection $rows): int;
+    public function handle(LarexExportCommand $command, CsvReader $reader): int;
 }
