@@ -25,8 +25,8 @@
         "ext-dom": "*",
         "ext-json": "*",
         "illuminate/support": "^6.0|^7.0|^8.0",
-        "loilo/fuse": "^4.0"
-
+        "loilo/fuse": "^4.0",
+        "spatie/simple-excel": "^1.13"
     },
     "require-dev": {
         "guzzlehttp/guzzle": "^6.5",
