@@ -5,6 +5,7 @@ namespace Lukasss93\Larex\Linters;
 use Illuminate\Support\Collection;
 use Lukasss93\Larex\Contracts\Linter;
 use Lukasss93\Larex\Exceptions\LintException;
+use Lukasss93\Larex\Support\CsvReader;
 use Lukasss93\Larex\Support\Utils;
 
 class ValidLanguageCodeLinter implements Linter
@@ -20,9 +21,9 @@ class ValidLanguageCodeLinter implements Linter
     /**
      * @inheritDoc
      */
-    public function handle(Collection $rows): void
+    public function handle(CsvReader $reader): void
     {
-        collect($rows->first())->skip(2)->each(function ($code, $n) {
+        $reader->getHeader()->skip(2)->each(function ($code, $n) {
             $suggest = Utils::isValidLanguageCode($code);
 
             if ($suggest !== true) {

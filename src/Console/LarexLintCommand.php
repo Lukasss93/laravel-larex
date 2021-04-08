@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Lukasss93\Larex\Contracts\Linter;
 use Lukasss93\Larex\Exceptions\LintException;
+use Lukasss93\Larex\Support\CsvReader;
 use Lukasss93\Larex\Support\Utils;
 
 class LarexLintCommand extends Command
@@ -72,7 +73,7 @@ class LarexLintCommand extends Command
                 $this->warn($instance->description());
 
                 try {
-                    $instance->handle(Utils::csvToCollection(base_path($this->file)));
+                    $instance->handle(CsvReader::create(base_path($this->file)));
 
                     $this->line("<bg=green> PASS </> <fg=green>Lint passed successfully.</>");
                     $status->push(true);

@@ -4,10 +4,10 @@
 namespace Lukasss93\Larex\Linters;
 
 
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Lukasss93\Larex\Contracts\Linter;
 use Lukasss93\Larex\Exceptions\LintException;
+use Lukasss93\Larex\Support\CsvReader;
 use Lukasss93\Larex\Support\Utils;
 
 class UntranslatedStringsLinter implements Linter
@@ -23,16 +23,14 @@ class UntranslatedStringsLinter implements Linter
     /**
      * @inheritDoc
      */
-    public function handle(Collection $rows): void
+    public function handle(CsvReader $reader): void
     {
-        $filesFound=Utils::findFiles(config('larex.search.dirs'), config('larex.search.patterns'));
+        $filesFound = Utils::findFiles(config('larex.search.dirs'), config('larex.search.patterns'));
         $stringsFound = Utils::parseStrings($filesFound, config('larex.search.functions'));
 
-        $stringsSaved = $rows
-            ->skip(1)
-            ->map(function ($item) {
-                return "{$item[0]}.{$item[1]}";
-            })->values();
+        $stringsSaved = $reader->getRows()->map(function ($item) {
+            return "{$item['group']}.{$item['key']}";
+        })->values();
 
         $stringsUntranslated = $stringsFound->reject(function ($item) use ($stringsSaved) {
             return $stringsSaved->contains($item['string']);

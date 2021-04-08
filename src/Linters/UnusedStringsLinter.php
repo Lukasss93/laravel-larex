@@ -2,10 +2,10 @@
 
 namespace Lukasss93\Larex\Linters;
 
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Lukasss93\Larex\Contracts\Linter;
 use Lukasss93\Larex\Exceptions\LintException;
+use Lukasss93\Larex\Support\CsvReader;
 use Lukasss93\Larex\Support\Utils;
 
 class UnusedStringsLinter implements Linter
@@ -21,22 +21,21 @@ class UnusedStringsLinter implements Linter
     /**
      * @inheritDoc
      */
-    public function handle(Collection $rows): void
+    public function handle(CsvReader $reader): void
     {
-        $filesFound=Utils::findFiles(config('larex.search.dirs'), config('larex.search.patterns'));
+        $filesFound = Utils::findFiles(config('larex.search.dirs'), config('larex.search.patterns'));
         $stringsFound = Utils::parseStrings($filesFound, config('larex.search.functions'))->pluck('string');
-        $stringsSaved = $rows->skip(1);
 
-        $stringsUnused = $stringsSaved->reject(function ($item) use ($stringsFound) {
-            return $stringsFound->contains("{$item[0]}.{$item[1]}");
-        });
+        $stringsUnused = $reader->getRows()->reject(function ($item) use ($stringsFound) {
+            return $stringsFound->contains("{$item['group']}.{$item['key']}");
+        })->collect();
 
         if ($stringsUnused->isNotEmpty()) {
             $errors = collect([]);
 
             foreach ($stringsUnused as $i => $item) {
-                $line = $i + 1;
-                $errors->push("{$item[0]}.{$item[1]} is unused at line {$line}");
+                $line = $i + 2;
+                $errors->push("{$item['group']}.{$item['key']} is unused at line {$line}");
             }
 
             $subject = Str::plural('string', $errors->count());

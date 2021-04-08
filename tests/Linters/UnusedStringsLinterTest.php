@@ -14,7 +14,7 @@ class UnusedStringsLinterTest extends TestCase
         parent::setUp();
 
         //create a test blade file with @lang functions
-        $testFilePath = resource_path('views' . DIRECTORY_SEPARATOR . 'test.blade.php');
+        $testFilePath = resource_path('views/test.blade.php');
 
         if (File::exists($testFilePath)) {
             File::delete($testFilePath);

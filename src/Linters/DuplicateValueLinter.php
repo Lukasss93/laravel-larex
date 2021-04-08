@@ -8,6 +8,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Lukasss93\Larex\Contracts\Linter;
 use Lukasss93\Larex\Exceptions\LintException;
+use Lukasss93\Larex\Support\CsvReader;
 use Lukasss93\Larex\Support\Utils;
 
 class DuplicateValueLinter implements Linter
@@ -23,25 +24,21 @@ class DuplicateValueLinter implements Linter
     /**
      * @inheritDoc
      */
-    public function handle(Collection $rows): void
+    public function handle(CsvReader $reader): void
     {
-        $header = $rows->first();
-
         $errors = collect([]);
 
-        $rows->skip(1)->each(function ($columns, $rowN) use ($header, $errors) {
-            [$group, $key] = $columns;
+        $reader->getRows()->each(function ($columns, $line) use ($errors) {
+            $line+=2;
 
-            $duplicates = Utils::getDuplicateValues(collect($columns)->skip(2));
+            $duplicates = Utils::getDuplicateValues($columns->skip(2));
 
             if (count($duplicates) > 0) {
-                $row = $rowN + 1;
-                $message = "row {$row} ({$group}.{$key}), columns: ";
+                $message = "row {$line} ({$columns['group']}.{$columns['key']}), columns: ";
 
                 foreach ($duplicates as $duplicate => $positions) {
-                    foreach ($positions as $p => $position) {
-                        $column = $position + 1;
-                        $lang = $header[$position];
+                    foreach ($positions as $p => $lang) {
+                        $column = array_search($lang, array_keys($columns->toArray()), true) + 1;
                         $message .= "{$column} ({$lang})";
 
                         if ($p < count($positions) - 1) {

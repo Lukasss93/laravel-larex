@@ -8,6 +8,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Lukasss93\Larex\Contracts\Linter;
 use Lukasss93\Larex\Exceptions\LintException;
+use Lukasss93\Larex\Support\CsvReader;
 
 class NoValueLinter implements Linter
 {
@@ -18,30 +19,25 @@ class NoValueLinter implements Linter
     {
         return 'Checking missing values...';
     }
-    
+
     /**
      * @inheritDoc
      */
-    public function handle(Collection $rows): void
+    public function handle(CsvReader $reader): void
     {
-        $header = $rows->first();
-        
         $errors = collect([]);
-        
-        $rows->skip(1)->each(function ($columns, $rowN) use ($header, $errors) {
-            [$group, $key] = $columns;
-            
-            collect($columns)->skip(2)->each(function ($cell, $columnN) use ($errors, $header, $group, $key, $rowN) {
-                if ($cell === '') {
-                    $row = $rowN + 1;
-                    $column = $columnN + 1;
-                    $lang = $header[$columnN];
-                    
-                    $errors->push("row {$row} ({$group}.{$key}), column {$column} ({$lang})");
+
+        $reader->getRows()->each(function ($columns, $line) use ($errors) {
+            $line+=2;
+
+            $columns->skip(2)->each(function ($value, $lang) use ($columns, $line, $errors) {
+                if ($value === '') {
+                    $column = array_search($lang, array_keys($columns->toArray()), true) + 1;
+                    $errors->push("row {$line} ({$columns['group']}.{$columns['key']}), column {$column} ({$lang})");
                 }
             });
         });
-        
+
         if ($errors->isNotEmpty()) {
             $subject = Str::plural('value', $errors->count());
             throw new LintException("{$errors->count()} missing {$subject} found:", $errors->toArray());

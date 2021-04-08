@@ -8,6 +8,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Lukasss93\Larex\Contracts\Linter;
 use Lukasss93\Larex\Exceptions\LintException;
+use Lukasss93\Larex\Support\CsvReader;
 
 class DuplicateKeyLinter implements Linter
 {
@@ -18,31 +19,31 @@ class DuplicateKeyLinter implements Linter
     {
         return 'Checking duplicated keys...';
     }
-    
+
     /**
      * @inheritDoc
      */
-    public function handle(Collection $rows): void
+    public function handle(CsvReader $reader): void
     {
         $count = [];
-        
-        $rows->skip(1)->each(function ($columns, $rowN) use (&$count) {
-            [$group, $key] = $columns;
-            $count["{$group}.{$key}"][] = $rowN;
+
+        $reader->getRows()->each(function ($columns, $line) use (&$count) {
+            $line+=2;
+            $count["{$columns['group']}.{$columns['key']}"][] = $line;
         });
-        
+
         $duplicates = collect($count)->filter(function ($items) {
             return count($items) > 1;
         });
-        
+
         if ($duplicates->isNotEmpty()) {
             $errors = collect([]);
-            
+
             foreach ($duplicates as $duplicate => $positions) {
                 $message = '';
                 foreach ($positions as $p => $position) {
-                    $message .= $position + 1;
-                    
+                    $message .= $position;
+
                     if ($p < count($positions) - 1) {
                         $message .= ', ';
                     }
@@ -50,7 +51,7 @@ class DuplicateKeyLinter implements Linter
                 $message .= " ({$duplicate})";
                 $errors->push($message);
             }
-            
+
             $subject = Str::plural('key', $duplicates->count());
             throw new LintException("{$duplicates->count()} duplicate {$subject} found:", $errors->toArray());
         }
