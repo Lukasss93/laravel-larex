@@ -4,7 +4,8 @@ namespace Lukasss93\Larex\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use Lukasss93\Larex\Support\Utils;
+use Lukasss93\Larex\Support\CsvReader;
+use Lukasss93\Larex\Support\CsvWriter;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Helper\TableCell;
 use Symfony\Component\Console\Helper\TableSeparator;
@@ -56,32 +57,30 @@ class LarexInsertCommand extends Command
             return 1;
         }
 
-        //get the csv
-        $csv = Utils::csvToCollection(base_path($this->file));
+        //csv reader
+        $reader = CsvReader::create(base_path($this->file));
 
         //get csv header
-        $header = $csv->get(0);
+        $header = $reader->getHeader();
 
         //get csv rows
-        $rows = $csv->skip(1);
+        $rows = $reader->getRows()->collect();
 
         //get existing groups
         $availableGroups = $rows
-            ->pluck(0)
+            ->pluck('group')
             ->unique()
             ->toArray();
 
         //get existing keys
         $availableKeys = $rows
-            ->pluck(1)
+            ->pluck('key')
             ->unique()
-            ->map(function ($item) {
-                return "{$item}.";
-            })
+            ->map(fn($item) => "{$item}.")
             ->toArray();
 
         //get available languages
-        $languages = collect($header)->skip(2)->values();
+        $languages = $header->skip(2)->values();
 
         //initialize data
         $data = collect([]);
@@ -113,7 +112,7 @@ class LarexInsertCommand extends Command
                 } while ($key === '');
                 $data->put('key', $key);
 
-                if ($rows->where(0, $group)->where(1, $key)->isNotEmpty()) {
+                if ($rows->contains('group', $group) && $rows->contains('key', $key)) {
                     $continue = $this->askWithCompletion('<fg=red>The group/key pair already exists. Do you want to continue?</>', ['yes', 'no'], 'no') === 'yes';
                 }
             } while (!$continue);
@@ -149,9 +148,11 @@ class LarexInsertCommand extends Command
         } while ($this->askWithCompletion('Are you sure?', ['yes', 'no'], 'yes') !== 'yes');
 
         //append to csv
-        $csv->push($data->values()->toArray());
+        $rows->push($data->values()->toArray());
 
-        Utils::collectionToCsv($csv, base_path($this->file));
+        CsvWriter::create(base_path($this->file))
+            ->addRows($rows->toArray());
+
         $this->info('Item added successfully.');
 
         if ($this->option('export')) {
