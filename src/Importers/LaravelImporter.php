@@ -60,8 +60,6 @@ class LaravelImporter implements Importer
         }
 
         //creating the csv file
-        $header = collect(['group', 'key'])->merge($languages);
-        $headerCount = $header->count();
         $data = collect([]);
 
         foreach ($rawValues as $rawValue) {
@@ -75,27 +73,25 @@ class LaravelImporter implements Importer
                     'key' => $rawValue['key'],
                 ];
 
-                for ($i = 2; $i < $headerCount; $i++) {
-                    $real = $rawValue['lang'] === $header->get($i) ? $rawValue['value'] : '';
-                    $output[$header->get($i)] = $real;
+                foreach ($languages as $lang) {
+                    $real = $rawValue['lang'] === $lang ? $rawValue['value'] : '';
+                    $output[$lang] = $real;
                 }
 
                 $data->push($output);
             } else {
-                for ($i = 2; $i < $headerCount; $i++) {
-                    $code = $rawValue['lang'] === $header->get($i) ? $rawValue['value'] : null;
+                foreach ($languages as $lang) {
+                    $code = $rawValue['lang'] === $lang ? $rawValue['value'] : null;
 
                     if ($code !== null) {
                         $new = $data->get($index);
-                        $new[$header->get($i)] = $rawValue['value'];
+                        $new[$lang] = $rawValue['value'];
                         $data->put($index, $new);
                     }
                 }
             }
         }
 
-        return $data
-            ->prepend($header->toArray())
-            ->values();
+        return $data->values();
     }
 }

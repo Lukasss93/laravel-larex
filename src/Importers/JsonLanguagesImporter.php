@@ -4,6 +4,7 @@ namespace Lukasss93\Larex\Importers;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
+use JsonException;
 use Lukasss93\Larex\Console\LarexImportCommand;
 use Lukasss93\Larex\Contracts\Importer;
 
@@ -19,6 +20,7 @@ class JsonLanguagesImporter implements Importer
 
     /**
      * @inheritDoc
+     * @throws JsonException
      */
     public function handle(LarexImportCommand $command): Collection
     {
@@ -29,7 +31,7 @@ class JsonLanguagesImporter implements Importer
         $files = File::glob(resource_path('lang/*.json'));
 
         foreach ($files as $file) {
-            $items = json_decode(File::get($file), true);
+            $items = json_decode(File::get($file), true, 512, JSON_THROW_ON_ERROR);
             $lang = pathinfo($file, PATHINFO_FILENAME);
 
             if (!$languages->contains($lang)) {
@@ -52,8 +54,6 @@ class JsonLanguagesImporter implements Importer
         }
 
         //creating the csv file
-        $header = collect(['group', 'key'])->merge($languages);
-        $headerCount = $header->count();
         $data = collect([]);
 
         foreach ($rawValues as $rawValue) {
@@ -67,27 +67,25 @@ class JsonLanguagesImporter implements Importer
                     'key' => $rawValue['key'],
                 ];
 
-                for ($i = 2; $i < $headerCount; $i++) {
-                    $real = $rawValue['lang'] === $header->get($i) ? $rawValue['value'] : '';
-                    $output[$header->get($i)] = $real;
+                foreach ($languages as $lang) {
+                    $real = $rawValue['lang'] === $lang ? $rawValue['value'] : '';
+                    $output[$lang] = $real;
                 }
 
                 $data->push($output);
             } else {
-                for ($i = 2; $i < $headerCount; $i++) {
-                    $code = $rawValue['lang'] === $header->get($i) ? $rawValue['value'] : null;
+                foreach ($languages as $lang) {
+                    $code = $rawValue['lang'] === $lang ? $rawValue['value'] : null;
 
                     if ($code !== null) {
                         $new = $data->get($index);
-                        $new[$header->get($i)] = $rawValue['value'];
+                        $new[$lang] = $rawValue['value'];
                         $data->put($index, $new);
                     }
                 }
             }
         }
 
-        return $data
-            ->prepend($header->toArray())
-            ->values();
+        return $data->values();
     }
 }

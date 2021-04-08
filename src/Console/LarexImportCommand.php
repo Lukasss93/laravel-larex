@@ -5,7 +5,7 @@ namespace Lukasss93\Larex\Console;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Lukasss93\Larex\Contracts\Importer;
-use Lukasss93\Larex\Support\Utils;
+use Lukasss93\Larex\Support\CsvWriter;
 
 class LarexImportCommand extends Command
 {
@@ -90,7 +90,8 @@ class LarexImportCommand extends Command
         //TODO
 
         //write csv
-        Utils::collectionToCsv($items, base_path($this->file));
+        CsvWriter::create(base_path($this->file))
+            ->addRows($items->toArray());
 
         $this->info('Data imported successfully.');
 
