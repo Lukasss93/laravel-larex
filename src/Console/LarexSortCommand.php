@@ -4,7 +4,8 @@ namespace Lukasss93\Larex\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use Lukasss93\Larex\Support\Utils;
+use Lukasss93\Larex\Support\CsvReader;
+use Lukasss93\Larex\Support\CsvWriter;
 
 class LarexSortCommand extends Command
 {
@@ -55,18 +56,13 @@ class LarexSortCommand extends Command
             return 1;
         }
 
-        [$header, $rows] = Utils::csvToCollection(base_path($this->file))->partition(function ($item, $key) {
-            return $key === 0;
-        });
+        $content = CsvReader::create(base_path($this->file))
+            ->getRows()
+            ->sortBy(fn ($item) => [$item['group'], $item['key']])
+            ->collect();
 
-        $content = collect([])
-            ->merge($header)
-            ->merge($rows->sortBy(function ($item) {
-                return [$item[0], $item[1]];
-            }))
-            ->values();
-
-        Utils::collectionToCsv($content, base_path($this->file));
+        CsvWriter::create(base_path($this->file))
+            ->addRows($content->toArray());
 
         $this->info('Sorting completed.');
         return 0;

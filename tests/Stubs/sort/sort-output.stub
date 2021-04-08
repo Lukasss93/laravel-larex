@@ -1,8 +1,4 @@
 group,key,en
-aaa,bca,"123
-
-ok
-
-wow"
+aaa,bca,123 ok wow
 aaa,cba,123
 bbb,abc,123
