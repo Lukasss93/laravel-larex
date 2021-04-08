@@ -15,40 +15,6 @@ use Symfony\Component\Finder\SplFileInfo;
 class Utils
 {
     /**
-     * Get a collection from csv file
-     * @param string $filename
-     * @return Collection
-     */
-    public static function csvToCollection(string $filename): Collection
-    {
-        $output = collect([]);
-        $file = fopen($filename, 'rb');
-        $delimiter = config('larex.csv.delimiter');
-        while (($columns = fgetcsv($file, 0, $delimiter)) !== false) {
-            $output->push($columns);
-        }
-        fclose($file);
-        return $output;
-    }
-
-    /**
-     * Write a collection to csv file
-     * @param Collection $array
-     * @param string $filename
-     */
-    public static function collectionToCsv(Collection $array, string $filename): void
-    {
-        $file = fopen($filename, 'wb');
-        $delimiter = config('larex.csv.delimiter');
-        $enclosure = config('larex.csv.enclosure');
-        $escape = config('larex.csv.escape');
-        foreach ($array as $row) {
-            self::fputcsv($file, $row, $delimiter, $enclosure, $escape);
-        }
-        fclose($file);
-    }
-
-    /**
      * Get a stub file
      * @param string $name
      * @return string
