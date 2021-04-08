@@ -24,7 +24,7 @@ class LarexInsertCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'larex:insert {--e|export : Convert the CSV file to Laravel lang files}';
+    protected $signature = 'larex:insert {--e|export= : Convert the CSV file to Laravel lang files}';
 
     /**
      * The console command description.
@@ -155,9 +155,11 @@ class LarexInsertCommand extends Command
 
         $this->info('Item added successfully.');
 
-        if ($this->option('export')) {
+        $export = $this->option('export');
+        if ($export !== false) {
+            $export = $export === true ? null : $export;
             $this->line('');
-            $this->call('larex:export');
+            $this->call(LarexExportCommand::class, ['exporter' => $export]);
         }
 
         return 0;
