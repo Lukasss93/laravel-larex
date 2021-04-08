@@ -72,7 +72,7 @@ class LaravelExporter implements Exporter
 
     public static function writeKeyValue($key, $value, &$file, int $level = 1): void
     {
-        $enclosure = config('larex.csv.enclosure');
+        $enclosure = '"';
 
         if (is_array($value)) {
             fwrite($file, str_repeat('    ', $level)."'$key' => [\n");
