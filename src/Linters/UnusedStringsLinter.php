@@ -13,7 +13,7 @@ class UnusedStringsLinter implements Linter
     /**
      * @inheritDoc
      */
-    public function description(): string
+    public static function description(): string
     {
         return 'Searching unused strings...';
     }

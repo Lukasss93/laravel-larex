@@ -2,7 +2,6 @@
 
 namespace Lukasss93\Larex\Linters;
 
-use Illuminate\Support\Collection;
 use Lukasss93\Larex\Contracts\Linter;
 use Lukasss93\Larex\Exceptions\LintException;
 use Lukasss93\Larex\Support\CsvReader;
@@ -12,7 +11,7 @@ class ConcurrentKeyLinter implements Linter
     /**
      * @inheritDoc
      */
-    public function description(): string
+    public static function description(): string
     {
         return 'Checking concurrent keys...';
     }

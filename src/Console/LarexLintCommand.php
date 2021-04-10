@@ -70,7 +70,7 @@ class LarexLintCommand extends Command
             $instance = new $linter;
 
             if ($instance instanceof Linter) {
-                $this->warn($instance->description());
+                $this->warn($instance::description());
 
                 try {
                     $instance->handle(CsvReader::create(base_path($this->file)));

@@ -11,7 +11,7 @@ interface Linter
      * Linter description
      * @return string
      */
-    public function description(): string;
+    public static function description(): string;
 
     /**
      * Linter logic

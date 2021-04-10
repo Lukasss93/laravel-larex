@@ -15,7 +15,7 @@ class UntranslatedStringsLinter implements Linter
     /**
      * @inheritDoc
      */
-    public function description(): string
+    public static function description(): string
     {
         return 'Searching untranslated strings...';
     }

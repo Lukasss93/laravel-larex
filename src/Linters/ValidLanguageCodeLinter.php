@@ -2,7 +2,6 @@
 
 namespace Lukasss93\Larex\Linters;
 
-use Illuminate\Support\Collection;
 use Lukasss93\Larex\Contracts\Linter;
 use Lukasss93\Larex\Exceptions\LintException;
 use Lukasss93\Larex\Support\CsvReader;
@@ -13,7 +12,7 @@ class ValidLanguageCodeLinter implements Linter
     /**
      * @inheritDoc
      */
-    public function description(): string
+    public static function description(): string
     {
         return 'Validating language codes in header columns...';
     }
