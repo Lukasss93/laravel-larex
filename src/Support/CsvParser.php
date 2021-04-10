@@ -126,11 +126,4 @@ class CsvParser
             }
         }
     }
-
-    public function validateStructure(): bool
-    {
-        //TODO: group, key, langs
-
-
-    }
 }

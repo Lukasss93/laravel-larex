@@ -3,9 +3,12 @@
 namespace Lukasss93\Larex\Console;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
+use InvalidArgumentException;
 use Lukasss93\Larex\Contracts\Importer;
 use Lukasss93\Larex\Support\CsvWriter;
+use Throwable;
 
 class LarexImportCommand extends Command
 {
@@ -86,8 +89,19 @@ class LarexImportCommand extends Command
         //call the importer
         $items = $importer->handle($this);
 
-        //validate items structure
-        //TODO
+        //check no data
+        if ($items->isEmpty()) {
+            $this->warn('No data found to import.');
+            return 0;
+        }
+
+        try {
+            //validate items structure
+            self::validateCollection($items);
+        } catch (Throwable $e) {
+            $this->error($e->getMessage());
+            return 1;
+        }
 
         //write csv
         CsvWriter::create(base_path($this->file))
@@ -96,5 +110,45 @@ class LarexImportCommand extends Command
         $this->info('Data imported successfully.');
 
         return 0;
+    }
+
+    protected static function validateCollection(Collection $rows): void
+    {
+        $compare = null;
+        foreach ($rows as $i => $columns) {
+
+            if (!is_array($columns)) {
+                throw new InvalidArgumentException("The item must be an array at index $i.");
+            }
+
+            $keys = collect($columns)->keys();
+
+            if ($keys->get(0) !== 'group') {
+                throw new InvalidArgumentException("The first key name of the item must be 'group' at index $i.");
+            }
+
+            if ($keys->get(1) !== 'key') {
+                throw new InvalidArgumentException("The first key name of the item must be 'key' at index $i.");
+            }
+
+            if ($keys->count() <= 2) {
+                throw new InvalidArgumentException("There must be at least one language code at index $i.");
+            }
+
+            if ($compare === null) {
+                $compare = $keys;
+                continue;
+            }
+
+            if ($keys->count() !== $compare->count()) {
+                throw new InvalidArgumentException("All items in the collection must be the same length at index $i.");
+            }
+
+            foreach ($keys->skip(2) as $j => $key) {
+                if ($key !== $compare->get($j)) {
+                    throw new InvalidArgumentException("All items in the collection must have the same keys values in the same position at index $i.");
+                }
+            }
+        }
     }
 }
