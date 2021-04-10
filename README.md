@@ -125,11 +125,11 @@ php artisan vendor:publish --provider="Lukasss93\Larex\LarexServiceProvider" --t
 
 The `larex:export <exporter>` command exports CSV strings to a specific location based on the selected exporter.
 
-| Exporter              | Key        | Default | Description                                        |
-| --------------------- | ---------- | ------- | -------------------------------------------------- |
-| LaravelExporter       | laravel    | Yes     | Export data from CSV to Laravel localization files |
-| JsonGroupsExporter    | json:group | No      | Export data from CSV to JSON by group              |
-| JsonLanguagesExporter | json:lang  | No      | Export data from CSV to JSON by language           |
+| Exporter   | Default | Description                                        |
+| ---------- | ------- | -------------------------------------------------- |
+| laravel    | Yes     | Export data from CSV to Laravel localization files |
+| json:group | No      | Export data from CSV to JSON by group              |
+| json:lang  | No      | Export data from CSV to JSON by language           |
 
 ##### How to create an exporter:
 
@@ -140,11 +140,11 @@ The `larex:export <exporter>` command exports CSV strings to a specific location
 
 The `larex:import <importer>` command imports the strings of the selected importer, into the CSV.
 
-| Importer              | Key        | Default | Description                                        |
-| --------------------- | ---------- | ------- | -------------------------------------------------- |
-| LaravelImporter       | laravel    | Yes     | Import data from Laravel localization files to CSV |
-| JsonGroupsImporter    | json:group | No      | Import data from JSON by group to CSV              |
-| JsonLanguagesImporter | json:lang  | No      | Import data from JSON by language to CSV           |
+| Importer   | Default | Description                                        |
+| ---------- | ------- | -------------------------------------------------- |
+| laravel    | Yes     | Import data from Laravel localization files to CSV |
+| json:group | No      | Import data from JSON by group to CSV              |
+| json:lang  | No      | Import data from JSON by language to CSV           |
 
 ##### How to create an importer:
 

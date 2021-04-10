@@ -1,31 +1,57 @@
 # Changelog
+
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres
+to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+Please check the [UPGRADING.md](https://github.com/Lukasss93/laravel-larex/blob/master/UPGRADING.md)
+file before upgrading to a major version!
+
+## v3.0 - [Unreleased]
+
+### Added
+
+- Added Exporters
+- Added Importers
+- Added possibility to change exporter in `larex:insert` command with `--export=<exporter>` option
+
+### Changed
+
+- Now the `larex:export` command optionally accepts an exporter as argument
+- Now the `larex:import` command optionally accepts an importer as argument
+- Changed Linter interface signature
+
+### Removed
+
+- Removed `larex` command
+- Removed csv options from larex config: delimiter, enclosure, escape
+- Dropped PHP 7.3 support
+- Dropped Laravel 6 support
 
 ## v2.1 - 2021-04-03
+
 ### Added
+
 - Added a confirmation in larex:insert command
 - Added check if group/key already exists when using the larex:insert command
 
 ### Fixed
+
 - Fix null values to group and key questions in larex:insert command
 - Fix "Insert command has problems with utf-8 characters"
 - Fix "Wrong enclosure with larex:insert"
 
-
-## v2.0.1- 2021-03-11
+## v2.0.1 - 2021-03-11
 ### Changed
 - Forced eol to LF
 
 ## v2.0 - 2021-01-09
-Please check the [UPGRADING.md](https://github.com/Lukasss93/laravel-larex/blob/master/UPGRADING.md) 
-file before upgrading to this major version!
-## Added
+
+### Added
 - Added new command `php artisan larex:lint`
 
-## Changed
+### Changed
 - Changed default csv format:
     - Delimiter changed from `;` to `,`
     - Escape character changed from `\"` to `""`
