@@ -3,8 +3,8 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/php-%3E%3D%207.3-blue"/>
-  <img src="https://img.shields.io/badge/laravel-%3E%3D%206.0-orange"/>
+  <img src="https://img.shields.io/badge/php-%3E%3D%207.4-blue"/>
+  <img src="https://img.shields.io/badge/laravel-%3E%3D%207.0-orange"/>
   <a href="https://packagist.org/packages/lukasss93/laravel-larex">
     <img src="https://poser.pugx.org/lukasss93/laravel-larex/v/stable"/>
   </a>
@@ -121,10 +121,39 @@ php artisan vendor:publish --provider="Lukasss93\Larex\LarexServiceProvider" --t
    ];
    ```
 
+### ⏫ Exporters
+
+The `larex:export <exporter>` command exports CSV strings to a specific location based on the selected exporter.
+
+| Exporter              | Key        | Default | Description                                        |
+| --------------------- | ---------- | ------- | -------------------------------------------------- |
+| LaravelExporter       | laravel    | Yes     | Export data from CSV to Laravel localization files |
+| JsonGroupsExporter    | json:group | No      | Export data from CSV to JSON by group              |
+| JsonLanguagesExporter | json:lang  | No      | Export data from CSV to JSON by language           |
+
+##### How to create an exporter:
+
+1. Create a class that implements the `Lukasss93\Larex\Contracts\Exporter` interface
+2. Add your exporter inside the larex config
+
+### ⏬ Importers
+
+The `larex:import <importer>` command imports the strings of the selected importer, into the CSV.
+
+| Importer              | Key        | Default | Description                                        |
+| --------------------- | ---------- | ------- | -------------------------------------------------- |
+| LaravelImporter       | laravel    | Yes     | Import data from Laravel localization files to CSV |
+| JsonGroupsImporter    | json:group | No      | Import data from JSON by group to CSV              |
+| JsonLanguagesImporter | json:lang  | No      | Import data from JSON by language to CSV           |
+
+##### How to create an importer:
+
+1. Create a class that implements the `Lukasss93\Larex\Contracts\Importer` interface
+2. Add your importer inside the larex config
+
 ### 🔍 Linters
 
-Larex provides a linting system by using the `php artisan larex:lint` command 
-to validate your CSV file.
+Larex provides a linting system by using the `php artisan larex:lint` command to validate your CSV file.
 
 ##### Available linters:
 
@@ -143,7 +172,8 @@ to validate your CSV file.
 You can enable/disable any linter you want by comment/uncomment it inside the larex config.
 
 ##### How to create a linter:
-1. Create a class that implements the `Lukasss93\Larex\Contracts\Linter` interface 
+
+1. Create a class that implements the `Lukasss93\Larex\Contracts\Linter` interface
 2. Add your linter inside the larex config
 
 ## ⚗️ Testing
@@ -152,10 +182,20 @@ You can enable/disable any linter you want by comment/uncomment it inside the la
 composer test
 ```
 
+## 🔰 Version Support
+
+| Larex           | PHP                       | Laravel    |
+| --------------- | ------------------------- | ---------- |
+| 1.0             | 7.2                       | ≥ 5.8      |
+| ≥ 1.2 and ≤ 2.1 | 7.2 &#124; 7.3 &#124; 7.4 | ≥ 6        |
+| 3.0             | 7.4 &#124; 8.0            | ≥ 7        |
+
 ## 📃 Changelog
 
-Please see the [CHANGELOG.md](https://github.com/Lukasss93/laravel-larex/blob/master/CHANGELOG.md) for more information on what has changed recently.
+Please see the [CHANGELOG.md](https://github.com/Lukasss93/laravel-larex/blob/master/CHANGELOG.md) for more information
+on what has changed recently.
 
 ## 📖 License
 
-Please see the [LICENSE.md](https://github.com/Lukasss93/laravel-larex/blob/master/LICENSE.md) file for more information.
+Please see the [LICENSE.md](https://github.com/Lukasss93/laravel-larex/blob/master/LICENSE.md) file for more
+information.
