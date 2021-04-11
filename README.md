@@ -2,27 +2,17 @@
     <img style="max-height:400px" src="https://banners.beyondco.de/Laravel%20Larex.png?theme=dark&packageManager=composer+require&packageName=lukasss93%2Flaravel-larex+--dev&pattern=graphPaper&style=style_1&description=Translate+your+Laravel+application+from+a+single+CSV+file%21+&md=1&showWatermark=0&fontSize=125px&images=table"/>
 </p>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/php-%3E%3D%207.4-blue"/>
-  <img src="https://img.shields.io/badge/laravel-%3E%3D%207.0-orange"/>
-  <a href="https://packagist.org/packages/lukasss93/laravel-larex">
-    <img src="https://poser.pugx.org/lukasss93/laravel-larex/v/stable"/>
-  </a>
-  <a href="https://packagist.org/packages/lukasss93/laravel-larex">
-    <img src="https://poser.pugx.org/lukasss93/laravel-larex/downloads"/>
-  </a>
-  <a href="https://packagist.org/packages/lukasss93/laravel-larex">
-    <img src="https://poser.pugx.org/lukasss93/laravel-larex/license"/>
-  </a>
-  <img src="https://img.shields.io/github/workflow/status/Lukasss93/laravel-larex/run-tests"/>
-  <a href="https://codecov.io/gh/Lukasss93/laravel-larex">
-    <img src="https://img.shields.io/codecov/c/github/lukasss93/laravel-larex?token=XcLU2ccFQ7"/>
-  </a>
-</p>
+# Laravel Larex
 
-<p align="center">
-    Translate your Laravel application from a single CSV file!
-</p>
+[![Version](https://poser.pugx.org/lukasss93/laravel-larex/v/stable)](https://packagist.org/packages/lukasss93/laravel-larex)
+[![Downloads](https://poser.pugx.org/lukasss93/laravel-larex/downloads)](https://packagist.org/packages/lukasss93/laravel-larex)
+![PHP](https://img.shields.io/badge/PHP-%3E%3D%207.4-blue)
+![Laravel](https://img.shields.io/badge/Laravel-%3E%3D%207.0-orange)
+[![License](https://poser.pugx.org/lukasss93/laravel-larex/license)](https://packagist.org/packages/lukasss93/laravel-larex)
+![Build](https://img.shields.io/github/workflow/status/Lukasss93/laravel-larex/run-tests)
+[![Coverage](https://img.shields.io/codecov/c/github/lukasss93/laravel-larex?token=XcLU2ccFQ7)](https://codecov.io/gh/Lukasss93/laravel-larex)
+
+> Translate your Laravel application from a single CSV file!
 
 ## 🚀 Installation
 
@@ -196,6 +186,11 @@ composer test
 
 Please see the [CHANGELOG.md](https://github.com/Lukasss93/laravel-larex/blob/master/CHANGELOG.md) for more information
 on what has changed recently.
+
+## 🏅 Credits
+
+- [Luca Patera](https://github.com/Lukasss93)
+- [All Contributors](https://github.com/Lukasss93/laravel-larex/contributors)
 
 ## 📖 License
 
