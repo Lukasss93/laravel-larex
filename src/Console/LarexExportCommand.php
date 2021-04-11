@@ -89,12 +89,14 @@ class LarexExportCommand extends Command
         if (!File::exists(base_path($this->file))) {
             $this->error("The '$this->file' does not exists.");
             $this->line('Please create it with: php artisan larex:init or php artisan larex:import');
+
             return 1;
         }
 
         //check concurrent options
         if ($this->option('include') !== null && $this->option('exclude') !== null) {
             $this->error('The --include and --exclude options can be used only one at a time.');
+
             return 1;
         }
 
@@ -115,6 +117,7 @@ class LarexExportCommand extends Command
                 $this->line("<fg=yellow>$key</> - $description");
             }
             $this->line('');
+
             return 1;
         }
 
@@ -124,6 +127,7 @@ class LarexExportCommand extends Command
         //check if exporter is valid
         if (!($exporter instanceof Exporter)) {
             $this->error(sprintf("Exporter '%s' must implements %s interface.", $exporterKey, Exporter::class));
+
             return 1;
         }
 
