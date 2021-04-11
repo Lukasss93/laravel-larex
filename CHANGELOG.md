@@ -15,6 +15,7 @@ file before upgrading to a major version!
 - Added Exporters
 - Added Importers
 - Added possibility to change exporter in `larex:insert` command with `--export=<exporter>` option
+- Added `larex:localize` command to find unlocalized strings
 
 ### Changed
 
