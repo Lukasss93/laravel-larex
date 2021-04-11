@@ -24,7 +24,7 @@ class ConcurrentKeyLinter implements Linter
         //get keys position
         $count = [];
         $reader->getRows()->each(function ($columns, $line) use (&$count) {
-            $line+=2;
+            $line += 2;
 
             if (!array_key_exists($columns['group'], $count)) {
                 $count[$columns['group']] = [];
@@ -84,7 +84,7 @@ class ConcurrentKeyLinter implements Linter
             $key = $currentKey === $firstKey ? $originalKey : null;
             $row = $currentKey === $firstKey ? $n : null;
             $array[$firstKey] = ['key' => $key, 'row' => $row, 'children' => []];
-        } else if (array_key_exists($originalKey, $array)) {
+        } elseif (array_key_exists($originalKey, $array)) {
             $array[$firstKey]['key'] = $originalKey;
             $array[$firstKey]['row'] = $n;
         }

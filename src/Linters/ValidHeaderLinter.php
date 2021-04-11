@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Lukasss93\Larex\Linters;
-
 
 use Lukasss93\Larex\Contracts\Linter;
 use Lukasss93\Larex\Exceptions\LintException;
@@ -23,25 +21,25 @@ class ValidHeaderLinter implements Linter
      */
     public function handle(CsvReader $reader): void
     {
-        $header=$reader->getHeader();
+        $header = $reader->getHeader();
 
-        if(!isset($header[0])){
+        if (!isset($header[0])) {
             throw new LintException('First header column is missing.');
         }
 
-        if($header[0]!=='group'){
+        if ($header[0] !== 'group') {
             throw new LintException('First header column value is invalid. Must be "group".');
         }
 
-        if(!isset($header[1])){
+        if (!isset($header[1])) {
             throw new LintException('Second header column is missing.');
         }
 
-        if($header[1]!=='key'){
+        if ($header[1] !== 'key') {
             throw new LintException('Second header column value is invalid. Must be "key".');
         }
 
-        if(count($header)<=2){
+        if (count($header) <= 2) {
             throw new LintException('No language columns found.');
         }
     }

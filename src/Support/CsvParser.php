@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Lukasss93\Larex\Support;
-
 
 use Illuminate\Support\Arr;
 
@@ -30,6 +28,7 @@ class CsvParser
     public function setHandleSubKey(bool $value): self
     {
         $this->handleSubKeys = $value;
+
         return $this;
     }
 

@@ -62,7 +62,7 @@ class JsonLanguagesExporterTest extends TestCase
     {
         $this->initFromStub('exporters.json-language.include-exclude.input');
 
-        $this->artisan(LarexExportCommand::class, ['exporter' => 'json:lang','--include'=>'en'])
+        $this->artisan(LarexExportCommand::class, ['exporter' => 'json:lang', '--include' => 'en'])
             ->expectsOutput("Processing the '$this->file' file...")
             ->expectsOutput("resources/lang/en.json created successfully.")
             ->assertExitCode(0);
@@ -80,7 +80,7 @@ class JsonLanguagesExporterTest extends TestCase
     {
         $this->initFromStub('exporters.json-language.include-exclude.input');
 
-        $this->artisan(LarexExportCommand::class, ['exporter' => 'json:lang','--exclude'=>'en'])
+        $this->artisan(LarexExportCommand::class, ['exporter' => 'json:lang', '--exclude' => 'en'])
             ->expectsOutput("Processing the '$this->file' file...")
             ->expectsOutput("resources/lang/it.json created successfully.")
             ->assertExitCode(0);

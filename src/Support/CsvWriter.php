@@ -1,10 +1,8 @@
 <?php
 
-
 namespace Lukasss93\Larex\Support;
 
 use InvalidArgumentException;
-use Lukasss93\Larex\Support\Utils;
 use RuntimeException;
 
 class CsvWriter
@@ -36,9 +34,9 @@ class CsvWriter
     protected function __construct(string $path)
     {
         $this->path = $path;
-        $this->delimiter=',';
-        $this->enclosure='"';
-        $this->escape='"';
+        $this->delimiter = ',';
+        $this->enclosure = '"';
+        $this->escape = '"';
         $this->filePointer = fopen($this->path, 'wb+');
     }
 

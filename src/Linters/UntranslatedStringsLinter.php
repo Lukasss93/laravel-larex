@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Lukasss93\Larex\Linters;
-
 
 use Illuminate\Support\Str;
 use Lukasss93\Larex\Contracts\Linter;
@@ -28,13 +26,14 @@ class UntranslatedStringsLinter implements Linter
         $filesFound = Utils::findFiles(config('larex.search.dirs'), config('larex.search.patterns'));
         $stringsFound = Utils::parseStrings($filesFound, config('larex.search.functions'));
 
-        $stringsSaved = $reader->getRows()->map(function ($item) {
-            return "{$item['group']}.{$item['key']}";
-        })->values();
+        $stringsSaved = $reader
+            ->getRows()
+            ->map(fn($item) => "{$item['group']}.{$item['key']}")
+            ->values();
 
-        $stringsUntranslated = $stringsFound->reject(function ($item) use ($stringsSaved) {
-            return $stringsSaved->contains($item['string']);
-        })->groupBy('filename')
+        $stringsUntranslated = $stringsFound
+            ->reject(fn($item) => $stringsSaved->contains($item['string']))
+            ->groupBy('filename')
             ->map->sortBy('line')
             ->map->values()
             ->flatten(1);
