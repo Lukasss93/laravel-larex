@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Lukasss93\Larex\Linters;
-
 
 use Illuminate\Support\Str;
 use Lukasss93\Larex\Contracts\Linter;
@@ -28,7 +26,7 @@ class DuplicateValueLinter implements Linter
         $errors = collect([]);
 
         $reader->getRows()->each(function ($columns, $line) use ($errors) {
-            $line+=2;
+            $line += 2;
 
             $duplicates = Utils::getDuplicateValues($columns->skip(2));
 

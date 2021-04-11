@@ -49,7 +49,6 @@ class JsonLanguagesImporter implements Importer
                     'lang' => $lang,
                     'value' => $value,
                 ]);
-
             }
         }
 

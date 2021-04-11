@@ -8,13 +8,13 @@ use Lukasss93\Larex\Console\LarexImportCommand;
 interface Importer
 {
     /**
-     * Exporter description
+     * Exporter description.
      * @return string
      */
     public static function description(): string;
 
     /**
-     * Exporter logic
+     * Exporter logic.
      * @param LarexImportCommand $command
      * @return Collection
      */

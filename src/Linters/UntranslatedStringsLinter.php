@@ -28,11 +28,11 @@ class UntranslatedStringsLinter implements Linter
 
         $stringsSaved = $reader
             ->getRows()
-            ->map(fn($item) => "{$item['group']}.{$item['key']}")
+            ->map(fn ($item) => "{$item['group']}.{$item['key']}")
             ->values();
 
         $stringsUntranslated = $stringsFound
-            ->reject(fn($item) => $stringsSaved->contains($item['string']))
+            ->reject(fn ($item) => $stringsSaved->contains($item['string']))
             ->groupBy('filename')
             ->map->sortBy('line')
             ->map->values()
@@ -49,6 +49,4 @@ class UntranslatedStringsLinter implements Linter
             throw new LintException("{$errors->count()} untranslated {$subject} found:", $errors->toArray());
         }
     }
-
-
 }

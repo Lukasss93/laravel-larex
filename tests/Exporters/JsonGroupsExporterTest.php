@@ -15,10 +15,10 @@ class JsonGroupsExporterTest extends TestCase
 
         $this->artisan(LarexExportCommand::class, ['exporter' => 'json:group'])
             ->expectsOutput("Processing the '$this->file' file...")
-            ->expectsOutput("resources/lang/en/app.json created successfully.")
-            ->expectsOutput("resources/lang/en/special.json created successfully.")
-            ->expectsOutput("resources/lang/it/app.json created successfully.")
-            ->expectsOutput("resources/lang/it/special.json created successfully.")
+            ->expectsOutput('resources/lang/en/app.json created successfully.')
+            ->expectsOutput('resources/lang/en/special.json created successfully.')
+            ->expectsOutput('resources/lang/it/app.json created successfully.')
+            ->expectsOutput('resources/lang/it/special.json created successfully.')
             ->assertExitCode(0);
 
         self::assertFileExists(resource_path('lang/en/app.json'));
@@ -53,10 +53,10 @@ class JsonGroupsExporterTest extends TestCase
 
         $this->artisan(LarexExportCommand::class, ['exporter' => 'json:group', '--watch' => true])
             ->expectsOutput("Processing the '$this->file' file...")
-            ->expectsOutput("resources/lang/en/app.json created successfully.")
-            ->expectsOutput("resources/lang/en/special.json created successfully.")
-            ->expectsOutput("resources/lang/it/app.json created successfully.")
-            ->expectsOutput("resources/lang/it/special.json created successfully.")
+            ->expectsOutput('resources/lang/en/app.json created successfully.')
+            ->expectsOutput('resources/lang/en/special.json created successfully.')
+            ->expectsOutput('resources/lang/it/app.json created successfully.')
+            ->expectsOutput('resources/lang/it/special.json created successfully.')
             ->expectsOutput('Waiting for changes...')
             ->assertExitCode(0);
 
@@ -92,8 +92,8 @@ class JsonGroupsExporterTest extends TestCase
 
         $this->artisan(LarexExportCommand::class, ['exporter' => 'json:group', '--include' => 'en'])
             ->expectsOutput("Processing the '$this->file' file...")
-            ->expectsOutput("resources/lang/en/app.json created successfully.")
-            ->expectsOutput("resources/lang/en/special.json created successfully.")
+            ->expectsOutput('resources/lang/en/app.json created successfully.')
+            ->expectsOutput('resources/lang/en/special.json created successfully.')
             ->assertExitCode(0);
 
         self::assertFileExists(resource_path('lang/en/app.json'));
@@ -118,8 +118,8 @@ class JsonGroupsExporterTest extends TestCase
 
         $this->artisan(LarexExportCommand::class, ['exporter' => 'json:group', '--exclude' => 'en'])
             ->expectsOutput("Processing the '$this->file' file...")
-            ->expectsOutput("resources/lang/it/app.json created successfully.")
-            ->expectsOutput("resources/lang/it/special.json created successfully.")
+            ->expectsOutput('resources/lang/it/app.json created successfully.')
+            ->expectsOutput('resources/lang/it/special.json created successfully.')
             ->assertExitCode(0);
 
         self::assertFileDoesNotExist(resource_path('lang/en/app.json'));

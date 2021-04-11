@@ -81,6 +81,7 @@ class LaravelExporter implements Exporter
                 self::writeKeyValue($childKey, $childValue, $file, $level);
             }
             fwrite($file, str_repeat('    ', $level - 1)."],\n");
+
             return;
         }
 

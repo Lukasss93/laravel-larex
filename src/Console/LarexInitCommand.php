@@ -9,7 +9,7 @@ use Lukasss93\Larex\Support\Utils;
 class LarexInitCommand extends Command
 {
     /**
-     * Localization file path
+     * Localization file path.
      *
      * @var string
      */
@@ -54,13 +54,14 @@ class LarexInitCommand extends Command
         }
 
         if (File::exists(base_path($this->file))) {
-            $this->error($this->file . ' already exists.');
+            $this->error($this->file.' already exists.');
+
             return 1;
         }
 
         File::put(base_path($this->file), Utils::getStub($stub));
 
-        $this->info($this->file . ' created successfully.');
+        $this->info($this->file.' created successfully.');
 
         return 0;
     }

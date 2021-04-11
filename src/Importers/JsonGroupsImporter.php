@@ -46,7 +46,6 @@ class JsonGroupsImporter implements Importer
                     'lang' => $lang,
                     'value' => $value,
                 ]);
-
             }
         }
 

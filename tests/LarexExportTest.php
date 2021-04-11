@@ -9,7 +9,7 @@ class LarexExportTest extends TestCase
 {
     public function test_export_with_missing_file(): void
     {
-       $this->artisan(LarexExportCommand::class)
+        $this->artisan(LarexExportCommand::class)
             ->expectsOutput("Processing the '$this->file' file...")
             ->expectsOutput("The '$this->file' does not exists.")
             ->expectsOutput('Please create it with: php artisan larex:init or php artisan larex:import')
@@ -22,7 +22,7 @@ class LarexExportTest extends TestCase
 
         $this->artisan(LarexExportCommand::class, ['--include' => '', '--exclude'=>''])
             ->expectsOutput("Processing the '$this->file' file...")
-            ->expectsOutput("The --include and --exclude options can be used only one at a time.")
+            ->expectsOutput('The --include and --exclude options can be used only one at a time.')
             ->assertExitCode(1);
     }
 

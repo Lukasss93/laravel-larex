@@ -42,14 +42,14 @@ abstract class TestCase extends OrchestraTestCase
                 'larex.search' => [
                     'dirs' => ['resources/views'],
                     'patterns' => ['*.php'],
-                    'functions' => ['__', 'trans', '@lang']
+                    'functions' => ['__', 'trans', '@lang'],
                 ],
             ]);
 
             //clear lang folder
             $items = glob(resource_path('lang/*'));
             foreach ($items as $item) {
-                if(is_dir($item)){
+                if (is_dir($item)) {
                     File::deleteDirectory($item);
                 } else {
                     File::delete($item);
@@ -61,7 +61,8 @@ abstract class TestCase extends OrchestraTestCase
     public function getTestStub(string $name): string
     {
         $name = str_replace('.', '/', $name);
-        $content = file_get_contents(__DIR__ . '/Stubs/' . $name . '.stub');
+        $content = file_get_contents(__DIR__.'/Stubs/'.$name.'.stub');
+
         return Utils::normalizeEOLs($content);
     }
 

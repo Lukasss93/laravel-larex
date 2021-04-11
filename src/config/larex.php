@@ -9,14 +9,14 @@ return [
      */
 
     /**
-     * Default CSV settings
+     * Default CSV settings.
      */
     'csv' => [
         'path' => 'resources/lang/localization.csv',
     ],
 
     /**
-     * Exporters
+     * Exporters.
      */
     'exporters' => [
         // Default exporter
@@ -31,7 +31,7 @@ return [
     ],
 
     /**
-     * Importers
+     * Importers.
      */
     'importers' => [
         // Default importer
@@ -46,7 +46,7 @@ return [
     ],
 
     /**
-     * Linters to run with larex:lint command
+     * Linters to run with larex:lint command.
      */
     'linters' => [
         Lukasss93\Larex\Linters\ValidHeaderLinter::class,
@@ -64,7 +64,7 @@ return [
      * Search criteria for file used by:
      * - UntranslatedStringsLinter
      * - UnusedStringsLinter
-     * - LarexLocalizeCommand
+     * - LarexLocalizeCommand.
      */
     'search' => [
         /**

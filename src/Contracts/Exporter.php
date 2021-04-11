@@ -8,13 +8,13 @@ use Lukasss93\Larex\Support\CsvReader;
 interface Exporter
 {
     /**
-     * Exporter description
+     * Exporter description.
      * @return string
      */
     public static function description(): string;
 
     /**
-     * Exporter logic
+     * Exporter logic.
      * @param LarexExportCommand $command
      * @param CsvReader $reader
      * @return int

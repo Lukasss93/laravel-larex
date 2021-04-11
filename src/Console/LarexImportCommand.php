@@ -13,7 +13,7 @@ use Throwable;
 class LarexImportCommand extends Command
 {
     /**
-     * Localization file path
+     * Localization file path.
      *
      * @var string
      */
@@ -66,6 +66,7 @@ class LarexImportCommand extends Command
                 $this->line("<fg=yellow>$key</> - {$importer::description()}");
             }
             $this->line('');
+
             return 1;
         }
 
@@ -75,12 +76,14 @@ class LarexImportCommand extends Command
         //check if importer is valid
         if (!($importer instanceof Importer)) {
             $this->error(sprintf("Importer '%s' must implements %s interface.", $importerKey, Importer::class));
+
             return 1;
         }
 
         //check file exists
         if (!$this->option('force') && File::exists(base_path($this->file))) {
             $this->error("The '{$this->file}' already exists.");
+
             return 1;
         }
 
@@ -92,6 +95,7 @@ class LarexImportCommand extends Command
         //check no data
         if ($items->isEmpty()) {
             $this->warn('No data found to import.');
+
             return 0;
         }
 
@@ -100,6 +104,7 @@ class LarexImportCommand extends Command
             self::validateCollection($items);
         } catch (Throwable $e) {
             $this->error($e->getMessage());
+
             return 1;
         }
 
@@ -116,7 +121,6 @@ class LarexImportCommand extends Command
     {
         $compare = null;
         foreach ($rows as $i => $columns) {
-
             if (!is_array($columns)) {
                 throw new InvalidArgumentException("The item must be an array at index $i.");
             }

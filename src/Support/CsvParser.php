@@ -8,7 +8,7 @@ class CsvParser
 {
     private CsvReader $reader;
 
-    /** @var string[] $warning */
+    /** @var string[] */
     private array $warning;
 
     private bool $handleSubKeys;

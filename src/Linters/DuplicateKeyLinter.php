@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Lukasss93\Larex\Linters;
-
 
 use Illuminate\Support\Str;
 use Lukasss93\Larex\Contracts\Linter;
@@ -27,7 +25,7 @@ class DuplicateKeyLinter implements Linter
         $count = [];
 
         $reader->getRows()->each(function ($columns, $line) use (&$count) {
-            $line+=2;
+            $line += 2;
             $count["{$columns['group']}.{$columns['key']}"][] = $line;
         });
 
