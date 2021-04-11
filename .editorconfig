@@ -12,7 +12,7 @@ max_line_length = 120
 [*.md]
 trim_trailing_whitespace = false
 
-[*.{yml,yaml}]
+[*.{yml, yaml}]
 indent_size = 2
 
 [*.blade.php]
@@ -22,3 +22,7 @@ trim_trailing_whitespace = false
 ij_php_align_key_value_pairs = false
 ij_php_comma_after_last_array_element = true
 ij_php_keep_indents_on_empty_lines = false
+ij_php_else_if_style = combine
+ij_php_keep_blank_lines_in_code = 1
+ij_php_concat_spaces = false
+ij_php_blank_lines_before_return_statement = 1
