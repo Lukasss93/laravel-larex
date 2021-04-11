@@ -76,6 +76,8 @@ php artisan vendor:publish --provider="Lukasss93\Larex\LarexServiceProvider" --t
 * You can use `php artisan larex:insert` to add new items via CLI too!
 * You can use `php artisan larex:export --include=en,it` to export only _"en"_ and _"it"_ columns.
 * You can use `php artisan larex:export --exclude=it` to export all columns except _"it"_ column.
+* You can use `php artisan larex:localize` to find unlocalized strings (use the `--import` option to add strings in your
+  CSV).
 
 ### 📝 Example
 
