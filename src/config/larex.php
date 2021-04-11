@@ -64,6 +64,7 @@ return [
      * Search criteria for file used by:
      * - UntranslatedStringsLinter
      * - UnusedStringsLinter
+     * - LarexLocalizeCommand
      */
     'search' => [
         /**

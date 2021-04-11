@@ -8,6 +8,7 @@ use Lukasss93\Larex\Console\LarexImportCommand;
 use Lukasss93\Larex\Console\LarexInitCommand;
 use Lukasss93\Larex\Console\LarexInsertCommand;
 use Lukasss93\Larex\Console\LarexLintCommand;
+use Lukasss93\Larex\Console\LarexLocalizeCommand;
 use Lukasss93\Larex\Console\LarexSortCommand;
 
 class LarexServiceProvider extends ServiceProvider
@@ -27,7 +28,7 @@ class LarexServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__ . '/config/larex.php', 'larex');
+        $this->mergeConfigFrom(__DIR__.'/config/larex.php', 'larex');
 
         $this->registerCommands();
     }
@@ -41,13 +42,14 @@ class LarexServiceProvider extends ServiceProvider
             LarexSortCommand::class,
             LarexInsertCommand::class,
             LarexLintCommand::class,
+            LarexLocalizeCommand::class,
         ]);
     }
 
     protected function registerPublishables(): void
     {
         $this->publishes([
-            __DIR__ . '/config/larex.php' => config_path('larex.php'),
+            __DIR__.'/config/larex.php' => config_path('larex.php'),
         ], 'larex-config');
     }
 }
