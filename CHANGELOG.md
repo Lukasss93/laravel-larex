@@ -8,7 +8,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Please check the [UPGRADING.md](https://github.com/Lukasss93/laravel-larex/blob/master/UPGRADING.md)
 file before upgrading to a major version!
 
-## v3.0 - [Unreleased]
+## v3.0 - 2021-04-11
 
 ### Added
 
