@@ -14,7 +14,7 @@ class UntranslatedStringsLinterTest extends TestCase
         parent::setUp();
 
         //create a test blade file with @lang functions
-        $testFilePath = resource_path('views' . DIRECTORY_SEPARATOR . 'test.blade.php');
+        $testFilePath = resource_path('views'.DIRECTORY_SEPARATOR.'test.blade.php');
 
         if (File::exists($testFilePath)) {
             File::delete($testFilePath);
@@ -42,13 +42,13 @@ class UntranslatedStringsLinterTest extends TestCase
             UntranslatedStringsLinter::class,
         ]]);
 
-        $testFilePath = resource_path('views' . DIRECTORY_SEPARATOR . 'test.blade.php');
+        $testFilePath = resource_path('views'.DIRECTORY_SEPARATOR.'test.blade.php');
 
         $this->initFromStub('linters.untranslated-strings.failure');
 
         $this->artisan(LarexLintCommand::class)
             ->expectsOutput(' FAIL  1 untranslated string found:')
-            ->expectsOutput('└ app.news is untranslated at line 90, column 63 in ' . $testFilePath)
+            ->expectsOutput('└ app.news is untranslated at line 90, column 63 in '.$testFilePath)
             ->expectsOutput('FAILURES!')
             ->expectsOutput('Linters: 1, Failures: 1')
             ->assertExitCode(1);

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Lukasss93\Larex\Support;
-
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\LazyCollection;
@@ -25,6 +23,7 @@ class CsvReader
     public function getHeader(): Collection
     {
         $header = $this->reader->getHeaders();
+
         return is_array($header) ? collect($header) : collect([]);
     }
 

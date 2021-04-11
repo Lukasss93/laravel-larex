@@ -48,7 +48,7 @@ class JsonLanguagesExporter implements Exporter
 
             $data = [];
             foreach ($groups as $group => $keys) {
-                foreach ($keys as $key=>$value){
+                foreach ($keys as $key=>$value) {
                     $data["$group.$key"] = $value;
                 }
             }

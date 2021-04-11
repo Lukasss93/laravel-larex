@@ -178,7 +178,7 @@ class LarexImportTest extends TestCase
         config(['larex.importers.list.invalid' => $importer]);
 
         $this->artisan(LarexImportCommand::class, ['importer' => 'invalid'])
-            ->expectsOutput("There must be at least one language code at index 0.")
+            ->expectsOutput('There must be at least one language code at index 0.')
             ->assertExitCode(1);
     }
 
@@ -211,7 +211,7 @@ class LarexImportTest extends TestCase
         config(['larex.importers.list.invalid' => $importer]);
 
         $this->artisan(LarexImportCommand::class, ['importer' => 'invalid'])
-            ->expectsOutput("All items in the collection must be the same length at index 1.")
+            ->expectsOutput('All items in the collection must be the same length at index 1.')
             ->assertExitCode(1);
     }
 
@@ -245,7 +245,7 @@ class LarexImportTest extends TestCase
         config(['larex.importers.list.invalid' => $importer]);
 
         $this->artisan(LarexImportCommand::class, ['importer' => 'invalid'])
-            ->expectsOutput("All items in the collection must have the same keys values in the same position at index 1.")
+            ->expectsOutput('All items in the collection must have the same keys values in the same position at index 1.')
             ->assertExitCode(1);
     }
 }

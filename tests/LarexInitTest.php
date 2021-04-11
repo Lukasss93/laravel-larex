@@ -11,7 +11,7 @@ class LarexInitTest extends TestCase
     public function test_init_command(): void
     {
         $this->artisan(LarexInitCommand::class)
-            ->expectsOutput($this->file . ' created successfully.')
+            ->expectsOutput($this->file.' created successfully.')
             ->assertExitCode(0);
 
         self::assertFileExists(base_path($this->file));
@@ -20,8 +20,8 @@ class LarexInitTest extends TestCase
 
     public function test_init_command_with_base_option(): void
     {
-        $this->artisan(LarexInitCommand::class,['--base'=>true])
-            ->expectsOutput($this->file . ' created successfully.')
+        $this->artisan(LarexInitCommand::class, ['--base'=>true])
+            ->expectsOutput($this->file.' created successfully.')
             ->assertExitCode(0);
 
         self::assertFileExists(base_path($this->file));
@@ -33,7 +33,7 @@ class LarexInitTest extends TestCase
         $this->artisan(LarexInitCommand::class)->run();
 
         $this->artisan(LarexInitCommand::class)
-            ->expectsOutput($this->file . ' already exists.')
+            ->expectsOutput($this->file.' already exists.')
             ->assertExitCode(1);
 
         self::assertFileExists(base_path($this->file));

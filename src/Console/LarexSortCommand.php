@@ -10,7 +10,7 @@ use Lukasss93\Larex\Support\CsvWriter;
 class LarexSortCommand extends Command
 {
     /**
-     * Localization file path
+     * Localization file path.
      *
      * @var string
      */
@@ -53,6 +53,7 @@ class LarexSortCommand extends Command
         if (!File::exists(base_path($this->file))) {
             $this->error("The '{$this->file}' does not exists.");
             $this->line('Please create it with: php artisan larex:init');
+
             return 1;
         }
 
@@ -65,6 +66,7 @@ class LarexSortCommand extends Command
             ->addRows($content->toArray());
 
         $this->info('Sorting completed.');
+
         return 0;
     }
 }

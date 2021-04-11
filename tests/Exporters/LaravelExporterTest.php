@@ -15,10 +15,10 @@ class LaravelExporterTest extends TestCase
 
         $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel'])
             ->expectsOutput("Processing the '$this->file' file...")
-            ->expectsOutput("resources/lang/en/app.php created successfully.")
-            ->expectsOutput("resources/lang/en/special.php created successfully.")
-            ->expectsOutput("resources/lang/it/app.php created successfully.")
-            ->expectsOutput("resources/lang/it/special.php created successfully.")
+            ->expectsOutput('resources/lang/en/app.php created successfully.')
+            ->expectsOutput('resources/lang/en/special.php created successfully.')
+            ->expectsOutput('resources/lang/it/app.php created successfully.')
+            ->expectsOutput('resources/lang/it/special.php created successfully.')
             ->assertExitCode(0);
 
         self::assertFileExists(resource_path('lang/en/app.php'));
@@ -53,10 +53,10 @@ class LaravelExporterTest extends TestCase
 
         $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel', '--watch'=>true])
             ->expectsOutput("Processing the '$this->file' file...")
-            ->expectsOutput("resources/lang/en/app.php created successfully.")
-            ->expectsOutput("resources/lang/en/special.php created successfully.")
-            ->expectsOutput("resources/lang/it/app.php created successfully.")
-            ->expectsOutput("resources/lang/it/special.php created successfully.")
+            ->expectsOutput('resources/lang/en/app.php created successfully.')
+            ->expectsOutput('resources/lang/en/special.php created successfully.')
+            ->expectsOutput('resources/lang/it/app.php created successfully.')
+            ->expectsOutput('resources/lang/it/special.php created successfully.')
             ->expectsOutput('Waiting for changes...')
             ->assertExitCode(0);
 
@@ -90,10 +90,10 @@ class LaravelExporterTest extends TestCase
     {
         $this->initFromStub('exporters.laravel.include-exclude.input');
 
-        $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel','--include'=>'en'])
+        $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel', '--include'=>'en'])
             ->expectsOutput("Processing the '$this->file' file...")
-            ->expectsOutput("resources/lang/en/app.php created successfully.")
-            ->expectsOutput("resources/lang/en/another.php created successfully.")
+            ->expectsOutput('resources/lang/en/app.php created successfully.')
+            ->expectsOutput('resources/lang/en/another.php created successfully.')
             ->assertExitCode(0);
 
         self::assertFileExists(resource_path('lang/en/app.php'));
@@ -116,10 +116,10 @@ class LaravelExporterTest extends TestCase
     {
         $this->initFromStub('exporters.laravel.include-exclude.input');
 
-        $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel','--exclude'=>'en'])
+        $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel', '--exclude'=>'en'])
             ->expectsOutput("Processing the '$this->file' file...")
-            ->expectsOutput("resources/lang/it/app.php created successfully.")
-            ->expectsOutput("resources/lang/it/another.php created successfully.")
+            ->expectsOutput('resources/lang/it/app.php created successfully.')
+            ->expectsOutput('resources/lang/it/another.php created successfully.')
             ->assertExitCode(0);
 
         self::assertFileDoesNotExist(resource_path('lang/en/app.php'));

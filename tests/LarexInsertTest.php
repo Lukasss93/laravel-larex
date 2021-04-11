@@ -212,6 +212,4 @@ class LarexInsertTest extends TestCase
             File::get(resource_path('lang/it/app.php'))
         );
     }
-
-
 }

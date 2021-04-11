@@ -13,7 +13,7 @@ use Symfony\Component\Console\Helper\TableSeparator;
 class LarexInsertCommand extends Command
 {
     /**
-     * Localization file path
+     * Localization file path.
      *
      * @var string
      */
@@ -54,6 +54,7 @@ class LarexInsertCommand extends Command
         if (!File::exists(base_path($this->file))) {
             $this->error("The '{$this->file}' does not exists.");
             $this->line('Please create it with: php artisan larex:init');
+
             return 1;
         }
 
@@ -76,7 +77,7 @@ class LarexInsertCommand extends Command
         $availableKeys = $rows
             ->pluck('key')
             ->unique()
-            ->map(fn($item) => "{$item}.")
+            ->map(fn ($item) => "{$item}.")
             ->toArray();
 
         //get available languages
@@ -117,7 +118,6 @@ class LarexInsertCommand extends Command
                 }
             } while (!$continue);
 
-
             foreach ($languages as $i => $language) {
                 $count = $i + 1;
                 $value = $this->ask(
@@ -144,7 +144,6 @@ class LarexInsertCommand extends Command
             }
             $table->setRows($tableRows->toArray());
             $table->render();
-
         } while ($this->askWithCompletion('Are you sure?', ['yes', 'no'], 'yes') !== 'yes');
 
         //append to csv

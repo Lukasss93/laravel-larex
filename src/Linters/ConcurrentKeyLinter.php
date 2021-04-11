@@ -47,7 +47,6 @@ class ConcurrentKeyLinter implements Linter
                 $this->buildErrors($key, $error);
                 $errors[$group][] = $error;
             }
-
         });
 
         //print errors
@@ -98,7 +97,6 @@ class ConcurrentKeyLinter implements Linter
     private function parseErrors(string $group, array $keys, &$errors): void
     {
         foreach ($keys as $key) {
-
             if (count($key['children']) === 0) {
                 continue;
             }

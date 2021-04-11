@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Lukasss93\Larex\Linters;
-
 
 use Illuminate\Support\Str;
 use Lukasss93\Larex\Contracts\Linter;
@@ -27,7 +25,7 @@ class NoValueLinter implements Linter
         $errors = collect([]);
 
         $reader->getRows()->each(function ($columns, $line) use ($errors) {
-            $line+=2;
+            $line += 2;
 
             $columns->skip(2)->each(function ($value, $lang) use ($columns, $line, $errors) {
                 if ($value === '') {

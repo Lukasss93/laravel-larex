@@ -35,11 +35,11 @@ class LarexLocalizeCommand extends Command
         $csvRows = $reader->getRows()->collect();
         $filesFound = Utils::findFiles(config('larex.search.dirs'), config('larex.search.patterns'));
 
-        $stringsSaved = $csvRows->map(fn($item) => "{$item['group']}.{$item['key']}")->values();
+        $stringsSaved = $csvRows->map(fn ($item) => "{$item['group']}.{$item['key']}")->values();
         $stringsFound = Utils::parseStrings($filesFound, config('larex.search.functions'));
 
         $unlocalizedStrings = $stringsFound
-            ->reject(fn($item) => $stringsSaved->contains($item['string']))
+            ->reject(fn ($item) => $stringsSaved->contains($item['string']))
             ->groupBy('filename')
             ->map->sortBy('line')
             ->map->values()
@@ -47,6 +47,7 @@ class LarexLocalizeCommand extends Command
 
         if ($unlocalizedStrings->isEmpty()) {
             $this->info('No unlocalized strings found.');
+
             return 0;
         }
 

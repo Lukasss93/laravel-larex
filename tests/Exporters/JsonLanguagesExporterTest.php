@@ -15,8 +15,8 @@ class JsonLanguagesExporterTest extends TestCase
 
         $this->artisan(LarexExportCommand::class, ['exporter' => 'json:lang'])
             ->expectsOutput("Processing the '$this->file' file...")
-            ->expectsOutput("resources/lang/en.json created successfully.")
-            ->expectsOutput("resources/lang/it.json created successfully.")
+            ->expectsOutput('resources/lang/en.json created successfully.')
+            ->expectsOutput('resources/lang/it.json created successfully.')
             ->assertExitCode(0);
 
         self::assertFileExists(resource_path('lang/en.json'));
@@ -39,8 +39,8 @@ class JsonLanguagesExporterTest extends TestCase
 
         $this->artisan(LarexExportCommand::class, ['exporter' => 'json:lang', '--watch' => true])
             ->expectsOutput("Processing the '$this->file' file...")
-            ->expectsOutput("resources/lang/en.json created successfully.")
-            ->expectsOutput("resources/lang/it.json created successfully.")
+            ->expectsOutput('resources/lang/en.json created successfully.')
+            ->expectsOutput('resources/lang/it.json created successfully.')
             ->expectsOutput('Waiting for changes...')
             ->assertExitCode(0);
 
@@ -64,7 +64,7 @@ class JsonLanguagesExporterTest extends TestCase
 
         $this->artisan(LarexExportCommand::class, ['exporter' => 'json:lang', '--include' => 'en'])
             ->expectsOutput("Processing the '$this->file' file...")
-            ->expectsOutput("resources/lang/en.json created successfully.")
+            ->expectsOutput('resources/lang/en.json created successfully.')
             ->assertExitCode(0);
 
         self::assertFileExists(resource_path('lang/en.json'));
@@ -82,7 +82,7 @@ class JsonLanguagesExporterTest extends TestCase
 
         $this->artisan(LarexExportCommand::class, ['exporter' => 'json:lang', '--exclude' => 'en'])
             ->expectsOutput("Processing the '$this->file' file...")
-            ->expectsOutput("resources/lang/it.json created successfully.")
+            ->expectsOutput('resources/lang/it.json created successfully.')
             ->assertExitCode(0);
 
         self::assertFileDoesNotExist(resource_path('lang/en.json'));

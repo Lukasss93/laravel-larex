@@ -11,7 +11,7 @@ use Lukasss93\Larex\Support\Utils;
 class LarexExportCommand extends Command
 {
     /**
-     * Localization file path
+     * Localization file path.
      *
      * @var string
      */

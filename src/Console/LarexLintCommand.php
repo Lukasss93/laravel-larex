@@ -13,7 +13,7 @@ use Lukasss93\Larex\Support\Utils;
 class LarexLintCommand extends Command
 {
     /**
-     * Localization file path
+     * Localization file path.
      *
      * @var string
      */
@@ -54,6 +54,7 @@ class LarexLintCommand extends Command
         if (!File::exists(base_path($this->file))) {
             $this->error("The '$this->file' does not exists.");
             $this->line('Please create it with: php artisan larex:init');
+
             return 1;
         }
 
@@ -75,7 +76,7 @@ class LarexLintCommand extends Command
                 try {
                     $instance->handle(CsvReader::create(base_path($this->file)));
 
-                    $this->line("<bg=green> PASS </> <fg=green>Lint passed successfully.</>");
+                    $this->line('<bg=green> PASS </> <fg=green>Lint passed successfully.</>');
                     $status->push(true);
                 } catch (LintException $e) {
                     $this->line("<bg=red> FAIL </> <fg=red>{$e->getMessage()}</>");
@@ -94,7 +95,7 @@ class LarexLintCommand extends Command
         $this->line('........................');
         $this->line('');
 
-        $time = Utils::msToHuman((int)((microtime(true) - $timeStart) * 1000));
+        $time = Utils::msToHuman((int) ((microtime(true) - $timeStart) * 1000));
         $memory = Utils::bytesToHuman(memory_get_usage() - $memoryStart);
 
         $this->line("Time: <fg=green>{$time}</>    Memory: <fg=green>{$memory}</>");
@@ -106,7 +107,8 @@ class LarexLintCommand extends Command
 
         if ($total === 0) {
             //no linters processed
-            $this->line("<bg=yellow;fg=black>No linters executed!</>");
+            $this->line('<bg=yellow;fg=black>No linters executed!</>');
+
             return -1;
         }
 
@@ -114,12 +116,14 @@ class LarexLintCommand extends Command
             //some test fails
             $this->line('<bg=red>FAILURES!</>');
             $this->line("<bg=red>Linters: {$total}, Failures: {$fail}</>");
+
             return 1;
         }
 
         //all test passes
         $linters = Str::plural('linter', $pass);
         $this->line("<bg=green>OK ({$pass} {$linters})</>");
+
         return 0;
     }
 }

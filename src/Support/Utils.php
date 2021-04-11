@@ -15,7 +15,7 @@ use Symfony\Component\Finder\SplFileInfo;
 class Utils
 {
     /**
-     * Get a stub file
+     * Get a stub file.
      * @param string $name
      * @return string
      */
@@ -24,11 +24,12 @@ class Utils
         $name = str_replace('.', '/', $name);
         $path = dirname(__DIR__).'/Stubs/'.$name.'.stub';
         $content = file_get_contents($path);
+
         return self::normalizeEOLs($content);
     }
 
     /**
-     * Normalize EOLs
+     * Normalize EOLs.
      * @param string|null $content
      * @param string $replace
      * @return string
@@ -39,7 +40,7 @@ class Utils
     }
 
     /**
-     * Loop "forever"
+     * Loop "forever".
      * @param callable $callback
      */
     public static function forever(callable $callback): void
@@ -56,7 +57,7 @@ class Utils
     }
 
     /**
-     * Format line as CSV and write to file pointer
+     * Format line as CSV and write to file pointer.
      * @param $handle
      * @param $array
      * @param string $delimiter
@@ -103,7 +104,7 @@ class Utils
     }
 
     /**
-     * Returns an array of duplicated values from an array of values
+     * Returns an array of duplicated values from an array of values.
      * @param $values
      * @return array
      */
@@ -113,19 +114,20 @@ class Utils
         foreach ($values as $i => $value) {
             $count[$value][] = $i;
         }
+
         return collect($count)->filter(function ($items) {
             return count($items) > 1;
         })->toArray();
     }
 
     /**
-     * Check if the value is a valid language code and suggest correct
+     * Check if the value is a valid language code and suggest correct.
      * @param string $code
      * @return bool|string
      */
     public static function isValidLanguageCode(string $code)
     {
-        $languages = collect(require("Languages.php"));
+        $languages = collect(require 'Languages.php');
 
         if ($languages->containsStrict($code)) {
             return true;
@@ -145,7 +147,7 @@ class Utils
     }
 
     /**
-     * Check if the value is a valid HTML
+     * Check if the value is a valid HTML.
      * @param $string
      * @return bool
      */
@@ -154,6 +156,7 @@ class Utils
         try {
             $doc = new DOMDocument();
             $doc->loadHTML("<html><body>$string</body></html>");
+
             return true;
         } catch (Exception $e) {
             return false;
@@ -161,7 +164,7 @@ class Utils
     }
 
     /**
-     * Returns a collection of files by paths and patterns
+     * Returns a collection of files by paths and patterns.
      * @param array $paths
      * @param array $patterns
      * @return Collection|SplFileInfo[]
@@ -177,11 +180,12 @@ class Utils
             ->in($directories)
             ->name($patterns)
             ->files();
+
         return new Collection($files);
     }
 
     /**
-     * Returns a collection of localization strings from a collection of files
+     * Returns a collection of localization strings from a collection of files.
      * @param Collection|SplFileInfo[] $files
      * @param array $functions
      * @return Collection
@@ -190,7 +194,7 @@ class Utils
     {
         return $files
             ->map(function (SplFileInfo $file) use ($functions) {
-                return Utils::getStrings($file, $functions);
+                return self::getStrings($file, $functions);
             })
             ->flatMap(function ($collection) {
                 return $collection->all();
@@ -198,7 +202,7 @@ class Utils
     }
 
     /**
-     * Returns a collection of localization strings from a file
+     * Returns a collection of localization strings from a file.
      * @param SplFileInfo $file
      * @param array $functions
      * @return Collection
@@ -221,6 +225,7 @@ class Utils
                 }
             }
         }
+
         return $strings;
     }
 
@@ -279,11 +284,12 @@ class Utils
         for ($i = 0; $bytes > 1024; $i++) {
             $bytes /= 1024;
         }
+
         return round($bytes, 2).' '.$units[$i];
     }
 
     /**
-     * Create a json file
+     * Create a json file.
      * @param string $path
      * @param $data
      * @throws JsonException

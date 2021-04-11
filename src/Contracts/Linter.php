@@ -8,13 +8,13 @@ use Lukasss93\Larex\Support\CsvReader;
 interface Linter
 {
     /**
-     * Linter description
+     * Linter description.
      * @return string
      */
     public static function description(): string;
 
     /**
-     * Linter logic
+     * Linter logic.
      * @param CsvReader $reader
      * @throws LintException
      */
