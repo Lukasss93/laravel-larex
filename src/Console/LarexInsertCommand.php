@@ -52,7 +52,7 @@ class LarexInsertCommand extends Command
     public function handle(): int
     {
         if (!File::exists(base_path($this->file))) {
-            $this->error("The '{$this->file}' does not exists.");
+            $this->error("The '$this->file' does not exists.");
             $this->line('Please create it with: php artisan larex:init');
 
             return 1;
@@ -77,7 +77,7 @@ class LarexInsertCommand extends Command
         $availableKeys = $rows
             ->pluck('key')
             ->unique()
-            ->map(fn($item) => "{$item}.")
+            ->map(fn($item) => "$item.")
             ->toArray();
 
         //get available languages
@@ -92,7 +92,6 @@ class LarexInsertCommand extends Command
                 $continue = true;
 
                 //get group
-                $group = '';
                 do {
                     $group = trim($this->anticipate('Enter the group', $availableGroups, $data->get('group')));
 
@@ -103,7 +102,6 @@ class LarexInsertCommand extends Command
                 $data->put('group', $group);
 
                 //get key
-                $key = '';
                 do {
                     $key = trim($this->anticipate('Enter the key', $availableKeys, $data->get('key')));
 
@@ -121,7 +119,7 @@ class LarexInsertCommand extends Command
             foreach ($languages as $i => $language) {
                 $count = $i + 1;
                 $value = $this->ask(
-                    "[{$count}/{$languages->count()}] Enter the value for [{$language}] language",
+                    "[$count/{$languages->count()}] Enter the value for [$language] language",
                     $data->get($language)
                 );
 
@@ -136,7 +134,7 @@ class LarexInsertCommand extends Command
             $count = 0;
             foreach ($data as $i => $item) {
                 $count++;
-                $tableRows->push(["<info>{$i}</info>", $item]);
+                $tableRows->push(["<info>$i</info>", $item]);
 
                 if ($count < $data->count()) {
                     $tableRows->push(new TableSeparator());

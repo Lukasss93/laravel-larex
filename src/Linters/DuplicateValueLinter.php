@@ -31,12 +31,12 @@ class DuplicateValueLinter implements Linter
             $duplicates = Utils::getDuplicateValues($columns->skip(2));
 
             if (count($duplicates) > 0) {
-                $message = "row {$line} ({$columns['group']}.{$columns['key']}), columns: ";
+                $message = "row $line ({$columns['group']}.{$columns['key']}), columns: ";
 
-                foreach ($duplicates as $duplicate => $positions) {
+                foreach ($duplicates as $positions) {
                     foreach ($positions as $p => $lang) {
                         $column = array_search($lang, array_keys($columns->toArray()), true) + 1;
-                        $message .= "{$column} ({$lang})";
+                        $message .= "$column ($lang)";
 
                         if ($p < count($positions) - 1) {
                             $message .= ', ';
@@ -50,7 +50,7 @@ class DuplicateValueLinter implements Linter
 
         if ($errors->isNotEmpty()) {
             $subject = Str::plural('value', $errors->count());
-            throw new LintException("{$errors->count()} duplicate {$subject} found:", $errors->toArray());
+            throw new LintException("{$errors->count()} duplicate $subject found:", $errors->toArray());
         }
     }
 }

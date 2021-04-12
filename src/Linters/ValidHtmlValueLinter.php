@@ -31,14 +31,14 @@ class ValidHtmlValueLinter implements Linter
             $columns->skip(2)->each(function ($value, $lang) use ($columns, $line, $errors) {
                 if (!Utils::isValidHTML($value)) {
                     $column = array_search($lang, array_keys($columns->toArray()), true) + 1;
-                    $errors->push("line {$line} ({$columns['group']}.{$columns['key']}), column: {$column} ({$lang})");
+                    $errors->push("line $line ({$columns['group']}.{$columns['key']}), column: $column ($lang)");
                 }
             });
         });
 
         if ($errors->isNotEmpty()) {
             $subject = Str::plural('string', $errors->count());
-            throw new LintException("{$errors->count()} invalid html {$subject} found:", $errors->toArray());
+            throw new LintException("{$errors->count()} invalid html $subject found:", $errors->toArray());
         }
     }
 }

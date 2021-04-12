@@ -85,7 +85,7 @@ class LarexLintCommand extends Command
                     $totalErrors = count($errors);
                     foreach ($errors as $i => $error) {
                         $char = $i < $totalErrors - 1 ? '├' : '└';
-                        $this->line("<fg=red>{$char} {$error}</>");
+                        $this->line("<fg=red>$char $error</>");
                     }
                 }
                 $this->line('');
@@ -98,7 +98,7 @@ class LarexLintCommand extends Command
         $time = Utils::msToHuman((int) ((microtime(true) - $timeStart) * 1000));
         $memory = Utils::bytesToHuman(memory_get_usage() - $memoryStart);
 
-        $this->line("Time: <fg=green>{$time}</>    Memory: <fg=green>{$memory}</>");
+        $this->line("Time: <fg=green>$time</>    Memory: <fg=green>$memory</>");
         $this->line('');
 
         $total = $status->count();
@@ -115,14 +115,14 @@ class LarexLintCommand extends Command
         if ($total !== $pass) {
             //some test fails
             $this->line('<bg=red>FAILURES!</>');
-            $this->line("<bg=red>Linters: {$total}, Failures: {$fail}</>");
+            $this->line("<bg=red>Linters: $total, Failures: $fail</>");
 
             return 1;
         }
 
         //all test passes
         $linters = Str::plural('linter', $pass);
-        $this->line("<bg=green>OK ({$pass} {$linters})</>");
+        $this->line("<bg=green>OK ($pass $linters)</>");
 
         return 0;
     }

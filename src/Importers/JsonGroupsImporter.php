@@ -53,9 +53,7 @@ class JsonGroupsImporter implements Importer
         $data = collect([]);
 
         foreach ($rawValues as $rawValue) {
-            $index = $data->search(function ($item) use ($rawValue) {
-                return $item['group'] === $rawValue['group'] && $item['key'] === $rawValue['key'];
-            });
+            $index = $data->search(fn($item) => $item['group'] === $rawValue['group'] && $item['key'] === $rawValue['key']);
 
             if ($index === false) {
                 $output = [

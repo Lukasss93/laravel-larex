@@ -52,7 +52,7 @@ class LarexLocalizeCommand extends Command
         }
 
         $subject = Str::plural('string', $unlocalizedStrings->count());
-        $this->warn("{$unlocalizedStrings->count()} unlocalized {$subject} found:");
+        $this->warn("{$unlocalizedStrings->count()} unlocalized $subject found:");
 
         foreach ($unlocalizedStrings as $item) {
             $this->line("<fg=red>{$item['string']} is untranslated at line {$item['line']}, column {$item['column']} in {$item['filepath']}</>");

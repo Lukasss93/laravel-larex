@@ -57,7 +57,7 @@ class ConcurrentKeyLinter implements Linter
                 $errorKeys = collect($subkeys)->sort();
                 $i = 0;
                 foreach ($errorKeys as $key => $row) {
-                    $text .= "{$row} ({$group}.{$key})";
+                    $text .= "$row ($group.$key)";
 
                     if ($i < $errorKeys->count() - 1) {
                         $text .= ', ';

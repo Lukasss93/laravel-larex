@@ -115,9 +115,7 @@ class Utils
             $count[$value][] = $i;
         }
 
-        return collect($count)->filter(function ($items) {
-            return count($items) > 1;
-        })->toArray();
+        return collect($count)->filter(fn($items) => count($items) > 1)->toArray();
     }
 
     /**
@@ -133,9 +131,7 @@ class Utils
             return true;
         }
 
-        $fuse = new Fuse($languages->map(function ($item) {
-            return ['code' => $item];
-        })->toArray(), ['keys' => ['code']]);
+        $fuse = new Fuse($languages->map(fn($item) => ['code' => $item])->toArray(), ['keys' => ['code']]);
 
         $search = $fuse->search($code);
 
@@ -193,12 +189,9 @@ class Utils
     public static function parseStrings(Collection $files, array $functions): Collection
     {
         return $files
-            ->map(function (SplFileInfo $file) use ($functions) {
-                return self::getStrings($file, $functions);
-            })
-            ->flatMap(function ($collection) {
-                return $collection->all();
-            })->values();
+            ->map(fn(SplFileInfo $file) => self::getStrings($file, $functions))
+            ->flatMap(fn($collection) => $collection->all())
+            ->values();
     }
 
     /**

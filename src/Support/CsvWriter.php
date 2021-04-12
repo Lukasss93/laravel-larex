@@ -7,29 +7,21 @@ use RuntimeException;
 
 class CsvWriter
 {
-    /** @var string */
-    private $path;
+    private string $path;
 
-    /** @var resource */
     private $filePointer;
 
-    /** @var string */
-    private $delimiter;
+    private string $delimiter;
 
-    /** @var string */
-    private $enclosure;
+    private string $enclosure;
 
-    /** @var string */
-    private $escape;
+    private string $escape;
 
-    /** @var bool */
-    private $processHeader = true;
+    private bool $processHeader = true;
 
-    /** @var bool */
-    private $processingFirstRow = true;
+    private bool $processingFirstRow = true;
 
-    /** @var int */
-    private $numberOfRows = 0;
+    private int $numberOfRows = 0;
 
     protected function __construct(string $path)
     {

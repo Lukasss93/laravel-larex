@@ -82,7 +82,7 @@ class LarexImportCommand extends Command
 
         //check file exists
         if (!$this->option('force') && File::exists(base_path($this->file))) {
-            $this->error("The '{$this->file}' already exists.");
+            $this->error("The '$this->file' already exists.");
 
             return 1;
         }

@@ -51,7 +51,7 @@ class LarexSortCommand extends Command
         $this->warn('Sorting che CSV rows...');
 
         if (!File::exists(base_path($this->file))) {
-            $this->error("The '{$this->file}' does not exists.");
+            $this->error("The '$this->file' does not exists.");
             $this->line('Please create it with: php artisan larex:init');
 
             return 1;

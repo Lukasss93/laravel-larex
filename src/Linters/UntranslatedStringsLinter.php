@@ -46,7 +46,7 @@ class UntranslatedStringsLinter implements Linter
             }
 
             $subject = Str::plural('string', $errors->count());
-            throw new LintException("{$errors->count()} untranslated {$subject} found:", $errors->toArray());
+            throw new LintException("{$errors->count()} untranslated $subject found:", $errors->toArray());
         }
     }
 }

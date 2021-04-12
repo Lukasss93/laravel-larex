@@ -27,8 +27,8 @@ class ValidLanguageCodeLinter implements Linter
 
             if ($suggest !== true) {
                 $column = $n + 1;
-                $suggest = is_string($suggest) ? " Did you mean: {$suggest}" : '';
-                throw new LintException("Language code not valid in column {$column} ({$code}).".$suggest);
+                $suggest = is_string($suggest) ? " Did you mean: $suggest" : '';
+                throw new LintException("Language code not valid in column $column ($code).".$suggest);
             }
         });
     }
