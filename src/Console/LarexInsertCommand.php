@@ -77,7 +77,7 @@ class LarexInsertCommand extends Command
         $availableKeys = $rows
             ->pluck('key')
             ->unique()
-            ->map(fn($item) => "$item.")
+            ->map(fn ($item) => "$item.")
             ->toArray();
 
         //get available languages
