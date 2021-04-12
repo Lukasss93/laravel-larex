@@ -28,7 +28,7 @@ class UnusedStringsLinter implements Linter
 
         $stringsUnused = $reader
             ->getRows()
-            ->reject(fn($item) => $stringsFound->contains("{$item['group']}.{$item['key']}"))
+            ->reject(fn ($item) => $stringsFound->contains("{$item['group']}.{$item['key']}"))
             ->collect();
 
         if ($stringsUnused->isNotEmpty()) {

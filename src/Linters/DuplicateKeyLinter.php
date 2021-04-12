@@ -28,7 +28,7 @@ class DuplicateKeyLinter implements Linter
             $count["{$columns['group']}.{$columns['key']}"][] = $line;
         });
 
-        $duplicates = collect($count)->filter(fn($items) => count($items) > 1);
+        $duplicates = collect($count)->filter(fn ($items) => count($items) > 1);
 
         if ($duplicates->isNotEmpty()) {
             $errors = collect([]);

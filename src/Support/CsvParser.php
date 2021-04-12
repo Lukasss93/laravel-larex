@@ -75,7 +75,7 @@ class CsvParser
 
         //sort languages by column order
         return collect($languages)
-            ->sortBy(fn($item, $key) => array_search($key, $header->skip(2)->toArray(), true))
+            ->sortBy(fn ($item, $key) => array_search($key, $header->skip(2)->toArray(), true))
             ->toArray();
     }
 
