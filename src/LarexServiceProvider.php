@@ -4,6 +4,7 @@ namespace Lukasss93\Larex;
 
 use Illuminate\Support\ServiceProvider;
 use Lukasss93\Larex\Console\LarexExportCommand;
+use Lukasss93\Larex\Console\LarexFindCommand;
 use Lukasss93\Larex\Console\LarexImportCommand;
 use Lukasss93\Larex\Console\LarexInitCommand;
 use Lukasss93\Larex\Console\LarexInsertCommand;
@@ -43,6 +44,7 @@ class LarexServiceProvider extends ServiceProvider
             LarexInsertCommand::class,
             LarexLintCommand::class,
             LarexLocalizeCommand::class,
+            LarexFindCommand::class,
         ]);
     }
 
