@@ -8,13 +8,19 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Please check the [UPGRADING.md](https://github.com/Lukasss93/laravel-larex/blob/master/UPGRADING.md)
 file before upgrading to a major version!
 
-## v3.0.1 - 2021-04-12
+## [v3.1](https://github.com/Lukasss93/laravel-larex/releases/tag/v3.1) - [Unreleased]
+
+### Added
+
+- Added larex:find command
+
+## [v3.0.1](https://github.com/Lukasss93/laravel-larex/releases/tag/v3.0.1) - 2021-04-12
 
 ### Fixed
 
 - Fix larex:insert always exports strings
 
-## v3.0 - 2021-04-11
+## [v3.0](https://github.com/Lukasss93/laravel-larex/releases/tag/v3.0) - 2021-04-11
 
 ### Added
 
@@ -36,7 +42,7 @@ file before upgrading to a major version!
 - Dropped PHP 7.3 support
 - Dropped Laravel 6 support
 
-## v2.1 - 2021-04-03
+## [v2.1](https://github.com/Lukasss93/laravel-larex/releases/tag/v2.1) - 2021-04-03
 
 ### Added
 
@@ -49,11 +55,11 @@ file before upgrading to a major version!
 - Fix "Insert command has problems with utf-8 characters"
 - Fix "Wrong enclosure with larex:insert"
 
-## v2.0.1 - 2021-03-11
+## [v2.0.1](https://github.com/Lukasss93/laravel-larex/releases/tag/v2.0.1) - 2021-03-11
 ### Changed
 - Forced eol to LF
 
-## v2.0 - 2021-01-09
+## [v2.0](https://github.com/Lukasss93/laravel-larex/releases/tag/v2.0) - 2021-01-09
 
 ### Added
 - Added new command `php artisan larex:lint`
@@ -64,7 +70,7 @@ file before upgrading to a major version!
     - Escape character changed from `\"` to `""`
 
 
-## v1.6 - 2021-01-02
+## [v1.6](https://github.com/Lukasss93/laravel-larex/releases/tag/v1.6) - 2021-01-02
 ### Added
 - Added warning message in export command when used with -v option
 - Added support for PHP 8
@@ -77,18 +83,18 @@ file before upgrading to a major version!
 - Dropped support for PHP 7.2
 
 
-## v1.5.1 - 2020-09-15
+## [v1.5.1](https://github.com/Lukasss93/laravel-larex/releases/tag/v1.5.1) - 2020-09-15
 ### Fixed
 - Fixed invalid escaping on export command
 
 
-## v1.5 - 2020-08-29
+## [v1.5](https://github.com/Lukasss93/laravel-larex/releases/tag/v1.5) - 2020-08-29
 ### Added
 - Added **--include** option to `larex:export` command
 - Added **--exclude** option to `larex:export` command
 
 
-## v1.4 - 2020-08-28
+## [v1.4](https://github.com/Lukasss93/laravel-larex/releases/tag/v1.4) - 2020-08-28
 ### Added
 - Added `larex:insert` command
 
@@ -97,13 +103,13 @@ file before upgrading to a major version!
 - Fixed exporting empty column value
 
 
-## v1.3.1 - 2020-08-11
+## [v1.3.1](https://github.com/Lukasss93/laravel-larex/releases/tag/v1.3.1) - 2020-08-11
 ### Fixed
 - Missing language folders creation
 - Integer keys are treated as strings
 
 
-## v1.3 - 2020-08-08
+## [v1.3](https://github.com/Lukasss93/laravel-larex/releases/tag/v1.3) - 2020-08-08
 ### Added
 - Added `larex:export` command (it's an alias of `larex` command)
 
@@ -114,13 +120,13 @@ file before upgrading to a major version!
 - Sentences with line break aren't escaped.
 
 
-## v1.2 - 2020-07-18
+## [v1.2](https://github.com/Lukasss93/laravel-larex/releases/tag/v1.2) - 2020-07-18
 ### Added
 - Added `larex:import` command
 - Added PHPUnit tests
 
 
-## v1.1 - 2020-07-07
+## [v1.1](https://github.com/Lukasss93/laravel-larex/releases/tag/v1.1) - 2020-07-07
 ### Added
 - Added line validation
 
@@ -128,6 +134,6 @@ file before upgrading to a major version!
 - Failed to parse some rows
 
 
-## v1.0 - 2020-07-04
+## [v1.0](https://github.com/Lukasss93/laravel-larex/releases/tag/v1.0) - 2020-07-04
 ### Added
 - First release
