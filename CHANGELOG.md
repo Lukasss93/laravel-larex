@@ -8,11 +8,12 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Please check the [UPGRADING.md](https://github.com/Lukasss93/laravel-larex/blob/master/UPGRADING.md)
 file before upgrading to a major version!
 
-## [v3.1](https://github.com/Lukasss93/laravel-larex/releases/tag/v3.1) - [Unreleased]
+## [v3.1](https://github.com/Lukasss93/laravel-larex/releases/tag/v3.1) - 2021-05-22
 
 ### Added
 
-- Added larex:find command
+- Added `larex:find` command
+- Added `eol` option to config
 
 ## [v3.0.1](https://github.com/Lukasss93/laravel-larex/releases/tag/v3.0.1) - 2021-04-12
 
