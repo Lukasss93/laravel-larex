@@ -66,8 +66,8 @@ php artisan vendor:publish --provider="Lukasss93\Larex\LarexServiceProvider" --t
 * You can use `php artisan larex:insert` to add new items via CLI too!
 * You can use `php artisan larex:export --include=en,it` to export only _"en"_ and _"it"_ columns.
 * You can use `php artisan larex:export --exclude=it` to export all columns except _"it"_ column.
-* You can use `php artisan larex:localize` to find unlocalized strings (use the `--import` option to add strings in your
-  CSV).
+* You can use `php artisan larex:localize` to find unlocalized strings (use the `--import` option to add strings in your CSV).
+* You can use `php artisan larex:find` to search existing groups or keys in your CSV file.
 
 ### 📝 Example
 
@@ -180,7 +180,7 @@ composer test
 | --------------- | ------------------------- | ---------- |
 | 1.0             | 7.2                       | ≥ 5.8      |
 | ≥ 1.2 and ≤ 2.1 | 7.2 &#124; 7.3 &#124; 7.4 | ≥ 6        |
-| 3.0             | 7.4 &#124; 8.0            | ≥ 7        |
+| ≥ 3.0           | 7.4 &#124; 8.0            | ≥ 7        |
 
 ## 📃 Changelog
 
