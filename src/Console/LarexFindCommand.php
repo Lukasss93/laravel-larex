@@ -71,7 +71,7 @@ class LarexFindCommand extends Command
             ->collect();
 
         if ($result->isEmpty()) {
-            $this->line("<fg=red>No string found.</>");
+            $this->line('<fg=red>No string found.</>');
 
             return 0;
         }

@@ -24,7 +24,8 @@ class LarexImportTest extends TestCase
 
     public function test_import_with_invalid_importer(): void
     {
-        config(['larex.importers.list.foo' => new class() {
+        config(['larex.importers.list.foo' => new class()
+        {
         },
         ]);
 
@@ -52,7 +53,8 @@ class LarexImportTest extends TestCase
 
     public function test_import_with_empty_collection(): void
     {
-        $importer = new class implements Importer {
+        $importer = new class implements Importer
+        {
             public static function description(): string
             {
                 return 'test empty import';
@@ -73,7 +75,8 @@ class LarexImportTest extends TestCase
 
     public function test_import_with_invalid_item_in_collection(): void
     {
-        $importer = new class implements Importer {
+        $importer = new class implements Importer
+        {
             public static function description(): string
             {
                 return 'test invalid import';
@@ -102,7 +105,8 @@ class LarexImportTest extends TestCase
 
     public function test_import_with_invalid_group_position_in_collection(): void
     {
-        $importer = new class implements Importer {
+        $importer = new class implements Importer
+        {
             public static function description(): string
             {
                 return 'test invalid import';
@@ -130,7 +134,8 @@ class LarexImportTest extends TestCase
 
     public function test_import_with_invalid_key_position_in_collection(): void
     {
-        $importer = new class implements Importer {
+        $importer = new class implements Importer
+        {
             public static function description(): string
             {
                 return 'test invalid import';
@@ -158,7 +163,8 @@ class LarexImportTest extends TestCase
 
     public function test_import_with_no_languages_in_collection(): void
     {
-        $importer = new class implements Importer {
+        $importer = new class implements Importer
+        {
             public static function description(): string
             {
                 return 'test invalid import';
@@ -184,7 +190,8 @@ class LarexImportTest extends TestCase
 
     public function test_import_with_invalid_languages_length_in_collection(): void
     {
-        $importer = new class implements Importer {
+        $importer = new class implements Importer
+        {
             public static function description(): string
             {
                 return 'test invalid import';
@@ -217,7 +224,8 @@ class LarexImportTest extends TestCase
 
     public function test_import_with_invalid_languages_position_in_collection(): void
     {
-        $importer = new class implements Importer {
+        $importer = new class implements Importer
+        {
             public static function description(): string
             {
                 return 'test invalid import';
