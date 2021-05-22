@@ -58,12 +58,12 @@ abstract class TestCase extends OrchestraTestCase
         });
     }
 
-    public function getTestStub(string $name): string
+    public function getTestStub(string $name, $eol = "\n"): string
     {
         $name = str_replace('.', '/', $name);
         $content = file_get_contents(__DIR__.'/Stubs/'.$name.'.stub');
 
-        return Utils::normalizeEOLs($content);
+        return Utils::normalizeEOLs($content, $eol);
     }
 
     public static function setUpBeforeClass(): void

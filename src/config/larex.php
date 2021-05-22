@@ -87,4 +87,9 @@ return [
         'functions' => ['__', 'trans', '@lang'],
     ],
 
+    /**
+     * End of line used by:
+     * - LaravelExporter.
+     */
+    'eol' => PHP_EOL,
 ];

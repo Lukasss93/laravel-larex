@@ -27,22 +27,22 @@ class LaravelExporterTest extends TestCase
         self::assertFileExists(resource_path('lang/it/special.php'));
 
         self::assertEquals(
-            $this->getTestStub('exporters.laravel.base.output-en-app'),
+            $this->getTestStub('exporters.laravel.base.output-en-app', config('larex.eol')),
             File::get(resource_path('lang/en/app.php'))
         );
 
         self::assertEquals(
-            $this->getTestStub('exporters.laravel.base.output-en-special'),
+            $this->getTestStub('exporters.laravel.base.output-en-special', config('larex.eol')),
             File::get(resource_path('lang/en/special.php'))
         );
 
         self::assertEquals(
-            $this->getTestStub('exporters.laravel.base.output-it-app'),
+            $this->getTestStub('exporters.laravel.base.output-it-app', config('larex.eol')),
             File::get(resource_path('lang/it/app.php'))
         );
 
         self::assertEquals(
-            $this->getTestStub('exporters.laravel.base.output-it-special'),
+            $this->getTestStub('exporters.laravel.base.output-it-special', config('larex.eol')),
             File::get(resource_path('lang/it/special.php'))
         );
     }
@@ -66,22 +66,62 @@ class LaravelExporterTest extends TestCase
         self::assertFileExists(resource_path('lang/it/special.php'));
 
         self::assertEquals(
-            $this->getTestStub('exporters.laravel.base.output-en-app'),
+            $this->getTestStub('exporters.laravel.base.output-en-app', config('larex.eol')),
             File::get(resource_path('lang/en/app.php'))
         );
 
         self::assertEquals(
-            $this->getTestStub('exporters.laravel.base.output-en-special'),
+            $this->getTestStub('exporters.laravel.base.output-en-special', config('larex.eol')),
             File::get(resource_path('lang/en/special.php'))
         );
 
         self::assertEquals(
-            $this->getTestStub('exporters.laravel.base.output-it-app'),
+            $this->getTestStub('exporters.laravel.base.output-it-app', config('larex.eol')),
             File::get(resource_path('lang/it/app.php'))
         );
 
         self::assertEquals(
-            $this->getTestStub('exporters.laravel.base.output-it-special'),
+            $this->getTestStub('exporters.laravel.base.output-it-special', config('larex.eol')),
+            File::get(resource_path('lang/it/special.php'))
+        );
+    }
+
+    public function test_exporter_with_different_eol(): void
+    {
+        config(['larex.eol' => "\n"]);
+
+        $this->initFromStub('exporters.laravel.base.input');
+
+        $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel'])
+            ->expectsOutput("Processing the '$this->file' file...")
+            ->expectsOutput('resources/lang/en/app.php created successfully.')
+            ->expectsOutput('resources/lang/en/special.php created successfully.')
+            ->expectsOutput('resources/lang/it/app.php created successfully.')
+            ->expectsOutput('resources/lang/it/special.php created successfully.')
+            ->assertExitCode(0);
+
+        self::assertFileExists(resource_path('lang/en/app.php'));
+        self::assertFileExists(resource_path('lang/en/special.php'));
+        self::assertFileExists(resource_path('lang/it/app.php'));
+        self::assertFileExists(resource_path('lang/it/special.php'));
+
+        self::assertEquals(
+            $this->getTestStub('exporters.laravel.base.output-en-app', "\n"),
+            File::get(resource_path('lang/en/app.php'))
+        );
+
+        self::assertEquals(
+            $this->getTestStub('exporters.laravel.base.output-en-special', "\n"),
+            File::get(resource_path('lang/en/special.php'))
+        );
+
+        self::assertEquals(
+            $this->getTestStub('exporters.laravel.base.output-it-app', "\n"),
+            File::get(resource_path('lang/it/app.php'))
+        );
+
+        self::assertEquals(
+            $this->getTestStub('exporters.laravel.base.output-it-special', "\n"),
             File::get(resource_path('lang/it/special.php'))
         );
     }
@@ -102,12 +142,12 @@ class LaravelExporterTest extends TestCase
         self::assertFileDoesNotExist(resource_path('lang/it/another.php'));
 
         self::assertEquals(
-            $this->getTestStub('exporters.laravel.include-exclude.output-en-app'),
+            $this->getTestStub('exporters.laravel.include-exclude.output-en-app', config('larex.eol')),
             File::get(resource_path('lang/en/app.php'))
         );
 
         self::assertEquals(
-            $this->getTestStub('exporters.laravel.include-exclude.output-en-another'),
+            $this->getTestStub('exporters.laravel.include-exclude.output-en-another', config('larex.eol')),
             File::get(resource_path('lang/en/another.php'))
         );
     }
@@ -128,12 +168,12 @@ class LaravelExporterTest extends TestCase
         self::assertFileExists(resource_path('lang/it/another.php'));
 
         self::assertEquals(
-            $this->getTestStub('exporters.laravel.include-exclude.output-it-app'),
+            $this->getTestStub('exporters.laravel.include-exclude.output-it-app', config('larex.eol')),
             File::get(resource_path('lang/it/app.php'))
         );
 
         self::assertEquals(
-            $this->getTestStub('exporters.laravel.include-exclude.output-it-another'),
+            $this->getTestStub('exporters.laravel.include-exclude.output-it-another', config('larex.eol')),
             File::get(resource_path('lang/it/another.php'))
         );
     }
@@ -154,7 +194,7 @@ class LaravelExporterTest extends TestCase
         self::assertFileExists(resource_path('lang/it/app.php'));
 
         self::assertEquals(
-            $this->getTestStub('exporters.laravel.warnings.output-it'),
+            $this->getTestStub('exporters.laravel.warnings.output-it', config('larex.eol')),
             File::get(resource_path('lang/it/app.php'))
         );
     }

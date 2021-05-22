@@ -141,12 +141,12 @@ class LarexInsertTest extends TestCase
         );
 
         self::assertEquals(
-            $this->getTestStub('insert.base.output-app-en'),
+            $this->getTestStub('insert.base.output-app-en', config('larex.eol')),
             File::get(resource_path('lang/en/app.php'))
         );
 
         self::assertEquals(
-            $this->getTestStub('insert.base.output-app-it'),
+            $this->getTestStub('insert.base.output-app-it', config('larex.eol')),
             File::get(resource_path('lang/it/app.php'))
         );
     }
@@ -203,12 +203,12 @@ class LarexInsertTest extends TestCase
         );
 
         self::assertEquals(
-            $this->getTestStub('insert.correction.output-app-en'),
+            $this->getTestStub('insert.correction.output-app-en', config('larex.eol')),
             File::get(resource_path('lang/en/app.php'))
         );
 
         self::assertEquals(
-            $this->getTestStub('insert.correction.output-app-it'),
+            $this->getTestStub('insert.correction.output-app-it', config('larex.eol')),
             File::get(resource_path('lang/it/app.php'))
         );
     }

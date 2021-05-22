@@ -32,6 +32,7 @@ class LaravelExporter implements Exporter
 
         $include = $command->option('include') !== null ? (explode(',', $command->option('include'))) : [];
         $exclude = $command->option('exclude') !== null ? explode(',', $command->option('exclude')) : [];
+        $eol = config('larex.eol', PHP_EOL);
 
         //finally save the files
         $found = 0;
@@ -50,13 +51,13 @@ class LaravelExporter implements Exporter
 
             foreach ($groups as $group => $keys) {
                 $write = fopen(resource_path("lang/$language/$group.php"), 'wb');
-                fwrite($write, /** @lang text */ "<?php\n\nreturn [\n\n");
+                fwrite($write, /** @lang text */ "<?php$eol{$eol}return [$eol$eol");
 
                 foreach ($keys as $key => $value) {
-                    self::writeKeyValue($key, $value, $write);
+                    self::writeKeyValue($key, $value, $write, 1, $eol);
                 }
 
-                fwrite($write, "\n];\n");
+                fwrite($write, "$eol];$eol");
 
                 fclose($write);
                 $command->info("resources/lang/$language/$group.php created successfully.");
@@ -70,17 +71,17 @@ class LaravelExporter implements Exporter
         return 0;
     }
 
-    public static function writeKeyValue($key, $value, &$file, int $level = 1): void
+    protected static function writeKeyValue($key, $value, &$file, int $level = 1, $eol = PHP_EOL): void
     {
         $enclosure = '"';
 
         if (is_array($value)) {
-            fwrite($file, str_repeat('    ', $level)."'$key' => [\n");
+            fwrite($file, str_repeat('    ', $level)."'$key' => [$eol");
             $level++;
             foreach ($value as $childKey => $childValue) {
-                self::writeKeyValue($childKey, $childValue, $file, $level);
+                self::writeKeyValue($childKey, $childValue, $file, $level, $eol);
             }
-            fwrite($file, str_repeat('    ', $level - 1)."],\n");
+            fwrite($file, str_repeat('    ', $level - 1)."],$eol");
 
             return;
         }
@@ -90,9 +91,9 @@ class LaravelExporter implements Exporter
 
         if (is_int($key) || (is_numeric($key) && ctype_digit($key))) {
             $key = (int) $key;
-            fwrite($file, str_repeat('    ', $level)."$key => '$value',\n");
+            fwrite($file, str_repeat('    ', $level)."$key => '$value',$eol");
         } else {
-            fwrite($file, str_repeat('    ', $level)."'$key' => '$value',\n");
+            fwrite($file, str_repeat('    ', $level)."'$key' => '$value',$eol");
         }
     }
 }
