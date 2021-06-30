@@ -145,7 +145,7 @@ class LarexInsertCommand extends Command
         } while ($this->askWithCompletion('Are you sure?', ['yes', 'no'], 'yes') !== 'yes');
 
         //append to csv
-        $rows->push($data->values()->toArray());
+        $rows->push($data->toArray());
 
         CsvWriter::create(base_path($this->file))
             ->addRows($rows->toArray());

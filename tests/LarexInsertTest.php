@@ -3,6 +3,7 @@
 namespace Lukasss93\Larex\Tests;
 
 use Illuminate\Support\Facades\File;
+use Lukasss93\Larex\Console\LarexInitCommand;
 use Lukasss93\Larex\Console\LarexInsertCommand;
 
 class LarexInsertTest extends TestCase
@@ -210,6 +211,24 @@ class LarexInsertTest extends TestCase
         self::assertEquals(
             $this->getTestStub('insert.correction.output-app-it', config('larex.eol')),
             File::get(resource_path('lang/it/app.php'))
+        );
+    }
+
+    public function test_insert_command_with_init(): void
+    {
+        $this->artisan(LarexInitCommand::class);
+
+        $this->artisan(LarexInsertCommand::class)
+            ->expectsQuestion('Enter the group', 'app')
+            ->expectsQuestion('Enter the key', 'hello')
+            ->expectsQuestion('[1/1] Enter the value for [en] language', 'Hello!')
+            ->expectsQuestion('Are you sure?', 'yes')
+            ->expectsOutput('Item added successfully.')
+            ->assertExitCode(0);
+
+        self::assertEquals(
+            $this->getTestStub('insert.init.output'),
+            File::get(base_path($this->file))
         );
     }
 }
