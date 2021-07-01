@@ -10,6 +10,7 @@ use Lukasss93\Larex\Console\LarexInitCommand;
 use Lukasss93\Larex\Console\LarexInsertCommand;
 use Lukasss93\Larex\Console\LarexLintCommand;
 use Lukasss93\Larex\Console\LarexLocalizeCommand;
+use Lukasss93\Larex\Console\LarexRemoveCommand;
 use Lukasss93\Larex\Console\LarexSortCommand;
 
 class LarexServiceProvider extends ServiceProvider
@@ -45,6 +46,7 @@ class LarexServiceProvider extends ServiceProvider
             LarexLintCommand::class,
             LarexLocalizeCommand::class,
             LarexFindCommand::class,
+            LarexRemoveCommand::class,
         ]);
     }
 
