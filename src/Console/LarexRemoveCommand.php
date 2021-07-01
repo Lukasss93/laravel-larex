@@ -90,7 +90,7 @@ class LarexRemoveCommand extends Command
             $export = $this->option('export');
             if ($export !== 'notset') {
                 $export = $export === true ? null : $export;
-                $this->newLine();
+                $this->line('');
                 $this->call(LarexExportCommand::class, ['exporter' => $export]);
             }
 
