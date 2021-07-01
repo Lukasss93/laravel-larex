@@ -82,7 +82,7 @@ class LarexRemoveCommand extends Command
         });
 
         if ($force || $this->confirm("Are you sure you want to delete {$remove->count()} ".Str::plural('string',
-                    $remove->count())."?", false)) {
+                    $remove->count()).'?', false)) {
             CsvWriter::create(base_path($this->file))->addRows($keep->toArray());
 
             $this->info('Removed successfully.');
