@@ -68,6 +68,7 @@ php artisan vendor:publish --provider="Lukasss93\Larex\LarexServiceProvider" --t
 * You can use `php artisan larex:export --exclude=it` to export all columns except _"it"_ column.
 * You can use `php artisan larex:localize` to find unlocalized strings (use the `--import` option to add strings in your CSV).
 * You can use `php artisan larex:find` to search existing groups or keys in your CSV file.
+* You can use `php artisan larex:remove` to remove existing strings in your CSV file.
 
 ### 📝 Example
 

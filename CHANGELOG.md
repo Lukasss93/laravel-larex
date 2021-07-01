@@ -8,6 +8,17 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Please check the [UPGRADING.md](https://github.com/Lukasss93/laravel-larex/blob/master/UPGRADING.md)
 file before upgrading to a major version!
 
+## [v3.2](https://github.com/Lukasss93/laravel-larex/releases/tag/v3.2) - 2021-07-01
+
+### Added
+
+- Added `larex:remove` command
+
+### Fixed
+
+- Fix wrong separator in stubs files
+- Fix wrong header after larex:insert command
+
 ## [v3.1](https://github.com/Lukasss93/laravel-larex/releases/tag/v3.1) - 2021-05-22
 
 ### Added
