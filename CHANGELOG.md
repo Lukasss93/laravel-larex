@@ -8,6 +8,12 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Please check the [UPGRADING.md](https://github.com/Lukasss93/laravel-larex/blob/master/UPGRADING.md)
 file before upgrading to a major version!
 
+## [v3.3](https://github.com/Lukasss93/laravel-larex/releases/tag/v3.3) - 2021-08-03
+
+### Added
+
+- Added a new column in larex:find to preview the first translated value in the csv file
+
 ## [v3.2](https://github.com/Lukasss93/laravel-larex/releases/tag/v3.2) - 2021-07-01
 
 ### Added
@@ -20,49 +26,38 @@ file before upgrading to a major version!
 - Fix wrong header after larex:insert command
 
 ## [v3.1](https://github.com/Lukasss93/laravel-larex/releases/tag/v3.1) - 2021-05-22
-
 ### Added
-
 - Added `larex:find` command
 - Added `eol` option to config
 
 ## [v3.0.1](https://github.com/Lukasss93/laravel-larex/releases/tag/v3.0.1) - 2021-04-12
-
 ### Fixed
-
 - Fix larex:insert always exports strings
 
 ## [v3.0](https://github.com/Lukasss93/laravel-larex/releases/tag/v3.0) - 2021-04-11
-
 ### Added
-
 - Added Exporters
 - Added Importers
 - Added possibility to change exporter in `larex:insert` command with `--export=<exporter>` option
 - Added `larex:localize` command to find unlocalized strings
 
 ### Changed
-
 - Now the `larex:export` command optionally accepts an exporter as argument
 - Now the `larex:import` command optionally accepts an importer as argument
 - Changed Linter interface signature
 
 ### Removed
-
 - Removed `larex` command
 - Removed csv options from larex config: delimiter, enclosure, escape
 - Dropped PHP 7.3 support
 - Dropped Laravel 6 support
 
 ## [v2.1](https://github.com/Lukasss93/laravel-larex/releases/tag/v2.1) - 2021-04-03
-
 ### Added
-
 - Added a confirmation in larex:insert command
 - Added check if group/key already exists when using the larex:insert command
 
 ### Fixed
-
 - Fix null values to group and key questions in larex:insert command
 - Fix "Insert command has problems with utf-8 characters"
 - Fix "Wrong enclosure with larex:insert"
@@ -72,7 +67,6 @@ file before upgrading to a major version!
 - Forced eol to LF
 
 ## [v2.0](https://github.com/Lukasss93/laravel-larex/releases/tag/v2.0) - 2021-01-09
-
 ### Added
 - Added new command `php artisan larex:lint`
 
