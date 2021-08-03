@@ -51,7 +51,7 @@ class LaravelExporterTest extends TestCase
     {
         $this->initFromStub('exporters.laravel.base.input');
 
-        $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel', '--watch'=>true])
+        $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel', '--watch' => true])
             ->expectsOutput("Processing the '$this->file' file...")
             ->expectsOutput('resources/lang/en/app.php created successfully.')
             ->expectsOutput('resources/lang/en/special.php created successfully.')
@@ -130,7 +130,7 @@ class LaravelExporterTest extends TestCase
     {
         $this->initFromStub('exporters.laravel.include-exclude.input');
 
-        $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel', '--include'=>'en'])
+        $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel', '--include' => 'en'])
             ->expectsOutput("Processing the '$this->file' file...")
             ->expectsOutput('resources/lang/en/app.php created successfully.')
             ->expectsOutput('resources/lang/en/another.php created successfully.')
@@ -156,7 +156,7 @@ class LaravelExporterTest extends TestCase
     {
         $this->initFromStub('exporters.laravel.include-exclude.input');
 
-        $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel', '--exclude'=>'en'])
+        $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel', '--exclude' => 'en'])
             ->expectsOutput("Processing the '$this->file' file...")
             ->expectsOutput('resources/lang/it/app.php created successfully.')
             ->expectsOutput('resources/lang/it/another.php created successfully.')
@@ -207,5 +207,29 @@ class LaravelExporterTest extends TestCase
             ->expectsOutput("Processing the '$this->file' file...")
             ->expectsOutput('No entries exported.')
             ->assertExitCode(0);
+    }
+
+    public function test_exporter_with_language_code_territory(): void
+    {
+        $this->initFromStub('exporters.laravel.territory.input');
+
+        $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel'])
+            ->expectsOutput("Processing the '$this->file' file...")
+            ->expectsOutput('resources/lang/en_GB/app.php created successfully.')
+            ->expectsOutput('resources/lang/it/app.php created successfully.')
+            ->assertExitCode(0);
+
+        self::assertFileExists(resource_path('lang/en_GB/app.php'));
+        self::assertFileExists(resource_path('lang/it/app.php'));
+
+        self::assertEquals(
+            $this->getTestStub('exporters.laravel.territory.output-en_GB', config('larex.eol')),
+            File::get(resource_path('lang/en_GB/app.php'))
+        );
+
+        self::assertEquals(
+            $this->getTestStub('exporters.laravel.territory.output-it', config('larex.eol')),
+            File::get(resource_path('lang/it/app.php'))
+        );
     }
 }

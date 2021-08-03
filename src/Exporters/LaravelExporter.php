@@ -3,6 +3,7 @@
 namespace Lukasss93\Larex\Exporters;
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use Lukasss93\Larex\Console\LarexExportCommand;
 use Lukasss93\Larex\Contracts\Exporter;
 use Lukasss93\Larex\Support\CsvParser;
@@ -45,12 +46,14 @@ class LaravelExporter implements Exporter
             }
             $found++;
 
-            if (!File::exists(resource_path("lang/$language/"))) {
-                File::makeDirectory(resource_path("lang/$language/"));
+            $folder = Str::replace('-', '_', $language);
+
+            if (!File::exists(resource_path("lang/$folder/"))) {
+                File::makeDirectory(resource_path("lang/$folder/"));
             }
 
             foreach ($groups as $group => $keys) {
-                $write = fopen(resource_path("lang/$language/$group.php"), 'wb');
+                $write = fopen(resource_path("lang/$folder/$group.php"), 'wb');
                 fwrite($write, /** @lang text */ "<?php$eol{$eol}return [$eol$eol");
 
                 foreach ($keys as $key => $value) {
@@ -60,7 +63,7 @@ class LaravelExporter implements Exporter
                 fwrite($write, "$eol];$eol");
 
                 fclose($write);
-                $command->info("resources/lang/$language/$group.php created successfully.");
+                $command->info("resources/lang/$folder/$group.php created successfully.");
             }
         }
 
@@ -86,11 +89,11 @@ class LaravelExporter implements Exporter
             return;
         }
 
-        $value = (string) $value;
+        $value = (string)$value;
         $value = str_replace(["'", '\\'.$enclosure], ["\'", $enclosure], $value);
 
         if (is_int($key) || (is_numeric($key) && ctype_digit($key))) {
-            $key = (int) $key;
+            $key = (int)$key;
             fwrite($file, str_repeat('    ', $level)."$key => '$value',$eol");
         } else {
             fwrite($file, str_repeat('    ', $level)."'$key' => '$value',$eol");
