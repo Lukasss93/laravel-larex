@@ -49,7 +49,7 @@ class LarexFindCommand extends Command
      */
     public function handle(): int
     {
-        $width = (int)$this->option('width');
+        $width = (int) $this->option('width');
 
         $value = Str::lower($this->argument('value'));
         $find = Str::of($value)->explode('.');
