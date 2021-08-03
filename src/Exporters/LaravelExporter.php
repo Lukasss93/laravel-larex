@@ -89,11 +89,11 @@ class LaravelExporter implements Exporter
             return;
         }
 
-        $value = (string)$value;
+        $value = (string) $value;
         $value = str_replace(["'", '\\'.$enclosure], ["\'", $enclosure], $value);
 
         if (is_int($key) || (is_numeric($key) && ctype_digit($key))) {
-            $key = (int)$key;
+            $key = (int) $key;
             fwrite($file, str_repeat('    ', $level)."$key => '$value',$eol");
         } else {
             fwrite($file, str_repeat('    ', $level)."'$key' => '$value',$eol");
