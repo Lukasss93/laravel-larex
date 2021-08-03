@@ -3,7 +3,6 @@
 namespace Lukasss93\Larex\Exporters;
 
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
 use Lukasss93\Larex\Console\LarexExportCommand;
 use Lukasss93\Larex\Contracts\Exporter;
 use Lukasss93\Larex\Support\CsvParser;
@@ -46,7 +45,7 @@ class LaravelExporter implements Exporter
             }
             $found++;
 
-            $folder = Str::replace('-', '_', $language);
+            $folder = str_replace('-', '_', $language);
 
             if (!File::exists(resource_path("lang/$folder/"))) {
                 File::makeDirectory(resource_path("lang/$folder/"));
