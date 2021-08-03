@@ -8,6 +8,12 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Please check the [UPGRADING.md](https://github.com/Lukasss93/laravel-larex/blob/master/UPGRADING.md)
 file before upgrading to a major version!
 
+## [v3.3.1](https://github.com/Lukasss93/laravel-larex/releases/tag/v3.3.1) - 2021-08-04
+
+### Fixed
+
+- Bug fix: laravel exporter don't follow the naming convention for language folders
+
 ## [v3.3](https://github.com/Lukasss93/laravel-larex/releases/tag/v3.3) - 2021-08-03
 
 ### Added
