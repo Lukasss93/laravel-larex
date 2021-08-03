@@ -29,10 +29,12 @@ class LarexFindTest extends TestCase
 
         $this->artisan(LarexFindCommand::class, ['value' => 'app'])
             ->expectsTable([
-                'group', 'key',
+                'group',
+                'key',
+                'en',
             ], [
-                ['app', 'car'],
-                ['app', 'apple'],
+                ['app', 'car', 'Car'],
+                ['app', 'apple', 'Apple'],
             ])
             ->assertExitCode(0);
     }
