@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Lukasss93\Larex\Support\CsvReader;
+use Symfony\Component\Console\Helper\Table;
 
 class LarexFindCommand extends Command
 {
@@ -21,7 +22,7 @@ class LarexFindCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'larex:find {value}';
+    protected $signature = 'larex:find {value} {--w|width=100}';
 
     /**
      * The console command description.
@@ -48,6 +49,8 @@ class LarexFindCommand extends Command
      */
     public function handle(): int
     {
+        $width = (int)$this->option('width');
+
         $value = Str::lower($this->argument('value'));
         $find = Str::of($value)->explode('.');
         $findGroup = $find->first();
@@ -61,12 +64,21 @@ class LarexFindCommand extends Command
         }
 
         $reader = CsvReader::create(base_path($this->file));
+
+        //get headers
+        $headers = $reader
+            ->getHeader()
+            ->take(3);
+
+        //get rows
         $result = $reader
             ->getRows()
             ->filter(fn ($item) => Str::contains(Str::lower("{$item['group']}.{$item['key']}"), $value))
             ->map(fn ($item) => [
                 str_replace($findGroup, "<fg=yellow>$findGroup</>", $item['group']),
-                str_replace([$findGroup, $findKey], ["<fg=yellow>$findGroup</>", "<fg=yellow>$findKey</>"], $item['key']),
+                str_replace([$findGroup, $findKey], ["<fg=yellow>$findGroup</>", "<fg=yellow>$findKey</>"],
+                    $item['key']),
+                $item[$headers->get(2)],
             ])
             ->collect();
 
@@ -76,7 +88,12 @@ class LarexFindCommand extends Command
             return 0;
         }
 
-        $this->table($reader->getHeader()->take(2)->toArray(), $result->toArray());
+        $table = new Table($this->output);
+        $table
+            ->setHeaders($headers->toArray())
+            ->setRows($result->toArray())
+            ->setColumnMaxWidth(2, $width)
+            ->render();
 
         return 0;
     }
