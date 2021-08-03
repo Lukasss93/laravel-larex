@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Lukasss93\Larex\Console\LarexImportCommand;
 use Lukasss93\Larex\Console\LarexInitCommand;
 use Lukasss93\Larex\Contracts\Importer;
+use Lukasss93\Larex\Exceptions\ImportException;
 
 class LarexImportTest extends TestCase
 {
@@ -71,6 +72,28 @@ class LarexImportTest extends TestCase
         $this->artisan(LarexImportCommand::class, ['importer' => 'empty'])
             ->expectsOutput('No data found to import.')
             ->assertExitCode(0);
+    }
+
+    public function test_import_handle_exception(): void
+    {
+        $importer = new class implements Importer
+        {
+            public static function description(): string
+            {
+                return 'test import exception';
+            }
+
+            public function handle(LarexImportCommand $command): Collection
+            {
+                throw new ImportException('test exception');
+            }
+        };
+
+        config(['larex.importers.list.empty' => $importer]);
+
+        $this->artisan(LarexImportCommand::class, ['importer' => 'empty'])
+            ->expectsOutput('test exception')
+            ->assertExitCode(1);
     }
 
     public function test_import_with_invalid_item_in_collection(): void

@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use InvalidArgumentException;
 use Lukasss93\Larex\Contracts\Importer;
+use Lukasss93\Larex\Exceptions\ImportException;
 use Lukasss93\Larex\Support\CsvWriter;
 use Throwable;
 
@@ -89,8 +90,15 @@ class LarexImportCommand extends Command
 
         $this->warn('Importing entries...');
 
-        //call the importer
-        $items = $importer->handle($this);
+        try {
+
+            //call the importer
+            $items = $importer->handle($this);
+        } catch (ImportException $e) {
+            $this->error($e->getMessage());
+
+            return 1;
+        }
 
         //check no data
         if ($items->isEmpty()) {
