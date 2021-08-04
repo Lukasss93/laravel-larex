@@ -1,0 +1,10 @@
+group,key,en-GB,it
+complex,hello,Hello,Ciao
+complex,this.car,This car,Questa macchina
+complex,this.bus,This bus,Questo bus
+complex,very.long.limousine,It's a very long limousine,È una limousine molto lunga
+complex,spaced key,"there is a column, separator in this string",
+complex,another,different style,
+complex,ohno,"how ""it"" works now?",
+simple,hello,Hello,Ciao
+simple,bike,,Bicicletta

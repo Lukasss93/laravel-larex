@@ -33,7 +33,7 @@ class LaravelImporter implements Importer
         foreach ($files as $file) {
             $items = include $file;
             $group = pathinfo($file, PATHINFO_FILENAME);
-            $lang = basename(dirname($file));
+            $lang = str_replace('_', '-', basename(dirname($file)));
 
             if (!$languages->contains($lang)) {
                 $languages->push($lang);
@@ -63,7 +63,9 @@ class LaravelImporter implements Importer
         $data = collect([]);
 
         foreach ($rawValues as $rawValue) {
-            $index = $data->search(fn ($item) => $item['group'] === $rawValue['group'] && $item['key'] === $rawValue['key']);
+            $index = $data->search(function ($item) use ($rawValue) {
+                return $item['group'] === $rawValue['group'] && $item['key'] === $rawValue['key'];
+            });
 
             if ($index === false) {
                 $output = [
