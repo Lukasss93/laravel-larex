@@ -60,7 +60,7 @@ class LarexExportCommand extends Command
         return $this->translate();
     }
 
-    private function watch(): int
+    protected function watch(): int
     {
         $this->warn("Watching the '$this->file' file...");
 
@@ -81,7 +81,7 @@ class LarexExportCommand extends Command
         return 0;
     }
 
-    private function translate(): int
+    protected function translate(): int
     {
         $this->warn("Processing the '$this->file' file...");
 

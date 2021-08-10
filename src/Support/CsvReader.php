@@ -8,7 +8,7 @@ use Spatie\SimpleExcel\SimpleExcelReader;
 
 class CsvReader
 {
-    private SimpleExcelReader $reader;
+    protected SimpleExcelReader $reader;
 
     protected function __construct(string $path)
     {

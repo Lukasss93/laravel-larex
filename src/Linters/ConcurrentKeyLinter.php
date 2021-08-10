@@ -74,7 +74,7 @@ class ConcurrentKeyLinter implements Linter
         }
     }
 
-    private function setKeyPositions($originalKey, $currentKey, $n, &$array): void
+    protected function setKeyPositions($originalKey, $currentKey, $n, &$array): void
     {
         $keys = collect(explode('.', $currentKey));
 
@@ -94,7 +94,7 @@ class ConcurrentKeyLinter implements Linter
         }
     }
 
-    private function parseErrors(string $group, array $keys, &$errors): void
+    protected function parseErrors(string $group, array $keys, &$errors): void
     {
         foreach ($keys as $key) {
             if (count($key['children']) === 0) {
@@ -112,7 +112,7 @@ class ConcurrentKeyLinter implements Linter
         }
     }
 
-    private function buildErrors(array $key, &$error): void
+    protected function buildErrors(array $key, &$error): void
     {
         if ($key['row'] !== null) {
             $error[$key['key']] = $key['row'];

@@ -7,7 +7,7 @@ use Throwable;
 
 class LintException extends Exception
 {
-    private $errors;
+    protected $errors;
 
     public function __construct($message = '', $errors = [], $code = 0, Throwable $previous = null)
     {

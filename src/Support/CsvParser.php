@@ -6,12 +6,12 @@ use Illuminate\Support\Arr;
 
 class CsvParser
 {
-    private CsvReader $reader;
+    protected CsvReader $reader;
 
     /** @var string[] */
-    private array $warning;
+    protected array $warning;
 
-    private bool $handleSubKeys;
+    protected bool $handleSubKeys;
 
     public function __construct(CsvReader $reader)
     {
@@ -37,7 +37,7 @@ class CsvParser
         return $this->warning;
     }
 
-    public function parse(): array
+    public function parse(bool $skipEmpty = true): array
     {
         $languages = [];
         $header = $this->reader->getHeader();
@@ -62,6 +62,15 @@ class CsvParser
                 $item = $value ?? '';
 
                 if ($item === '') {
+
+                    if ($skipEmpty) {
+                        continue;
+                    }
+
+                    if (!array_key_exists($lang, $languages)) {
+                        $languages[$lang] = [];
+                    }
+
                     continue;
                 }
 
