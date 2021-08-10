@@ -62,7 +62,6 @@ class CsvParser
                 $item = $value ?? '';
 
                 if ($item === '') {
-
                     if ($skipEmpty) {
                         continue;
                     }
