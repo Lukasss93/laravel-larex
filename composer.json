@@ -29,8 +29,8 @@
         "spatie/simple-excel": "^1.13"
     },
     "require-dev": {
-        "guzzlehttp/guzzle": "^6.5",
         "orchestra/testbench": "^5.0|^6.0",
+        "pestphp/pest": "^1.15",
         "phpunit/phpunit": "^9.5"
     },
     "autoload": {
