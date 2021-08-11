@@ -54,10 +54,10 @@
     },
     "scripts": {
         "test": [
-            "@php vendor/phpunit/phpunit/phpunit --colors=always"
+            "./vendor/bin/pest --colors=always"
         ],
         "test-coverage": [
-            "@php vendor/phpunit/phpunit/phpunit --colors=always --bootstrap vendor/autoload.php --configuration phpunit.xml.dist --coverage-clover coverage.xml"
+            "./vendor/bin/pest --colors=always --coverage-clover coverage.xml"
         ]
     }
 }
