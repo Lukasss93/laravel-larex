@@ -17,7 +17,7 @@ it('finds unlocalized strings', function () {
 
     $this->artisan(LarexLocalizeCommand::class)
         ->expectsOutput('1 unlocalized string found:')
-        ->expectsOutput(sprintf("app.news is untranslated at line 90, column 63 in %s", $testFilePath))
+        ->expectsOutput(sprintf('app.news is untranslated at line 90, column 63 in %s', $testFilePath))
         ->assertExitCode(0);
 });
 

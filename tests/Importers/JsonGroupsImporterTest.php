@@ -22,4 +22,3 @@ it('imports strings', function () {
         ->fileContent()
         ->toEqualStub('importers.json-groups.output');
 });
-

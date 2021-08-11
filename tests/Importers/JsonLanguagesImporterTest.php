@@ -20,4 +20,3 @@ it('imports strings', function () {
         ->fileContent()
         ->toEqualStub('importers.json-langs.output');
 });
-

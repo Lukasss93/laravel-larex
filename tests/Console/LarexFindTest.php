@@ -28,4 +28,3 @@ it('finds strings', function () {
         ])
         ->assertExitCode(0);
 });
-

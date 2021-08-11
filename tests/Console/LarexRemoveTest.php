@@ -116,4 +116,3 @@ it('removes rows and export data', function () {
         ->fileContent()
         ->toEqualStub('remove.export.output-app-it');
 });
-

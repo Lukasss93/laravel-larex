@@ -74,7 +74,6 @@ it('exports strings with --exclude option', function () {
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.json-language.include-exclude.output-it');
-
 });
 
 it('exports strings with warning', function () {
@@ -107,4 +106,3 @@ it('exports strings with no entries', function () {
         ->expectsOutput('No entries exported.')
         ->assertExitCode(0);
 });
-

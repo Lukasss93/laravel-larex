@@ -37,4 +37,3 @@ it('fails', function () {
         ->expectsOutput('Linters: 1, Failures: 1')
         ->assertExitCode(1);
 });
-

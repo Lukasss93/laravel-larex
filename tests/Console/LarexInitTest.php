@@ -5,7 +5,7 @@ use Lukasss93\Larex\Support\Utils;
 
 it('initializes localization file', function () {
     $this->artisan(LarexInitCommand::class)
-        ->expectsOutput(sprintf("%s created successfully.", localizationPath(true)))
+        ->expectsOutput(sprintf('%s created successfully.', localizationPath(true)))
         ->assertExitCode(0);
 
     expect(localizationPath())
@@ -16,7 +16,7 @@ it('initializes localization file', function () {
 
 it('initializes localization file with --base option', function () {
     $this->artisan(LarexInitCommand::class, ['--base' => true])
-        ->expectsOutput(sprintf("%s created successfully.", localizationPath(true)))
+        ->expectsOutput(sprintf('%s created successfully.', localizationPath(true)))
         ->assertExitCode(0);
 
     expect(localizationPath())
@@ -29,10 +29,9 @@ it('does not initialize localization file due to file already exists', function 
     $this->artisan(LarexInitCommand::class)->run();
 
     $this->artisan(LarexInitCommand::class)
-        ->expectsOutput(sprintf("%s already exists.", localizationPath(true)))
+        ->expectsOutput(sprintf('%s already exists.', localizationPath(true)))
         ->assertExitCode(1);
 
     expect(localizationPath())
         ->toBeFile();
 });
-
