@@ -1,235 +1,202 @@
 <?php
 
-namespace Lukasss93\Larex\Tests\Exporters;
-
-use Illuminate\Support\Facades\File;
 use Lukasss93\Larex\Console\LarexExportCommand;
 use Lukasss93\Larex\Console\LarexInitCommand;
-use Lukasss93\Larex\Tests\TestCase;
 
-class LaravelExporterTest extends TestCase
-{
-    public function test_exporter(): void
-    {
-        $this->initFromStub('exporters.laravel.base.input');
+it('exports strings', function () {
+    initFromStub('exporters.laravel.base.input');
 
-        $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel'])
-            ->expectsOutput("Processing the '$this->file' file...")
-            ->expectsOutput('resources/lang/en/app.php created successfully.')
-            ->expectsOutput('resources/lang/en/special.php created successfully.')
-            ->expectsOutput('resources/lang/it/app.php created successfully.')
-            ->expectsOutput('resources/lang/it/special.php created successfully.')
-            ->assertExitCode(0);
+    $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel'])
+        ->expectsOutput(sprintf("Processing the '%s' file...", localizationPath(true)))
+        ->expectsOutput('resources/lang/en/app.php created successfully.')
+        ->expectsOutput('resources/lang/en/special.php created successfully.')
+        ->expectsOutput('resources/lang/it/app.php created successfully.')
+        ->expectsOutput('resources/lang/it/special.php created successfully.')
+        ->assertExitCode(0);
 
-        self::assertFileExists(resource_path('lang/en/app.php'));
-        self::assertFileExists(resource_path('lang/en/special.php'));
-        self::assertFileExists(resource_path('lang/it/app.php'));
-        self::assertFileExists(resource_path('lang/it/special.php'));
+    expect(resource_path('lang/en/app.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.base.output-en-app');
 
-        self::assertEquals(
-            $this->getTestStub('exporters.laravel.base.output-en-app', config('larex.eol')),
-            File::get(resource_path('lang/en/app.php'))
-        );
+    expect(resource_path('lang/en/special.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.base.output-en-special');
 
-        self::assertEquals(
-            $this->getTestStub('exporters.laravel.base.output-en-special', config('larex.eol')),
-            File::get(resource_path('lang/en/special.php'))
-        );
+    expect(resource_path('lang/it/app.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.base.output-it-app');
 
-        self::assertEquals(
-            $this->getTestStub('exporters.laravel.base.output-it-app', config('larex.eol')),
-            File::get(resource_path('lang/it/app.php'))
-        );
+    expect(resource_path('lang/it/special.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.base.output-it-special');
+});
 
-        self::assertEquals(
-            $this->getTestStub('exporters.laravel.base.output-it-special', config('larex.eol')),
-            File::get(resource_path('lang/it/special.php'))
-        );
-    }
+it('exports strings with --watch option', function () {
+    initFromStub('exporters.laravel.base.input');
 
-    public function test_exporter_with_watch(): void
-    {
-        $this->initFromStub('exporters.laravel.base.input');
+    $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel', '--watch' => true])
+        ->expectsOutput(sprintf("Processing the '%s' file...", localizationPath(true)))
+        ->expectsOutput('resources/lang/en/app.php created successfully.')
+        ->expectsOutput('resources/lang/en/special.php created successfully.')
+        ->expectsOutput('resources/lang/it/app.php created successfully.')
+        ->expectsOutput('resources/lang/it/special.php created successfully.')
+        ->expectsOutput('Waiting for changes...')
+        ->assertExitCode(0);
 
-        $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel', '--watch' => true])
-            ->expectsOutput("Processing the '$this->file' file...")
-            ->expectsOutput('resources/lang/en/app.php created successfully.')
-            ->expectsOutput('resources/lang/en/special.php created successfully.')
-            ->expectsOutput('resources/lang/it/app.php created successfully.')
-            ->expectsOutput('resources/lang/it/special.php created successfully.')
-            ->expectsOutput('Waiting for changes...')
-            ->assertExitCode(0);
+    expect(resource_path('lang/en/app.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.base.output-en-app');
 
-        self::assertFileExists(resource_path('lang/en/app.php'));
-        self::assertFileExists(resource_path('lang/en/special.php'));
-        self::assertFileExists(resource_path('lang/it/app.php'));
-        self::assertFileExists(resource_path('lang/it/special.php'));
+    expect(resource_path('lang/en/special.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.base.output-en-special');
 
-        self::assertEquals(
-            $this->getTestStub('exporters.laravel.base.output-en-app', config('larex.eol')),
-            File::get(resource_path('lang/en/app.php'))
-        );
+    expect(resource_path('lang/it/app.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.base.output-it-app');
 
-        self::assertEquals(
-            $this->getTestStub('exporters.laravel.base.output-en-special', config('larex.eol')),
-            File::get(resource_path('lang/en/special.php'))
-        );
+    expect(resource_path('lang/it/special.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.base.output-it-special');
+});
 
-        self::assertEquals(
-            $this->getTestStub('exporters.laravel.base.output-it-app', config('larex.eol')),
-            File::get(resource_path('lang/it/app.php'))
-        );
+it('exports strings with different eol', function () {
+    config(['larex.eol' => "\n"]);
 
-        self::assertEquals(
-            $this->getTestStub('exporters.laravel.base.output-it-special', config('larex.eol')),
-            File::get(resource_path('lang/it/special.php'))
-        );
-    }
+    initFromStub('exporters.laravel.base.input');
 
-    public function test_exporter_with_different_eol(): void
-    {
-        config(['larex.eol' => "\n"]);
+    $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel'])
+        ->expectsOutput(sprintf("Processing the '%s' file...", localizationPath(true)))
+        ->expectsOutput('resources/lang/en/app.php created successfully.')
+        ->expectsOutput('resources/lang/en/special.php created successfully.')
+        ->expectsOutput('resources/lang/it/app.php created successfully.')
+        ->expectsOutput('resources/lang/it/special.php created successfully.')
+        ->assertExitCode(0);
 
-        $this->initFromStub('exporters.laravel.base.input');
+    expect(resource_path('lang/en/app.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.base.output-en-app');
 
-        $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel'])
-            ->expectsOutput("Processing the '$this->file' file...")
-            ->expectsOutput('resources/lang/en/app.php created successfully.')
-            ->expectsOutput('resources/lang/en/special.php created successfully.')
-            ->expectsOutput('resources/lang/it/app.php created successfully.')
-            ->expectsOutput('resources/lang/it/special.php created successfully.')
-            ->assertExitCode(0);
+    expect(resource_path('lang/en/special.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.base.output-en-special');
 
-        self::assertFileExists(resource_path('lang/en/app.php'));
-        self::assertFileExists(resource_path('lang/en/special.php'));
-        self::assertFileExists(resource_path('lang/it/app.php'));
-        self::assertFileExists(resource_path('lang/it/special.php'));
+    expect(resource_path('lang/it/app.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.base.output-it-app');
 
-        self::assertEquals(
-            $this->getTestStub('exporters.laravel.base.output-en-app', "\n"),
-            File::get(resource_path('lang/en/app.php'))
-        );
+    expect(resource_path('lang/it/special.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.base.output-it-special');
+});
 
-        self::assertEquals(
-            $this->getTestStub('exporters.laravel.base.output-en-special', "\n"),
-            File::get(resource_path('lang/en/special.php'))
-        );
+it('exports strings with --include option', function () {
+    initFromStub('exporters.laravel.include-exclude.input');
 
-        self::assertEquals(
-            $this->getTestStub('exporters.laravel.base.output-it-app', "\n"),
-            File::get(resource_path('lang/it/app.php'))
-        );
+    $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel', '--include' => 'en'])
+        ->expectsOutput(sprintf("Processing the '%s' file...", localizationPath(true)))
+        ->expectsOutput('resources/lang/en/app.php created successfully.')
+        ->expectsOutput('resources/lang/en/another.php created successfully.')
+        ->assertExitCode(0);
 
-        self::assertEquals(
-            $this->getTestStub('exporters.laravel.base.output-it-special', "\n"),
-            File::get(resource_path('lang/it/special.php'))
-        );
-    }
+    expect(resource_path('lang/en/app.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.include-exclude.output-en-app');
 
-    public function test_exporter_with_include(): void
-    {
-        $this->initFromStub('exporters.laravel.include-exclude.input');
+    expect(resource_path('lang/en/another.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.include-exclude.output-en-another');
 
-        $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel', '--include' => 'en'])
-            ->expectsOutput("Processing the '$this->file' file...")
-            ->expectsOutput('resources/lang/en/app.php created successfully.')
-            ->expectsOutput('resources/lang/en/another.php created successfully.')
-            ->assertExitCode(0);
+    expect(resource_path('lang/it/app.php'))->not->toBeFile();
 
-        self::assertFileExists(resource_path('lang/en/app.php'));
-        self::assertFileExists(resource_path('lang/en/another.php'));
-        self::assertFileDoesNotExist(resource_path('lang/it/app.php'));
-        self::assertFileDoesNotExist(resource_path('lang/it/another.php'));
+    expect(resource_path('lang/it/another.php'))->not->toBeFile();
+});
 
-        self::assertEquals(
-            $this->getTestStub('exporters.laravel.include-exclude.output-en-app', config('larex.eol')),
-            File::get(resource_path('lang/en/app.php'))
-        );
+it('exports strings with --exclude option', function () {
+    initFromStub('exporters.laravel.include-exclude.input');
 
-        self::assertEquals(
-            $this->getTestStub('exporters.laravel.include-exclude.output-en-another', config('larex.eol')),
-            File::get(resource_path('lang/en/another.php'))
-        );
-    }
+    $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel', '--exclude' => 'en'])
+        ->expectsOutput(sprintf("Processing the '%s' file...", localizationPath(true)))
+        ->expectsOutput('resources/lang/it/app.php created successfully.')
+        ->expectsOutput('resources/lang/it/another.php created successfully.')
+        ->assertExitCode(0);
 
-    public function test_exporter_with_exclude(): void
-    {
-        $this->initFromStub('exporters.laravel.include-exclude.input');
+    expect(resource_path('lang/en/app.php'))->not->toBeFile();
 
-        $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel', '--exclude' => 'en'])
-            ->expectsOutput("Processing the '$this->file' file...")
-            ->expectsOutput('resources/lang/it/app.php created successfully.')
-            ->expectsOutput('resources/lang/it/another.php created successfully.')
-            ->assertExitCode(0);
+    expect(resource_path('lang/en/another.php'))->not->toBeFile();
 
-        self::assertFileDoesNotExist(resource_path('lang/en/app.php'));
-        self::assertFileDoesNotExist(resource_path('lang/en/another.php'));
-        self::assertFileExists(resource_path('lang/it/app.php'));
-        self::assertFileExists(resource_path('lang/it/another.php'));
+    expect(resource_path('lang/it/app.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.include-exclude.output-it-app');
 
-        self::assertEquals(
-            $this->getTestStub('exporters.laravel.include-exclude.output-it-app', config('larex.eol')),
-            File::get(resource_path('lang/it/app.php'))
-        );
+    expect(resource_path('lang/it/another.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.include-exclude.output-it-another');
+});
 
-        self::assertEquals(
-            $this->getTestStub('exporters.laravel.include-exclude.output-it-another', config('larex.eol')),
-            File::get(resource_path('lang/it/another.php'))
-        );
-    }
+it('exports strings with warning', function () {
+    initFromStub('exporters.laravel.warnings.input');
 
-    public function test_exporter_with_warning(): void
-    {
-        $this->initFromStub('exporters.laravel.warnings.input');
+    $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel'])
+        ->expectsOutput(sprintf("Processing the '%s' file...", localizationPath(true)))
+        ->expectsOutput('Missing key name at line 4. The row will be skipped.')
+        ->expectsOutput('app.second at line 5, column 3 (en) is missing. It will be skipped.')
+        ->expectsOutput('resources/lang/en/app.php created successfully.')
+        ->expectsOutput('resources/lang/it/app.php created successfully.')
+        ->assertExitCode(0);
 
-        $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel'])
-            ->expectsOutput("Processing the '$this->file' file...")
-            ->expectsOutput('Missing key name at line 4. The row will be skipped.')
-            ->expectsOutput('app.second at line 5, column 3 (en) is missing. It will be skipped.')
-            ->expectsOutput('resources/lang/en/app.php created successfully.')
-            ->expectsOutput('resources/lang/it/app.php created successfully.')
-            ->assertExitCode(0);
+    expect(resource_path('lang/en/app.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.warnings.output-en');
 
-        self::assertFileExists(resource_path('lang/en/app.php'));
-        self::assertFileExists(resource_path('lang/it/app.php'));
+    expect(resource_path('lang/it/app.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.warnings.output-it');
+});
 
-        self::assertEquals(
-            $this->getTestStub('exporters.laravel.warnings.output-it', config('larex.eol')),
-            File::get(resource_path('lang/it/app.php'))
-        );
-    }
+it('exports strings with no entries', function () {
+    $this->artisan(LarexInitCommand::class)->run();
 
-    public function test_exporter_with_no_entries(): void
-    {
-        $this->artisan(LarexInitCommand::class)->run();
+    $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel'])
+        ->expectsOutput(sprintf("Processing the '%s' file...", localizationPath(true)))
+        ->expectsOutput('No entries exported.')
+        ->assertExitCode(0);
+});
 
-        $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel'])
-            ->expectsOutput("Processing the '$this->file' file...")
-            ->expectsOutput('No entries exported.')
-            ->assertExitCode(0);
-    }
+it('test_exporter_with_language_code_territory', function () {
+    initFromStub('exporters.laravel.territory.input');
 
-    public function test_exporter_with_language_code_territory(): void
-    {
-        $this->initFromStub('exporters.laravel.territory.input');
+    $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel'])
+        ->expectsOutput(sprintf("Processing the '%s' file...", localizationPath(true)))
+        ->expectsOutput('resources/lang/en_GB/app.php created successfully.')
+        ->expectsOutput('resources/lang/it/app.php created successfully.')
+        ->assertExitCode(0);
 
-        $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel'])
-            ->expectsOutput("Processing the '$this->file' file...")
-            ->expectsOutput('resources/lang/en_GB/app.php created successfully.')
-            ->expectsOutput('resources/lang/it/app.php created successfully.')
-            ->assertExitCode(0);
+    expect(resource_path('lang/en_GB/app.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.territory.output-en_GB');
 
-        self::assertFileExists(resource_path('lang/en_GB/app.php'));
-        self::assertFileExists(resource_path('lang/it/app.php'));
-
-        self::assertEquals(
-            $this->getTestStub('exporters.laravel.territory.output-en_GB', config('larex.eol')),
-            File::get(resource_path('lang/en_GB/app.php'))
-        );
-
-        self::assertEquals(
-            $this->getTestStub('exporters.laravel.territory.output-it', config('larex.eol')),
-            File::get(resource_path('lang/it/app.php'))
-        );
-    }
-}
+    expect(resource_path('lang/it/app.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.territory.output-it');
+});

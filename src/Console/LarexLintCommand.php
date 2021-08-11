@@ -109,7 +109,7 @@ class LarexLintCommand extends Command
             //no linters processed
             $this->line('<bg=yellow;fg=black>No linters executed!</>');
 
-            return -1;
+            return 1;
         }
 
         if ($total !== $pass) {

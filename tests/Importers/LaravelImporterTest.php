@@ -1,50 +1,44 @@
 <?php
 
-namespace Lukasss93\Larex\Tests\Importers;
-
 use Illuminate\Support\Facades\File;
 use Lukasss93\Larex\Console\LarexImportCommand;
-use Lukasss93\Larex\Tests\TestCase;
 
-class LaravelImporterTest extends TestCase
-{
-    public function test_importer_base(): void
-    {
-        File::makeDirectory(resource_path('lang/en'), 0755, true, true);
-        File::makeDirectory(resource_path('lang/it'), 0755, true, true);
-        File::put(resource_path('lang/en/complex.php'), $this->getTestStub('importers.laravel.base.input-en-complex'));
-        File::put(resource_path('lang/en/simple.php'), $this->getTestStub('importers.laravel.base.input-en-simple'));
-        File::put(resource_path('lang/it/complex.php'), $this->getTestStub('importers.laravel.base.input-it-complex'));
-        File::put(resource_path('lang/it/simple.php'), $this->getTestStub('importers.laravel.base.input-it-simple'));
+it('imports strings | base', function () {
+    File::makeDirectory(resource_path('lang/en'), 0755, true, true);
+    File::makeDirectory(resource_path('lang/it'), 0755, true, true);
 
-        $this->artisan(LarexImportCommand::class, ['importer' => 'laravel'])
-            ->expectsOutput('Importing entries...')
-            ->expectsOutput('Data imported successfully.')
-            ->assertExitCode(0);
+    initFromStub('importers.laravel.base.input-en-complex', resource_path('lang/en/complex.php'));
+    initFromStub('importers.laravel.base.input-en-simple', resource_path('lang/en/simple.php'));
+    initFromStub('importers.laravel.base.input-it-complex', resource_path('lang/it/complex.php'));
+    initFromStub('importers.laravel.base.input-it-simple', resource_path('lang/it/simple.php'));
 
-        self::assertFileExists(base_path($this->file));
-        self::assertEquals($this->getTestStub('importers.laravel.base.output'), File::get(base_path($this->file)));
-    }
+    $this->artisan(LarexImportCommand::class, ['importer' => 'laravel'])
+        ->expectsOutput('Importing entries...')
+        ->expectsOutput('Data imported successfully.')
+        ->assertExitCode(0);
 
-    public function test_importer_territory(): void
-    {
-        File::makeDirectory(resource_path('lang/en_GB'), 0755, true, true);
-        File::makeDirectory(resource_path('lang/it'), 0755, true, true);
-        File::put(resource_path('lang/en_GB/complex.php'),
-            $this->getTestStub('importers.laravel.territory.input-en_GB-complex'));
-        File::put(resource_path('lang/en_GB/simple.php'),
-            $this->getTestStub('importers.laravel.territory.input-en_GB-simple'));
-        File::put(resource_path('lang/it/complex.php'),
-            $this->getTestStub('importers.laravel.territory.input-it-complex'));
-        File::put(resource_path('lang/it/simple.php'),
-            $this->getTestStub('importers.laravel.territory.input-it-simple'));
+    expect(localizationPath())
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('importers.laravel.base.output');
+});
 
-        $this->artisan(LarexImportCommand::class, ['importer' => 'laravel'])
-            ->expectsOutput('Importing entries...')
-            ->expectsOutput('Data imported successfully.')
-            ->assertExitCode(0);
+it('imports strings | territory', function () {
+    File::makeDirectory(resource_path('lang/en_GB'), 0755, true, true);
+    File::makeDirectory(resource_path('lang/it'), 0755, true, true);
 
-        self::assertFileExists(base_path($this->file));
-        self::assertEquals($this->getTestStub('importers.laravel.territory.output'), File::get(base_path($this->file)));
-    }
-}
+    initFromStub('importers.laravel.territory.input-en_GB-complex', resource_path('lang/en_GB/complex.php'));
+    initFromStub('importers.laravel.territory.input-en_GB-simple', resource_path('lang/en_GB/simple.php'));
+    initFromStub('importers.laravel.territory.input-it-complex', resource_path('lang/it/complex.php'));
+    initFromStub('importers.laravel.territory.input-it-simple', resource_path('lang/it/simple.php'));
+
+    $this->artisan(LarexImportCommand::class, ['importer' => 'laravel'])
+        ->expectsOutput('Importing entries...')
+        ->expectsOutput('Data imported successfully.')
+        ->assertExitCode(0);
+
+    expect(localizationPath())
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('importers.laravel.territory.output');
+});

@@ -17,6 +17,9 @@ use Lukasss93\Larex\Tests\TestCase;
 
 uses(TestCase::class)
     ->beforeEach(function () {
+        //set env to avoid --watch loop
+        putenv('NOLOOP=1');
+
         //set global csv settings
         config([
             'larex.csv' => [
@@ -27,6 +30,7 @@ uses(TestCase::class)
                 'patterns' => ['*.php'],
                 'functions' => ['__', 'trans', '@lang'],
             ],
+            'larex.eol' => "\n",
         ]);
 
         //clear lang folder
@@ -53,7 +57,7 @@ uses(TestCase::class)
 */
 
 expect()->extend('fileContent', fn () => $this->and(File::get($this->value)));
-expect()->extend('toEqualStub', fn ($name) => $this->toEqual(getTestStub($name)));
+expect()->extend('toEqualStub', fn (string $name, $eol = "\n") => $this->toEqual(getTestStub($name, $eol)));
 
 /*
 |--------------------------------------------------------------------------
@@ -85,7 +89,10 @@ function getTestStub(string $name, $eol = "\n"): string
     return Utils::normalizeEOLs($content, $eol);
 }
 
-function initFromStub(string $stub): void
+function initFromStub(string $stub, string $file = null): string
 {
-    File::put(localizationPath(), getTestStub($stub));
+    $filePath = Utils::normalizeDS($file ?? localizationPath());
+    File::put($filePath, getTestStub($stub));
+
+    return $filePath;
 }
