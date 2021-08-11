@@ -50,4 +50,3 @@ it('lints successfully', function () {
         ->expectsOutput('OK (1 linter)')
         ->assertExitCode(0);
 });
-

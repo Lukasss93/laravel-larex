@@ -90,7 +90,6 @@ it('exports strings with --include option', function () {
     expect(resource_path('lang/it/app.json'))->not->toBeFile();
 
     expect(resource_path('lang/it/special.json'))->not->toBeFile();
-
 });
 
 it('exports strings with --exclude option', function () {
