@@ -181,7 +181,7 @@ it('exports strings with no entries', function () {
         ->assertExitCode(0);
 });
 
-it('test_exporter_with_language_code_territory', function () {
+it('exports strings with language code territory', function () {
     initFromStub('exporters.laravel.territory.input');
 
     $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel'])
