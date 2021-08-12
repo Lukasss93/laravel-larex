@@ -8,6 +8,12 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Please check the [UPGRADING.md](https://github.com/Lukasss93/laravel-larex/blob/master/UPGRADING.md)
 file before upgrading to a major version!
 
+## [v3.5](https://github.com/Lukasss93/laravel-larex/releases/tag/v3.5) - 2021-08-13
+
+### Added
+
+- Added --include and --exclude options to larex:import command
+
 ## [v3.4](https://github.com/Lukasss93/laravel-larex/releases/tag/v3.4) - 2021-08-12
 
 ### Changed
