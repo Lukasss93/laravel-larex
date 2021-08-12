@@ -4,6 +4,7 @@ namespace Lukasss93\Larex\Importers;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use Lukasss93\Larex\Console\LarexImportCommand;
 use Lukasss93\Larex\Contracts\Importer;
 use RecursiveArrayIterator;
@@ -24,6 +25,8 @@ class LaravelImporter implements Importer
      */
     public function handle(LarexImportCommand $command): Collection
     {
+        $include = Str::of($command->option('include'))->explode(',')->reject(fn ($i) => empty($i));
+        $exclude = Str::of($command->option('exclude'))->explode(',')->reject(fn ($i) => empty($i));
         $languages = collect([]);
         $rawValues = collect([]);
 
@@ -34,6 +37,14 @@ class LaravelImporter implements Importer
             $items = include $file;
             $group = pathinfo($file, PATHINFO_FILENAME);
             $lang = str_replace('_', '-', basename(dirname($file)));
+
+            if ($include->isNotEmpty() && !$include->contains($lang)) {
+                continue;
+            }
+
+            if ($exclude->isNotEmpty() && $exclude->contains($lang)) {
+                continue;
+            }
 
             if (!$languages->contains($lang)) {
                 $languages->push($lang);

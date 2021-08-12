@@ -11,7 +11,7 @@ it('does not export strings due to missing localization file', function () {
         ->assertExitCode(1);
 });
 
-it('does not export strings due to both filled --include and --exclude parameters', function () {
+it('does not export strings due to both filled --include and --exclude options', function () {
     $this->artisan(LarexInitCommand::class)->run();
 
     $this->artisan(LarexExportCommand::class, ['--include' => '', '--exclude' => ''])

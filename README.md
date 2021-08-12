@@ -61,12 +61,16 @@ php artisan vendor:publish --provider="Lukasss93\Larex\LarexServiceProvider" --t
 * The **key** column inside the CSV file supports the **dot notation** for nested arrays.
 * You can watch your CSV file with `php artisan larex:export --watch`
 * You can use `php artisan larex:sort` to sort the CSV file by group and key.
-* Be careful when using the `php artisan larex:export` command! It will overwrite all files named with the group names inside the CSV.
+* Be careful when using the `php artisan larex:export` command! It will overwrite all files named with the group names
+  inside the CSV.
 * Be careful when using the **dot notation**! Only the **last** entry will override the value.
 * You can use `php artisan larex:insert` to add new items via CLI too!
+* You can use `php artisan larex:import --include=en,it` to import only _"en"_ and _"it"_ items.
+* You can use `php artisan larex:import --exclude=it` to import all items except _"it"_ item.
 * You can use `php artisan larex:export --include=en,it` to export only _"en"_ and _"it"_ columns.
 * You can use `php artisan larex:export --exclude=it` to export all columns except _"it"_ column.
-* You can use `php artisan larex:localize` to find unlocalized strings (use the `--import` option to add strings in your CSV).
+* You can use `php artisan larex:localize` to find unlocalized strings (use the `--import` option to add strings in your
+  CSV).
 * You can use `php artisan larex:find` to search existing groups or keys in your CSV file.
 * You can use `php artisan larex:remove` to remove existing strings in your CSV file.
 

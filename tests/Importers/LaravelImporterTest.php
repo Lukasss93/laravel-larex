@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\File;
 use Lukasss93\Larex\Console\LarexImportCommand;
 
-it('imports strings | base', function () {
+it('imports strings', function () {
     File::makeDirectory(resource_path('lang/en'), 0755, true, true);
     File::makeDirectory(resource_path('lang/it'), 0755, true, true);
 
@@ -23,7 +23,47 @@ it('imports strings | base', function () {
         ->toEqualStub('importers.laravel.base.output');
 });
 
-it('imports strings | territory', function () {
+it('imports strings with --include option', function () {
+    File::makeDirectory(resource_path('lang/en'), 0755, true, true);
+    File::makeDirectory(resource_path('lang/fr'), 0755, true, true);
+    File::makeDirectory(resource_path('lang/it'), 0755, true, true);
+
+    initFromStub('importers.laravel.include-exclude.input-en', resource_path('lang/en/app.php'));
+    initFromStub('importers.laravel.include-exclude.input-fr', resource_path('lang/fr/app.php'));
+    initFromStub('importers.laravel.include-exclude.input-it', resource_path('lang/it/app.php'));
+
+    $this->artisan(LarexImportCommand::class, ['importer' => 'laravel', '--include' => 'en,fr'])
+        ->expectsOutput('Importing entries...')
+        ->expectsOutput('Data imported successfully.')
+        ->assertExitCode(0);
+
+    expect(localizationPath())
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('importers.laravel.include-exclude.include');
+});
+
+it('imports strings with --exclude option', function () {
+    File::makeDirectory(resource_path('lang/en'), 0755, true, true);
+    File::makeDirectory(resource_path('lang/fr'), 0755, true, true);
+    File::makeDirectory(resource_path('lang/it'), 0755, true, true);
+
+    initFromStub('importers.laravel.include-exclude.input-en', resource_path('lang/en/app.php'));
+    initFromStub('importers.laravel.include-exclude.input-fr', resource_path('lang/fr/app.php'));
+    initFromStub('importers.laravel.include-exclude.input-it', resource_path('lang/it/app.php'));
+
+    $this->artisan(LarexImportCommand::class, ['importer' => 'laravel', '--exclude' => 'fr'])
+        ->expectsOutput('Importing entries...')
+        ->expectsOutput('Data imported successfully.')
+        ->assertExitCode(0);
+
+    expect(localizationPath())
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('importers.laravel.include-exclude.exclude');
+});
+
+it('imports strings with territory', function () {
     File::makeDirectory(resource_path('lang/en_GB'), 0755, true, true);
     File::makeDirectory(resource_path('lang/it'), 0755, true, true);
 

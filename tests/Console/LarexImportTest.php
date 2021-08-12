@@ -237,6 +237,12 @@ it('does not import strings due to invalid languages position in collection', fu
         ->assertExitCode(1);
 });
 
+it('does not import strings due to both filled --include and --exclude options', function () {
+    $this->artisan(LarexImportCommand::class, ['--include' => 'foo', '--exclude' => 'bar'])
+        ->expectsOutput('The --include and --exclude options can be used only one at a time.')
+        ->assertExitCode(1);
+});
+
 it('imports strings with --force option', function () {
     $this->artisan(LarexInitCommand::class);
 

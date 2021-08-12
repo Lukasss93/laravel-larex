@@ -27,7 +27,9 @@ class LarexImportCommand extends Command
      */
     protected $signature = 'larex:import
                             {importer? : Importer}
-                            {--f|force : Overwrite CSV file if already exists}';
+                            {--f|force : Overwrite CSV file if already exists}
+                            {--include= : Languages allowed to import in the CSV}
+                            {--exclude= : Languages not allowed to import in the CSV}';
 
     /**
      * The console command description.
@@ -84,6 +86,13 @@ class LarexImportCommand extends Command
         //check file exists
         if (!$this->option('force') && File::exists(base_path($this->file))) {
             $this->error("The '$this->file' already exists.");
+
+            return 1;
+        }
+
+        //check concurrent options
+        if ($this->option('include') !== null && $this->option('exclude') !== null) {
+            $this->error('The --include and --exclude options can be used only one at a time.');
 
             return 1;
         }

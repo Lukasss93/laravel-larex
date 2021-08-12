@@ -68,40 +68,6 @@ it('exports strings with --watch option', function () {
         ->toEqualStub('exporters.laravel.base.output-it-special');
 });
 
-it('exports strings with different eol', function () {
-    config(['larex.eol' => "\n"]);
-
-    initFromStub('exporters.laravel.base.input');
-
-    $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel'])
-        ->expectsOutput(sprintf("Processing the '%s' file...", localizationPath(true)))
-        ->expectsOutput('resources/lang/en/app.php created successfully.')
-        ->expectsOutput('resources/lang/en/special.php created successfully.')
-        ->expectsOutput('resources/lang/it/app.php created successfully.')
-        ->expectsOutput('resources/lang/it/special.php created successfully.')
-        ->assertExitCode(0);
-
-    expect(resource_path('lang/en/app.php'))
-        ->toBeFile()
-        ->fileContent()
-        ->toEqualStub('exporters.laravel.base.output-en-app');
-
-    expect(resource_path('lang/en/special.php'))
-        ->toBeFile()
-        ->fileContent()
-        ->toEqualStub('exporters.laravel.base.output-en-special');
-
-    expect(resource_path('lang/it/app.php'))
-        ->toBeFile()
-        ->fileContent()
-        ->toEqualStub('exporters.laravel.base.output-it-app');
-
-    expect(resource_path('lang/it/special.php'))
-        ->toBeFile()
-        ->fileContent()
-        ->toEqualStub('exporters.laravel.base.output-it-special');
-});
-
 it('exports strings with --include option', function () {
     initFromStub('exporters.laravel.include-exclude.input');
 
@@ -199,4 +165,38 @@ it('exports strings with language code territory', function () {
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.laravel.territory.output-it');
+});
+
+it('exports strings with different eol', function () {
+    config(['larex.eol' => "\n"]);
+
+    initFromStub('exporters.laravel.base.input');
+
+    $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel'])
+        ->expectsOutput(sprintf("Processing the '%s' file...", localizationPath(true)))
+        ->expectsOutput('resources/lang/en/app.php created successfully.')
+        ->expectsOutput('resources/lang/en/special.php created successfully.')
+        ->expectsOutput('resources/lang/it/app.php created successfully.')
+        ->expectsOutput('resources/lang/it/special.php created successfully.')
+        ->assertExitCode(0);
+
+    expect(resource_path('lang/en/app.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.base.output-en-app');
+
+    expect(resource_path('lang/en/special.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.base.output-en-special');
+
+    expect(resource_path('lang/it/app.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.base.output-it-app');
+
+    expect(resource_path('lang/it/special.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.base.output-it-special');
 });

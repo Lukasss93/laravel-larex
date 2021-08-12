@@ -4,6 +4,7 @@ namespace Lukasss93\Larex\Importers;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use JsonException;
 use Lukasss93\Larex\Console\LarexImportCommand;
 use Lukasss93\Larex\Contracts\Importer;
@@ -24,6 +25,8 @@ class JsonLanguagesImporter implements Importer
      */
     public function handle(LarexImportCommand $command): Collection
     {
+        $include = Str::of($command->option('include'))->explode(',')->reject(fn ($i) => empty($i));
+        $exclude = Str::of($command->option('exclude'))->explode(',')->reject(fn ($i) => empty($i));
         $languages = collect([]);
         $rawValues = collect([]);
 
@@ -33,6 +36,14 @@ class JsonLanguagesImporter implements Importer
         foreach ($files as $file) {
             $items = json_decode(File::get($file), true, 512, JSON_THROW_ON_ERROR);
             $lang = pathinfo($file, PATHINFO_FILENAME);
+
+            if ($include->isNotEmpty() && !$include->contains($lang)) {
+                continue;
+            }
+
+            if ($exclude->isNotEmpty() && $exclude->contains($lang)) {
+                continue;
+            }
 
             if (!$languages->contains($lang)) {
                 $languages->push($lang);
