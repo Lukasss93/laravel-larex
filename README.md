@@ -6,13 +6,21 @@
 
 [![Version](https://poser.pugx.org/lukasss93/laravel-larex/v/stable)](https://packagist.org/packages/lukasss93/laravel-larex)
 [![Downloads](https://poser.pugx.org/lukasss93/laravel-larex/downloads)](https://packagist.org/packages/lukasss93/laravel-larex)
-![PHP](https://img.shields.io/badge/PHP-%3E%3D%207.4-blue)
-![Laravel](https://img.shields.io/badge/Laravel-%3E%3D%207.0-orange)
+![PHP](https://img.shields.io/badge/PHP-%E2%89%A5%207.4-blue)
+![Laravel](https://img.shields.io/badge/Laravel-%E2%89%A5%207.0-orange)
 [![License](https://poser.pugx.org/lukasss93/laravel-larex/license)](https://packagist.org/packages/lukasss93/laravel-larex)
 ![Build](https://img.shields.io/github/workflow/status/Lukasss93/laravel-larex/run-tests)
 [![Coverage](https://img.shields.io/codecov/c/github/lukasss93/laravel-larex?token=XcLU2ccFQ7)](https://codecov.io/gh/Lukasss93/laravel-larex)
 
-> Translate your Laravel application from a single CSV file!
+> Translate Laravel Apps from a CSV File
+
+Laravel Larex lets you translate your whole Laravel application from a single CSV file.
+
+You can import translation entries from resources/lang files into a structured CSV, edit the translations and export them back to Laravel PHP files.
+
+Laravel Larex also supports functionalities to sort entries and find strings that aren't localized yet.
+
+_See **Plugins** section for other features._
 
 ## 🚀 Installation
 
@@ -172,6 +180,10 @@ You can enable/disable any linter you want by comment/uncomment it inside the la
 
 1. Create a class that implements the `Lukasss93\Larex\Contracts\Linter` interface
 2. Add your linter inside the larex config
+
+## 🧩 Plugins
+- **[Crowdin Plugin](https://github.com/Lukasss93/laravel-larex-crowdin)** <br>
+  _A Laravel Larex plugin to import/export localization strings from/to Crowdin_
 
 ## ⚗️ Testing
 
