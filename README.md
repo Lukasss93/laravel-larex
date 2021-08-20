@@ -20,7 +20,7 @@ You can import translation entries from resources/lang files into a structured C
 
 Laravel Larex also supports functionalities to sort entries and find strings that aren't localized yet.
 
-_See **Plugins** section for other features._
+_See **[Plugins](#-plugins)** section for other features._
 
 ## 🚀 Installation
 
