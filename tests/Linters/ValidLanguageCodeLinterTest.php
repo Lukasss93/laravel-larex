@@ -43,7 +43,7 @@ it('fails and suggest', function () {
     initFromStub('linters.valid-language-code.failure-and-suggest');
 
     $this->artisan(LarexLintCommand::class)
-        ->expectsOutput(' FAIL  Language code not valid in column 3 (it_IF). Did you mean: it_IT')
+        ->expectsOutput(' FAIL  Language code not valid in column 3 (it-IF). Did you mean: it-IT')
         ->expectsOutput('FAILURES!')
         ->expectsOutput('Linters: 1, Failures: 1')
         ->assertExitCode(1);
