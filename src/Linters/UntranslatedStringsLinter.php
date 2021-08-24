@@ -29,6 +29,7 @@ class UntranslatedStringsLinter implements Linter
         $stringsSaved = $reader
             ->getRows()
             ->map(fn ($item) => "{$item['group']}.{$item['key']}")
+            ->collect()
             ->values();
 
         $stringsUntranslated = $stringsFound
