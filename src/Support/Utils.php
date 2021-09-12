@@ -16,7 +16,8 @@ class Utils
 {
     /**
      * Get a stub file.
-     * @param string $name
+     *
+     * @param  string  $name
      * @return string
      */
     public static function getStub(string $name): string
@@ -30,8 +31,9 @@ class Utils
 
     /**
      * Normalize EOLs.
-     * @param string|null $content
-     * @param string $replace
+     *
+     * @param  string|null  $content
+     * @param  string  $replace
      * @return string
      */
     public static function normalizeEOLs(?string $content, string $replace = "\n"): string
@@ -46,7 +48,8 @@ class Utils
 
     /**
      * Loop "forever".
-     * @param callable $callback
+     *
+     * @param  callable  $callback
      */
     public static function forever(callable $callback): void
     {
@@ -63,12 +66,13 @@ class Utils
 
     /**
      * Format line as CSV and write to file pointer.
+     *
      * @param $handle
      * @param $array
-     * @param string $delimiter
-     * @param string $enclosure
-     * @param string $escape
-     * @param string $eol
+     * @param  string  $delimiter
+     * @param  string  $enclosure
+     * @param  string  $escape
+     * @param  string  $eol
      * @return bool|int
      */
     public static function fputcsv($handle, $array, $delimiter = ',', $enclosure = '"', $escape = '\\', $eol = "\n")
@@ -110,6 +114,7 @@ class Utils
 
     /**
      * Returns an array of duplicated values from an array of values.
+     *
      * @param $values
      * @return array
      */
@@ -125,7 +130,8 @@ class Utils
 
     /**
      * Check if the value is a valid language code and suggest correct.
-     * @param string $code
+     *
+     * @param  string  $code
      * @return bool|string
      */
     public static function isValidLanguageCode(string $code)
@@ -149,6 +155,7 @@ class Utils
 
     /**
      * Check if the value is a valid HTML.
+     *
      * @param $string
      * @return bool
      */
@@ -166,8 +173,9 @@ class Utils
 
     /**
      * Returns a collection of files by paths and patterns.
-     * @param array $paths
-     * @param array $patterns
+     *
+     * @param  array  $paths
+     * @param  array  $patterns
      * @return Collection|SplFileInfo[]
      */
     public static function findFiles(array $paths, array $patterns): Collection
@@ -187,8 +195,9 @@ class Utils
 
     /**
      * Returns a collection of localization strings from a collection of files.
-     * @param Collection|SplFileInfo[] $files
-     * @param array $functions
+     *
+     * @param  Collection|SplFileInfo[]  $files
+     * @param  array  $functions
      * @return Collection
      */
     public static function parseStrings(Collection $files, array $functions): Collection
@@ -201,8 +210,9 @@ class Utils
 
     /**
      * Returns a collection of localization strings from a file.
-     * @param SplFileInfo $file
-     * @param array $functions
+     *
+     * @param  SplFileInfo  $file
+     * @param  array  $functions
      * @return Collection
      */
     public static function getStrings(SplFileInfo $file, array $functions): Collection
@@ -288,8 +298,10 @@ class Utils
 
     /**
      * Create a json file.
-     * @param string $path
+     *
+     * @param  string  $path
      * @param $data
+     *
      * @throws JsonException
      */
     public static function putJson(string $path, $data): void

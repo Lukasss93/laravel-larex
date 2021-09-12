@@ -9,13 +9,15 @@ interface Importer
 {
     /**
      * Exporter description.
+     *
      * @return string
      */
     public static function description(): string;
 
     /**
      * Exporter logic.
-     * @param LarexImportCommand $command
+     *
+     * @param  LarexImportCommand  $command
      * @return Collection
      */
     public function handle(LarexImportCommand $command): Collection;

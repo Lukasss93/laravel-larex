@@ -9,13 +9,16 @@ interface Linter
 {
     /**
      * Linter description.
+     *
      * @return string
      */
     public static function description(): string;
 
     /**
      * Linter logic.
-     * @param CsvReader $reader
+     *
+     * @param  CsvReader  $reader
+     *
      * @throws LintException
      */
     public function handle(CsvReader $reader): void;
