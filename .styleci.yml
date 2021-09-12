@@ -5,3 +5,4 @@ disabled:
   - not_operator_with_successor_space
   - cast_spaces
   - laravel_phpdoc_alignment
+  - laravel_phpdoc_separation
