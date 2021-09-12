@@ -17,6 +17,7 @@ class LintException extends Exception
 
     /**
      * Get errors.
+     *
      * @return string[]
      */
     public function getErrors(): array

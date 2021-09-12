@@ -22,6 +22,7 @@ class JsonGroupsExporter implements Exporter
 
     /**
      * @inheritDoc
+     *
      * @throws JsonException
      */
     public function handle(LarexExportCommand $command, CsvReader $reader): int

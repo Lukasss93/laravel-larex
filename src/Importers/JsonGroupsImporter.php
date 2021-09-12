@@ -21,6 +21,7 @@ class JsonGroupsImporter implements Importer
 
     /**
      * @inheritDoc
+     *
      * @throws JsonException
      */
     public function handle(LarexImportCommand $command): Collection

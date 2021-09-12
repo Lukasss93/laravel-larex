@@ -10,7 +10,6 @@ abstract class TestCase extends OrchestraTestCase
 {
     /**
      * @param Application $app
-     *
      * @return array
      */
     protected function getPackageProviders($app): array

@@ -16,6 +16,7 @@ class Utils
 {
     /**
      * Get a stub file.
+     *
      * @param string $name
      * @return string
      */
@@ -30,6 +31,7 @@ class Utils
 
     /**
      * Normalize EOLs.
+     *
      * @param string|null $content
      * @param string $replace
      * @return string
@@ -46,6 +48,7 @@ class Utils
 
     /**
      * Loop "forever".
+     *
      * @param callable $callback
      */
     public static function forever(callable $callback): void
@@ -63,6 +66,7 @@ class Utils
 
     /**
      * Format line as CSV and write to file pointer.
+     *
      * @param $handle
      * @param $array
      * @param string $delimiter
@@ -110,6 +114,7 @@ class Utils
 
     /**
      * Returns an array of duplicated values from an array of values.
+     *
      * @param $values
      * @return array
      */
@@ -125,6 +130,7 @@ class Utils
 
     /**
      * Check if the value is a valid language code and suggest correct.
+     *
      * @param string $code
      * @return bool|string
      */
@@ -149,6 +155,7 @@ class Utils
 
     /**
      * Check if the value is a valid HTML.
+     *
      * @param $string
      * @return bool
      */
@@ -166,6 +173,7 @@ class Utils
 
     /**
      * Returns a collection of files by paths and patterns.
+     *
      * @param array $paths
      * @param array $patterns
      * @return Collection|SplFileInfo[]
@@ -187,6 +195,7 @@ class Utils
 
     /**
      * Returns a collection of localization strings from a collection of files.
+     *
      * @param Collection|SplFileInfo[] $files
      * @param array $functions
      * @return Collection
@@ -201,6 +210,7 @@ class Utils
 
     /**
      * Returns a collection of localization strings from a file.
+     *
      * @param SplFileInfo $file
      * @param array $functions
      * @return Collection
@@ -288,8 +298,10 @@ class Utils
 
     /**
      * Create a json file.
+     *
      * @param string $path
      * @param $data
+     *
      * @throws JsonException
      */
     public static function putJson(string $path, $data): void

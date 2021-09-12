@@ -9,12 +9,14 @@ interface Exporter
 {
     /**
      * Exporter description.
+     *
      * @return string
      */
     public static function description(): string;
 
     /**
      * Exporter logic.
+     *
      * @param LarexExportCommand $command
      * @param CsvReader $reader
      * @return int
