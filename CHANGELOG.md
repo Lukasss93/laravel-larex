@@ -8,9 +8,16 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Please check the [UPGRADING.md](https://github.com/Lukasss93/laravel-larex/blob/master/UPGRADING.md)
 file before upgrading to a major version!
 
+## [v3.5.2](https://github.com/Lukasss93/laravel-larex/releases/tag/v3.5.2) - 2021-09-12
+
+### Fixed
+
+- Bug fix: wrong file name if group value has whitespaces
+
 ## [v3.5.1](https://github.com/Lukasss93/laravel-larex/releases/tag/v3.5.1) - 2021-08-24
 
 ### Fixed
+
 - Bug fix: wrong supported languages code separator
 - Bug fix: wrong logic in UntranslatedStringsLinter
 
