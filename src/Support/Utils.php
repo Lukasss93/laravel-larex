@@ -294,7 +294,8 @@ class Utils
      */
     public static function putJson(string $path, $data): void
     {
-        File::put($path, json_encode($data,
-            JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+        $content = json_encode($data,
+            JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        File::put($path, Str::finish($content, "\n"));
     }
 }

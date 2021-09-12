@@ -49,8 +49,8 @@ class CsvParser
         foreach ($rows as $columns) {
 
             //get first two columns values
-            $group = $columns->get('group');
-            $key = $columns->get('key');
+            $group = trim($columns->get('group'));
+            $key = trim($columns->get('key'));
 
             //check if key is filled
             if ($key === '') {
@@ -59,6 +59,7 @@ class CsvParser
 
             //loop language columns
             foreach ($columns->skip(2) as $lang => $value) {
+                $lang = trim($lang);
                 $item = $value ?? '';
 
                 if ($item === '') {

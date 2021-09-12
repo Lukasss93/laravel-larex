@@ -106,3 +106,23 @@ it('exports strings with no entries', function () {
         ->expectsOutput('No entries exported.')
         ->assertExitCode(0);
 });
+
+it('exports strings trimming whitespaces in group and key', function () {
+    initFromStub('exporters.json-language.spaces.input');
+
+    $this->artisan(LarexExportCommand::class, ['exporter' => 'json:lang'])
+        ->expectsOutput(sprintf("Processing the '%s' file...", localizationPath(true)))
+        ->expectsOutput('resources/lang/en.json created successfully.')
+        ->expectsOutput('resources/lang/it.json created successfully.')
+        ->assertExitCode(0);
+
+    expect(resource_path('lang/en.json'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.json-language.spaces.output-en');
+
+    expect(resource_path('lang/it.json'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.json-language.spaces.output-it');
+});

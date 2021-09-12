@@ -200,3 +200,23 @@ it('exports strings with different eol', function () {
         ->fileContent()
         ->toEqualStub('exporters.laravel.base.output-it-special');
 });
+
+it('exports strings trimming whitespaces in group and key', function () {
+    initFromStub('exporters.laravel.spaces.input');
+
+    $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel'])
+        ->expectsOutput(sprintf("Processing the '%s' file...", localizationPath(true)))
+        ->expectsOutput('resources/lang/en/app.php created successfully.')
+        ->expectsOutput('resources/lang/it/app.php created successfully.')
+        ->assertExitCode(0);
+
+    expect(resource_path('lang/en/app.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.spaces.output-en');
+
+    expect(resource_path('lang/it/app.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.spaces.output-it');
+});
