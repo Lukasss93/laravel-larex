@@ -25,12 +25,12 @@
         "ext-dom": "*",
         "ext-json": "*",
         "illuminate/support": "^7.0|^8.0",
-        "loilo/fuse": "^4.0",
-        "spatie/simple-excel": "^1.13"
+        "loilo/fuse": "^6.4.6",
+        "spatie/simple-excel": "^1.13.1"
     },
     "require-dev": {
         "orchestra/testbench": "^5.0|^6.0",
-        "pestphp/pest": "^1.15"
+        "pestphp/pest": "^1.21"
     },
     "autoload": {
         "psr-4": {
@@ -50,7 +50,10 @@
         }
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     },
     "scripts": {
         "test": [

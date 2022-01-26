@@ -144,7 +144,7 @@ class Utils
             return false;
         }
 
-        return $search[0]['code'];
+        return $search[0]['item']['code'];
     }
 
     /**
