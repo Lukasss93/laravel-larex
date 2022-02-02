@@ -21,15 +21,15 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "^7.4|^8.0",
+        "php": "^8.0",
         "ext-dom": "*",
         "ext-json": "*",
-        "illuminate/support": "^8.0",
+        "illuminate/support": "^8.0|^9.0",
         "loilo/fuse": "^6.4.6",
         "spatie/simple-excel": "^1.13.1"
     },
     "require-dev": {
-        "orchestra/testbench": "^5.0|^6.0",
+        "orchestra/testbench": "^6.0|^7.0",
         "pestphp/pest": "^1.21"
     },
     "autoload": {

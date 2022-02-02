@@ -88,11 +88,11 @@ php artisan vendor:publish --provider="Lukasss93\Larex\LarexServiceProvider" --t
 
 2. Edit the *project-root/resources/lang/localization.csv* file
    
-   | group | key             | en         | it           |
-   | ----- | --------------- | ---------- | ------------ |
-   | app   | hello           | Hello      | Ciao         |
-   | app   | list.developers | Developers | Sviluppatori |
-   | app   | list.teachers   | Teachers   | Insegnanti   |
+| group | key             | en         | it           |
+|-------|-----------------|------------|--------------|
+| app   | hello           | Hello      | Ciao         |
+| app   | list.developers | Developers | Sviluppatori |
+| app   | list.teachers   | Teachers   | Insegnanti   |
 
 3. Run `php artisan larex:export` command
 
@@ -131,7 +131,7 @@ php artisan vendor:publish --provider="Lukasss93\Larex\LarexServiceProvider" --t
 The `larex:export <exporter>` command exports CSV strings to a specific location based on the selected exporter.
 
 | Exporter   | Default | Description                                        |
-| ---------- | ------- | -------------------------------------------------- |
+|------------|---------|----------------------------------------------------|
 | laravel    | Yes     | Export data from CSV to Laravel localization files |
 | json:group | No      | Export data from CSV to JSON by group              |
 | json:lang  | No      | Export data from CSV to JSON by language           |
@@ -146,7 +146,7 @@ The `larex:export <exporter>` command exports CSV strings to a specific location
 The `larex:import <importer>` command imports the strings of the selected importer, into the CSV.
 
 | Importer   | Default | Description                                        |
-| ---------- | ------- | -------------------------------------------------- |
+|------------|---------|----------------------------------------------------|
 | laravel    | Yes     | Import data from Laravel localization files to CSV |
 | json:group | No      | Import data from JSON by group to CSV              |
 | json:lang  | No      | Import data from JSON by language to CSV           |
@@ -163,7 +163,7 @@ Larex provides a linting system by using the `php artisan larex:lint` command to
 ##### Available linters:
 
 | Linter                    | Enabled by default | Description                                       |
-| ------------------------- | ------------------ | ------------------------------------------------- |
+|---------------------------|--------------------|---------------------------------------------------|
 | ValidHeaderLinter         | Yes                | Validate the header structure                     |
 | ValidLanguageCodeLinter   | Yes                | Validate the language codes in the header columns |
 | DuplicateKeyLinter        | Yes                | Find duplicated keys                              |
@@ -193,11 +193,12 @@ composer test
 
 ## 🔰 Version Support
 
-| Larex           | PHP                       | Laravel    |
-| --------------- | ------------------------- | ---------- |
-| 1.0             | 7.2                       | ≥ 5.8      |
-| ≥ 1.2 and ≤ 2.1 | 7.2 &#124; 7.3 &#124; 7.4 | ≥ 6        |
-| ≥ 3.0           | 7.4 &#124; 8.0            | ≥ 7        |
+| Larex            | PHP                       | Laravel                        |
+|------------------|---------------------------|--------------------------------|
+| ^1.0             | 7.2                       | 5.8                            |
+| ^1.2 &#124; ^2.1 | 7.2 &#124; 7.3 &#124; 7.4 | ≥ ^6.0 &#124; ^7.0 &#124; ^8.0 |
+| 3.0              | 7.4 &#124; 8.0            | ≥ ^7.0 &#124; ^8.0             |
+| 3.1              | 8.0 &#124; 8.1            | ≥ ^8.0 &#124; ^9.0             |
 
 ## 📃 Changelog
 
