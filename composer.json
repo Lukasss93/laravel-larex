@@ -35,12 +35,18 @@
     "autoload": {
         "psr-4": {
             "Lukasss93\\Larex\\": "src/"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
             "Lukasss93\\Larex\\Tests\\": "tests/"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "extra": {
         "laravel": {

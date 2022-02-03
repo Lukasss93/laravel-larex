@@ -12,7 +12,7 @@ return [
      * Default CSV settings.
      */
     'csv' => [
-        'path' => 'resources/lang/localization.csv',
+        'path' => lang_path('localization.csv'),
     ],
 
     /**

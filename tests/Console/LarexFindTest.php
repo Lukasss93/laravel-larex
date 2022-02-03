@@ -5,7 +5,7 @@ use Lukasss93\Larex\Console\LarexFindCommand;
 it('does not find rows due to missing localization file', function () {
     $this
         ->artisan(LarexFindCommand::class, ['value' => 'test'])
-        ->expectsOutput(sprintf("The '%s' does not exists.", localizationPath(true)))
+        ->expectsOutput(sprintf("The '%s' does not exists.", csv_path(true)))
         ->expectsOutput('Please create it with: php artisan larex:init or php artisan larex:import')
         ->assertExitCode(1);
 });

@@ -12,13 +12,6 @@ use Lukasss93\Larex\Support\CsvWriter;
 class LarexRemoveCommand extends Command
 {
     /**
-     * Localization file path.
-     *
-     * @var string
-     */
-    protected $file;
-
-    /**
      * The name and signature of the console command.
      *
      * @var string
@@ -35,17 +28,6 @@ class LarexRemoveCommand extends Command
     protected $description = 'Remove a key from CSV file';
 
     /**
-     * Create a new console command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-        $this->file = config('larex.csv.path');
-    }
-
-    /**
      * Execute the console command.
      *
      * @return int
@@ -55,8 +37,8 @@ class LarexRemoveCommand extends Command
         $key = $this->argument('key');
         $force = $this->option('force');
 
-        if (!File::exists(base_path($this->file))) {
-            $this->error("The '$this->file' does not exists.");
+        if (!File::exists(csv_path())) {
+            $this->error(sprintf("The '%s' does not exists.", csv_path(true)));
             $this->line('Please create it with: php artisan larex:init');
 
             return 1;
@@ -64,7 +46,7 @@ class LarexRemoveCommand extends Command
 
         /** @var Collection $remove */
         /** @var Collection $keep */
-        [$remove, $keep] = CsvReader::create(base_path($this->file))
+        [$remove, $keep] = CsvReader::create(csv_path())
             ->getRows()
             ->partition(fn ($item) => Str::is($key, "{$item['group']}.{$item['key']}"))
             ->collect();
@@ -83,7 +65,7 @@ class LarexRemoveCommand extends Command
 
         if ($force || $this->confirm("Are you sure you want to delete {$remove->count()} ".Str::plural('string',
                     $remove->count()).'?', false)) {
-            CsvWriter::create(base_path($this->file))->addRows($keep->toArray());
+            CsvWriter::create(csv_path())->addRows($keep->toArray());
 
             $this->info('Removed successfully.');
 

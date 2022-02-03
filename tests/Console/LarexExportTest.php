@@ -5,8 +5,8 @@ use Lukasss93\Larex\Console\LarexInitCommand;
 
 it('does not export strings due to missing localization file', function () {
     $this->artisan(LarexExportCommand::class)
-        ->expectsOutput(sprintf("Processing the '%s' file...", localizationPath(true)))
-        ->expectsOutput(sprintf("The '%s' does not exists.", localizationPath(true)))
+        ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
+        ->expectsOutput(sprintf("The '%s' does not exists.", csv_path(true)))
         ->expectsOutput('Please create it with: php artisan larex:init or php artisan larex:import')
         ->assertExitCode(1);
 });
@@ -15,7 +15,7 @@ it('does not export strings due to both filled --include and --exclude options',
     $this->artisan(LarexInitCommand::class)->run();
 
     $this->artisan(LarexExportCommand::class, ['--include' => '', '--exclude' => ''])
-        ->expectsOutput(sprintf("Processing the '%s' file...", localizationPath(true)))
+        ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
         ->expectsOutput('The --include and --exclude options can be used only one at a time.')
         ->assertExitCode(1);
 });

@@ -10,13 +10,6 @@ use Lukasss93\Larex\Support\CsvWriter;
 class LarexSortCommand extends Command
 {
     /**
-     * Localization file path.
-     *
-     * @var string
-     */
-    protected $file;
-
-    /**
      * The name and signature of the console command.
      *
      * @var string
@@ -31,17 +24,6 @@ class LarexSortCommand extends Command
     protected $description = 'Sort the CSV rows by group and key';
 
     /**
-     * Create a new console command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-        $this->file = config('larex.csv.path');
-    }
-
-    /**
      * Execute the console command.
      *
      * @return int
@@ -50,19 +32,19 @@ class LarexSortCommand extends Command
     {
         $this->warn('Sorting che CSV rows...');
 
-        if (!File::exists(base_path($this->file))) {
-            $this->error("The '$this->file' does not exists.");
+        if (!File::exists(csv_path())) {
+            $this->error(sprintf("The '%s' does not exists.", csv_path(true)));
             $this->line('Please create it with: php artisan larex:init');
 
             return 1;
         }
 
-        $content = CsvReader::create(base_path($this->file))
+        $content = CsvReader::create(csv_path())
             ->getRows()
             ->sortBy(fn ($item) => [$item['group'], $item['key']])
             ->collect();
 
-        CsvWriter::create(base_path($this->file))
+        CsvWriter::create(csv_path())
             ->addRows($content->toArray());
 
         $this->info('Sorting completed.');

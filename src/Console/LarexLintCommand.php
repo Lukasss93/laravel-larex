@@ -13,13 +13,6 @@ use Lukasss93\Larex\Support\Utils;
 class LarexLintCommand extends Command
 {
     /**
-     * Localization file path.
-     *
-     * @var string
-     */
-    protected $file;
-
-    /**
      * The name and signature of the console command.
      *
      * @var string
@@ -34,25 +27,14 @@ class LarexLintCommand extends Command
     protected $description = 'Lint the CSV file';
 
     /**
-     * Create a new console command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-        $this->file = config('larex.csv.path');
-    }
-
-    /**
      * Execute the console command.
      *
      * @return int
      */
     public function handle(): int
     {
-        if (!File::exists(base_path($this->file))) {
-            $this->error("The '$this->file' does not exists.");
+        if (!File::exists(csv_path())) {
+            $this->error(sprintf("The '%s' does not exists.", csv_path(true)));
             $this->line('Please create it with: php artisan larex:init');
 
             return 1;
@@ -74,7 +56,7 @@ class LarexLintCommand extends Command
                 $this->warn($instance::description());
 
                 try {
-                    $instance->handle(CsvReader::create(base_path($this->file)));
+                    $instance->handle(CsvReader::create(csv_path()));
 
                     $this->line('<bg=green> PASS </> <fg=green>Lint passed successfully.</>');
                     $status->push(true);

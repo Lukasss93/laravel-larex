@@ -17,7 +17,7 @@ it('imports strings', function () {
         ->expectsOutput('Data imported successfully.')
         ->assertExitCode(0);
 
-    expect(localizationPath())
+    expect(csv_path())
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('importers.json-groups.base.output');
@@ -37,7 +37,7 @@ it('imports strings with --include option', function () {
         ->expectsOutput('Data imported successfully.')
         ->assertExitCode(0);
 
-    expect(localizationPath())
+    expect(csv_path())
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('importers.json-groups.include-exclude.include');
@@ -57,7 +57,7 @@ it('imports strings with --exclude option', function () {
         ->expectsOutput('Data imported successfully.')
         ->assertExitCode(0);
 
-    expect(localizationPath())
+    expect(csv_path())
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('importers.json-groups.include-exclude.exclude');

@@ -31,7 +31,7 @@ class LarexLocalizeCommand extends Command
      */
     public function handle(): int
     {
-        $reader = CsvReader::create(base_path(config('larex.csv.path')));
+        $reader = CsvReader::create(csv_path());
         $csvRows = $reader->getRows()->collect();
         $filesFound = Utils::findFiles(config('larex.search.dirs'), config('larex.search.patterns'));
 
@@ -79,7 +79,7 @@ class LarexLocalizeCommand extends Command
                     return $output->toArray();
                 });
 
-            CsvWriter::create(base_path(config('larex.csv.path')))
+            CsvWriter::create(csv_path())
                 ->addRows($csvRows->toArray())
                 ->addRows($unlocalizedStringsToAdd->toArray());
 

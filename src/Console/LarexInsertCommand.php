@@ -13,13 +13,6 @@ use Symfony\Component\Console\Helper\TableSeparator;
 class LarexInsertCommand extends Command
 {
     /**
-     * Localization file path.
-     *
-     * @var string
-     */
-    protected $file;
-
-    /**
      * The name and signature of the console command.
      *
      * @var string
@@ -34,32 +27,21 @@ class LarexInsertCommand extends Command
     protected $description = 'Insert a new record in the CSV';
 
     /**
-     * Create a new console command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-        $this->file = config('larex.csv.path');
-    }
-
-    /**
      * Execute the console command.
      *
      * @return int
      */
     public function handle(): int
     {
-        if (!File::exists(base_path($this->file))) {
-            $this->error("The '$this->file' does not exists.");
+        if (!File::exists(csv_path())) {
+            $this->error(sprintf("The '%s' does not exists.", csv_path(true)));
             $this->line('Please create it with: php artisan larex:init');
 
             return 1;
         }
 
         //csv reader
-        $reader = CsvReader::create(base_path($this->file));
+        $reader = CsvReader::create(csv_path());
 
         //get csv header
         $header = $reader->getHeader();
@@ -147,7 +129,7 @@ class LarexInsertCommand extends Command
         //append to csv
         $rows->push($data->toArray());
 
-        CsvWriter::create(base_path($this->file))
+        CsvWriter::create(csv_path())
             ->addRows($rows->toArray());
 
         $this->info('Item added successfully.');

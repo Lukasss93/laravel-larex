@@ -34,7 +34,7 @@ it('does not import strings due to already existing localization file', function
     $this->artisan(LarexInitCommand::class);
 
     $this->artisan(LarexImportCommand::class)
-        ->expectsOutput(sprintf("The '%s' already exists.", localizationPath(true)))
+        ->expectsOutput(sprintf("The '%s' already exists.", csv_path(true)))
         ->assertExitCode(1);
 });
 

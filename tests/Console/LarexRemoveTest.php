@@ -12,7 +12,7 @@ it('removes rows', function () {
         ->expectsOutput('Removed successfully.')
         ->assertExitCode(0);
 
-    expect(localizationPath())
+    expect(csv_path())
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('remove.base.output');
@@ -27,7 +27,7 @@ it('removes rows with --force option', function () {
         ->expectsOutput('Removed successfully.')
         ->assertExitCode(0);
 
-    expect(localizationPath())
+    expect(csv_path())
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('remove.base.output');
@@ -43,7 +43,7 @@ it('does not remove rows due to user abort', function () {
         ->expectsOutput('Aborted.')
         ->assertExitCode(0);
 
-    expect(localizationPath())
+    expect(csv_path())
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('remove.abort.output');
@@ -56,7 +56,7 @@ it('does not remove rows due to no strings found', function () {
         ->expectsOutput('No strings found to remove.')
         ->assertExitCode(0);
 
-    expect(localizationPath())
+    expect(csv_path())
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('remove.nostrings.output');
@@ -73,7 +73,7 @@ it('removes rows with wildcard', function () {
         ->expectsOutput('Removed successfully.')
         ->assertExitCode(0);
 
-    expect(localizationPath())
+    expect(csv_path())
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('remove.wildcard.output');
@@ -81,11 +81,11 @@ it('removes rows with wildcard', function () {
 
 it('does not remove rows due to missing localization file', function () {
     $this->artisan(LarexRemoveCommand::class, ['key' => 'app.car'])
-        ->expectsOutput(sprintf("The '%s' does not exists.", localizationPath(true)))
+        ->expectsOutput(sprintf("The '%s' does not exists.", csv_path(true)))
         ->expectsOutput('Please create it with: php artisan larex:init')
         ->assertExitCode(1);
 
-    expect(localizationPath())->not->toBeFile();
+    expect(csv_path())->not->toBeFile();
 });
 
 it('removes rows and export data', function () {
@@ -96,12 +96,12 @@ it('removes rows and export data', function () {
         ->expectsOutput('└ app.car')
         ->expectsQuestion('Are you sure you want to delete 1 string?', true)
         ->expectsOutput('Removed successfully.')
-        ->expectsOutput(sprintf("Processing the '%s' file...", localizationPath(true)))
+        ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
         ->expectsOutput('resources/lang/en/app.php created successfully.')
         ->expectsOutput('resources/lang/it/app.php created successfully.')
         ->assertExitCode(0);
 
-    expect(localizationPath())
+    expect(csv_path())
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('remove.export.output')

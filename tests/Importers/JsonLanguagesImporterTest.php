@@ -15,7 +15,7 @@ it('imports strings', function () {
         ->expectsOutput('Data imported successfully.')
         ->assertExitCode(0);
 
-    expect(localizationPath())
+    expect(csv_path())
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('importers.json-langs.base.output');
@@ -35,7 +35,7 @@ it('imports strings with --include option', function () {
         ->expectsOutput('Data imported successfully.')
         ->assertExitCode(0);
 
-    expect(localizationPath())
+    expect(csv_path())
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('importers.json-langs.include-exclude.include');
@@ -55,7 +55,7 @@ it('imports strings with --exclude option', function () {
         ->expectsOutput('Data imported successfully.')
         ->assertExitCode(0);
 
-    expect(localizationPath())
+    expect(csv_path())
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('importers.json-langs.include-exclude.exclude');

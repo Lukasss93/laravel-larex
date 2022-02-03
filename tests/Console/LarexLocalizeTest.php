@@ -33,7 +33,7 @@ it('finds unlocalized strings and import data', function () {
         ->expectsOutput('Done.')
         ->assertExitCode(0);
 
-    expect(localizationPath())
+    expect(csv_path())
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('localize.with-strings-import.csv-after');

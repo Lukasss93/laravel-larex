@@ -10,7 +10,7 @@ it('sorts rows', function () {
         ->expectsOutput('Sorting completed.')
         ->assertExitCode(0);
 
-    expect(localizationPath())
+    expect(csv_path())
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('sort.sort-output');
@@ -19,9 +19,9 @@ it('sorts rows', function () {
 it('does not sort rows due to missing localization file', function () {
     $this->artisan(LarexSortCommand::class)
         ->expectsOutput('Sorting che CSV rows...')
-        ->expectsOutput(sprintf("The '%s' does not exists.", localizationPath(true)))
+        ->expectsOutput(sprintf("The '%s' does not exists.", csv_path(true)))
         ->expectsOutput('Please create it with: php artisan larex:init')
         ->assertExitCode(1);
 
-    expect(localizationPath())->not->toBeFile();
+    expect(csv_path())->not->toBeFile();
 });

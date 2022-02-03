@@ -8,7 +8,7 @@ it('does not lint due to missing localization file', function () {
     config(['larex.linters' => []]);
 
     $this->artisan(LarexLintCommand::class)
-        ->expectsOutput(sprintf("The '%s' does not exists.", localizationPath(true)))
+        ->expectsOutput(sprintf("The '%s' does not exists.", csv_path(true)))
         ->expectsOutput('Please create it with: php artisan larex:init')
         ->assertExitCode(1);
 });

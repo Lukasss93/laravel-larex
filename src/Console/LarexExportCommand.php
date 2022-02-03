@@ -11,13 +11,6 @@ use Lukasss93\Larex\Support\Utils;
 class LarexExportCommand extends Command
 {
     /**
-     * Localization file path.
-     *
-     * @var string
-     */
-    protected $file;
-
-    /**
      * The name and signature of the console command.
      *
      * @var string
@@ -36,17 +29,6 @@ class LarexExportCommand extends Command
     protected $description = 'Export entries from CSV file';
 
     /**
-     * Create a new console command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-        $this->file = config('larex.csv.path');
-    }
-
-    /**
      * Execute the console command.
      *
      * @return int
@@ -62,11 +44,11 @@ class LarexExportCommand extends Command
 
     protected function watch(): int
     {
-        $this->warn("Watching the '$this->file' file...");
+        $this->warn(sprintf("Watching the '%s' file...", csv_path(true)));
 
         $lastEditDate = null;
         Utils::forever(function () use (&$lastEditDate) {
-            $currentEditDate = filemtime(base_path($this->file));
+            $currentEditDate = filemtime(csv_path());
             clearstatcache();
 
             if ($lastEditDate !== $currentEditDate) {
@@ -83,11 +65,11 @@ class LarexExportCommand extends Command
 
     protected function translate(): int
     {
-        $this->warn("Processing the '$this->file' file...");
+        $this->warn(sprintf("Processing the '%s' file...", csv_path(true)));
 
         //check if csv file exists
-        if (!File::exists(base_path($this->file))) {
-            $this->error("The '$this->file' does not exists.");
+        if (!File::exists(csv_path())) {
+            $this->error(sprintf("The '%s' does not exists.", csv_path(true)));
             $this->line('Please create it with: php artisan larex:init or php artisan larex:import');
 
             return 1;
@@ -101,7 +83,7 @@ class LarexExportCommand extends Command
         }
 
         //csv reader
-        $reader = CsvReader::create(base_path($this->file));
+        $reader = CsvReader::create(csv_path());
 
         //get the exporter name
         $exporterKey = $this->argument('exporter') ?? config('larex.exporters.default');

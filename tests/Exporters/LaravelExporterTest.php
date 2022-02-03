@@ -7,7 +7,7 @@ it('exports strings', function () {
     initFromStub('exporters.laravel.base.input');
 
     $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel'])
-        ->expectsOutput(sprintf("Processing the '%s' file...", localizationPath(true)))
+        ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
         ->expectsOutput('resources/lang/en/app.php created successfully.')
         ->expectsOutput('resources/lang/en/special.php created successfully.')
         ->expectsOutput('resources/lang/it/app.php created successfully.')
@@ -39,7 +39,7 @@ it('exports strings with --watch option', function () {
     initFromStub('exporters.laravel.base.input');
 
     $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel', '--watch' => true])
-        ->expectsOutput(sprintf("Processing the '%s' file...", localizationPath(true)))
+        ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
         ->expectsOutput('resources/lang/en/app.php created successfully.')
         ->expectsOutput('resources/lang/en/special.php created successfully.')
         ->expectsOutput('resources/lang/it/app.php created successfully.')
@@ -72,7 +72,7 @@ it('exports strings with --include option', function () {
     initFromStub('exporters.laravel.include-exclude.input');
 
     $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel', '--include' => 'en'])
-        ->expectsOutput(sprintf("Processing the '%s' file...", localizationPath(true)))
+        ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
         ->expectsOutput('resources/lang/en/app.php created successfully.')
         ->expectsOutput('resources/lang/en/another.php created successfully.')
         ->assertExitCode(0);
@@ -96,7 +96,7 @@ it('exports strings with --exclude option', function () {
     initFromStub('exporters.laravel.include-exclude.input');
 
     $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel', '--exclude' => 'en'])
-        ->expectsOutput(sprintf("Processing the '%s' file...", localizationPath(true)))
+        ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
         ->expectsOutput('resources/lang/it/app.php created successfully.')
         ->expectsOutput('resources/lang/it/another.php created successfully.')
         ->assertExitCode(0);
@@ -120,7 +120,7 @@ it('exports strings with warning', function () {
     initFromStub('exporters.laravel.warnings.input');
 
     $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel'])
-        ->expectsOutput(sprintf("Processing the '%s' file...", localizationPath(true)))
+        ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
         ->expectsOutput('Missing key name at line 4. The row will be skipped.')
         ->expectsOutput('app.second at line 5, column 3 (en) is missing. It will be skipped.')
         ->expectsOutput('resources/lang/en/app.php created successfully.')
@@ -142,7 +142,7 @@ it('exports strings with no entries', function () {
     $this->artisan(LarexInitCommand::class)->run();
 
     $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel'])
-        ->expectsOutput(sprintf("Processing the '%s' file...", localizationPath(true)))
+        ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
         ->expectsOutput('No entries exported.')
         ->assertExitCode(0);
 });
@@ -151,7 +151,7 @@ it('exports strings with language code territory', function () {
     initFromStub('exporters.laravel.territory.input');
 
     $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel'])
-        ->expectsOutput(sprintf("Processing the '%s' file...", localizationPath(true)))
+        ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
         ->expectsOutput('resources/lang/en_GB/app.php created successfully.')
         ->expectsOutput('resources/lang/it/app.php created successfully.')
         ->assertExitCode(0);
@@ -173,7 +173,7 @@ it('exports strings with different eol', function () {
     initFromStub('exporters.laravel.base.input');
 
     $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel'])
-        ->expectsOutput(sprintf("Processing the '%s' file...", localizationPath(true)))
+        ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
         ->expectsOutput('resources/lang/en/app.php created successfully.')
         ->expectsOutput('resources/lang/en/special.php created successfully.')
         ->expectsOutput('resources/lang/it/app.php created successfully.')
@@ -205,7 +205,7 @@ it('exports strings trimming whitespaces in group and key', function () {
     initFromStub('exporters.laravel.spaces.input');
 
     $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel'])
-        ->expectsOutput(sprintf("Processing the '%s' file...", localizationPath(true)))
+        ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
         ->expectsOutput('resources/lang/en/app.php created successfully.')
         ->expectsOutput('resources/lang/it/app.php created successfully.')
         ->assertExitCode(0);

@@ -14,13 +14,6 @@ use Throwable;
 class LarexImportCommand extends Command
 {
     /**
-     * Localization file path.
-     *
-     * @var string
-     */
-    protected $file;
-
-    /**
      * The name and signature of the console command.
      *
      * @var string
@@ -37,18 +30,7 @@ class LarexImportCommand extends Command
      * @var string
      */
     protected $description = 'Import entries into CSV file';
-
-    /**
-     * Create a new console command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-        $this->file = config('larex.csv.path');
-    }
-
+    
     /**
      * Execute the console command.
      *
@@ -84,8 +66,8 @@ class LarexImportCommand extends Command
         }
 
         //check file exists
-        if (!$this->option('force') && File::exists(base_path($this->file))) {
-            $this->error("The '$this->file' already exists.");
+        if (!$this->option('force') && File::exists(csv_path())) {
+            $this->error(sprintf("The '%s' already exists.", csv_path(true)));
 
             return 1;
         }
@@ -126,7 +108,7 @@ class LarexImportCommand extends Command
         }
 
         //write csv
-        CsvWriter::create(base_path($this->file))
+        CsvWriter::create(csv_path())
             ->addRows($items->toArray());
 
         $this->info('Data imported successfully.');

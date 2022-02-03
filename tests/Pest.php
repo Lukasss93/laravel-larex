@@ -23,7 +23,7 @@ uses(TestCase::class)
         //set global csv settings
         config([
             'larex.csv' => [
-                'path' => 'resources/lang/localization.csv',
+                'path' => lang_path('localization.csv'),
             ],
             'larex.search' => [
                 'dirs' => ['resources/views'],
@@ -70,17 +70,6 @@ expect()->extend('toEqualStub', fn (string $name, $eol = "\n") => $this->toEqual
 |
 */
 
-function localizationPath($relative = false): string
-{
-    $path = 'resources/lang/localization.csv';
-
-    if ($relative) {
-        return $path;
-    }
-
-    return base_path($path);
-}
-
 function getTestStub(string $name, $eol = "\n"): string
 {
     $name = str_replace('.', '/', $name);
@@ -91,7 +80,7 @@ function getTestStub(string $name, $eol = "\n"): string
 
 function initFromStub(string $stub, string $file = null): string
 {
-    $filePath = Utils::normalizeDS($file ?? localizationPath());
+    $filePath = Utils::normalizeDS($file ?? csv_path());
     File::put($filePath, getTestStub($stub));
 
     return $filePath;

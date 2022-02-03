@@ -5,7 +5,7 @@ use Lukasss93\Larex\Console\LarexInsertCommand;
 
 it('does not insert string due to missing localization file', function () {
     $this->artisan(LarexInsertCommand::class)
-        ->expectsOutput(sprintf("The '%s' does not exists.", localizationPath(true)))
+        ->expectsOutput(sprintf("The '%s' does not exists.", csv_path(true)))
         ->expectsOutput('Please create it with: php artisan larex:init')
         ->assertExitCode(1);
 });
@@ -22,7 +22,7 @@ it('inserts string', function () {
         ->expectsOutput('Item added successfully.')
         ->assertExitCode(0);
 
-    expect(localizationPath())
+    expect(csv_path())
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('insert.base.output');
@@ -40,7 +40,7 @@ it('inserts string with special chars', function () {
         ->expectsOutput('Item added successfully.')
         ->assertExitCode(0);
 
-    expect(localizationPath())
+    expect(csv_path())
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('insert.special.output');
@@ -59,7 +59,7 @@ it('inserts string overwriting existent', function () {
         ->expectsOutput('Item added successfully.')
         ->assertExitCode(0);
 
-    expect(localizationPath())
+    expect(csv_path())
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('insert.exists.output-continue-yes');
@@ -80,7 +80,7 @@ it('inserts string not overwriting existent', function () {
         ->expectsOutput('Item added successfully.')
         ->assertExitCode(0);
 
-    expect(localizationPath())
+    expect(csv_path())
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('insert.exists.output-continue-no');
@@ -102,7 +102,7 @@ it('inserts string checking empty group/key', function () {
         ->expectsOutput('Item added successfully.')
         ->assertExitCode(0);
 
-    expect(localizationPath())
+    expect(csv_path())
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('insert.base.output');
@@ -119,12 +119,12 @@ it('inserts string and export data', function () {
         ->expectsQuestion('Are you sure?', 'yes')
         ->expectsOutput('Item added successfully.')
         ->expectsOutput('')
-        ->expectsOutput(sprintf("Processing the '%s' file...", localizationPath(true)))
+        ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
         ->expectsOutput('resources/lang/en/app.php created successfully.')
         ->expectsOutput('resources/lang/it/app.php created successfully.')
         ->assertExitCode(0);
 
-    expect(localizationPath())
+    expect(csv_path())
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('insert.base.output')
@@ -157,7 +157,7 @@ it('inserts string with correction', function () {
         ->expectsOutput('Item added successfully.')
         ->assertExitCode(0);
 
-    expect(localizationPath())
+    expect(csv_path())
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('insert.correction.output');
@@ -179,12 +179,12 @@ it('inserts string with correction and export data', function () {
         ->expectsQuestion('Are you sure?', 'yes')
         ->expectsOutput('Item added successfully.')
         ->expectsOutput('')
-        ->expectsOutput("Processing the '".config('larex.csv.path')."' file...")
+        ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
         ->expectsOutput('resources/lang/en/app.php created successfully.')
         ->expectsOutput('resources/lang/it/app.php created successfully.')
         ->assertExitCode(0);
 
-    expect(localizationPath())
+    expect(csv_path())
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('insert.correction.output')
@@ -211,7 +211,7 @@ it('inserts string after initializing localization file', function () {
         ->expectsOutput('Item added successfully.')
         ->assertExitCode(0);
 
-    expect(localizationPath())
+    expect(csv_path())
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('insert.init.output');

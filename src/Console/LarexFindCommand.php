@@ -11,13 +11,6 @@ use Symfony\Component\Console\Helper\Table;
 class LarexFindCommand extends Command
 {
     /**
-     * Localization file path.
-     *
-     * @var string
-     */
-    protected $file;
-
-    /**
      * The name and signature of the console command.
      *
      * @var string
@@ -30,18 +23,7 @@ class LarexFindCommand extends Command
      * @var string
      */
     protected $description = 'Find between strings';
-
-    /**
-     * Create a new console command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-        $this->file = config('larex.csv.path');
-    }
-
+    
     /**
      * Execute the console command.
      *
@@ -56,14 +38,14 @@ class LarexFindCommand extends Command
         $findGroup = $find->first();
         $findKey = $find->skip(1)->implode('.');
 
-        if (!File::exists(base_path($this->file))) {
-            $this->error("The '$this->file' does not exists.");
+        if (!File::exists(csv_path())) {
+            $this->error(sprintf("The '%s' does not exists.", csv_path(true)));
             $this->line('Please create it with: php artisan larex:init or php artisan larex:import');
 
             return 1;
         }
 
-        $reader = CsvReader::create(base_path($this->file));
+        $reader = CsvReader::create(csv_path());
 
         //get headers
         $headers = $reader

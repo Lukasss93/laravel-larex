@@ -9,13 +9,6 @@ use Lukasss93\Larex\Support\Utils;
 class LarexInitCommand extends Command
 {
     /**
-     * Localization file path.
-     *
-     * @var string
-     */
-    protected $file;
-
-    /**
      * The name and signature of the console command.
      *
      * @var string
@@ -30,17 +23,6 @@ class LarexInitCommand extends Command
     protected $description = 'Init the CSV file';
 
     /**
-     * Create a new console command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-        $this->file = config('larex.csv.path');
-    }
-
-    /**
      * Execute the console command.
      *
      * @return int
@@ -53,15 +35,15 @@ class LarexInitCommand extends Command
             $stub = 'base';
         }
 
-        if (File::exists(base_path($this->file))) {
-            $this->error($this->file.' already exists.');
+        if (File::exists(csv_path())) {
+            $this->error(csv_path(true).' already exists.');
 
             return 1;
         }
 
-        File::put(base_path($this->file), Utils::getStub($stub));
+        File::put(csv_path(), Utils::getStub($stub));
 
-        $this->info($this->file.' created successfully.');
+        $this->info(csv_path(true).' created successfully.');
 
         return 0;
     }
