@@ -7,6 +7,7 @@ function csv_path($relative = false): string
     if ($relative) {
         $path = str_replace(base_path(), '', $path);
         $path = ltrim($path, '/\\');
+
         return $path;
     }
 

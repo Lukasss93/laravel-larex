@@ -30,7 +30,7 @@ class LarexImportCommand extends Command
      * @var string
      */
     protected $description = 'Import entries into CSV file';
-    
+
     /**
      * Execute the console command.
      *
