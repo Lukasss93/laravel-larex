@@ -5,8 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-Please check the [UPGRADING.md](https://github.com/Lukasss93/laravel-larex/blob/master/UPGRADING.md)
-file before upgrading to a major version!
+Please check the [UPGRADING.md](UPGRADING.md) file before upgrading to a major version!
+
+## [v4.0](https://github.com/Lukasss93/laravel-larex/releases/tag/v4.0) - 2022-02-04
+
+### Added
+
+- Added support for Laravel 9
+
+### Changed
+
+- Changed `path` value in larex config
+
+### Removed
+
+- Dropped PHP 7.4 support
+- Dropped Laravel 7 support
 
 ## [v3.5.2](https://github.com/Lukasss93/laravel-larex/releases/tag/v3.5.2) - 2021-09-12
 
