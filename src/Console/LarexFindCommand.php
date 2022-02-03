@@ -23,7 +23,7 @@ class LarexFindCommand extends Command
      * @var string
      */
     protected $description = 'Find between strings';
-    
+
     /**
      * Execute the console command.
      *
