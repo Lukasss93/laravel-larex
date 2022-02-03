@@ -31,7 +31,7 @@ class JsonLanguagesImporter implements Importer
         $rawValues = collect([]);
 
         //get all files
-        $files = File::glob(resource_path('lang/*.json'));
+        $files = File::glob(lang_path('*.json'));
 
         foreach ($files as $file) {
             $items = json_decode(File::get($file), true, 512, JSON_THROW_ON_ERROR);

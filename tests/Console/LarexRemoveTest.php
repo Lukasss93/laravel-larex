@@ -106,12 +106,12 @@ it('removes rows and export data', function () {
         ->fileContent()
         ->toEqualStub('remove.export.output')
         //check exported en file
-        ->and(resource_path('lang/en/app.php'))
+        ->and(lang_path('en/app.php'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('remove.export.output-app-en')
         //check exported it file
-        ->and(resource_path('lang/it/app.php'))
+        ->and(lang_path('it/app.php'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('remove.export.output-app-it');

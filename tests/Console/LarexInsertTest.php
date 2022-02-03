@@ -129,12 +129,12 @@ it('inserts string and export data', function () {
         ->fileContent()
         ->toEqualStub('insert.base.output')
         //check exported en file
-        ->and(resource_path('lang/en/app.php'))
+        ->and(lang_path('en/app.php'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('insert.base.output-app-en')
         //check exported it file
-        ->and(resource_path('lang/it/app.php'))
+        ->and(lang_path('it/app.php'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('insert.base.output-app-it');
@@ -189,12 +189,12 @@ it('inserts string with correction and export data', function () {
         ->fileContent()
         ->toEqualStub('insert.correction.output')
         //check exported en file
-        ->and(resource_path('lang/en/app.php'))
+        ->and(lang_path('en/app.php'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('insert.correction.output-app-en')
         //check exported it file
-        ->and(resource_path('lang/it/app.php'))
+        ->and(lang_path('it/app.php'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('insert.correction.output-app-it');

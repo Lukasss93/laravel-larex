@@ -14,22 +14,22 @@ it('exports strings', function () {
         ->expectsOutput('resources/lang/it/special.php created successfully.')
         ->assertExitCode(0);
 
-    expect(resource_path('lang/en/app.php'))
+    expect(lang_path('en/app.php'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.laravel.base.output-en-app');
 
-    expect(resource_path('lang/en/special.php'))
+    expect(lang_path('en/special.php'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.laravel.base.output-en-special');
 
-    expect(resource_path('lang/it/app.php'))
+    expect(lang_path('it/app.php'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.laravel.base.output-it-app');
 
-    expect(resource_path('lang/it/special.php'))
+    expect(lang_path('it/special.php'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.laravel.base.output-it-special');
@@ -47,22 +47,22 @@ it('exports strings with --watch option', function () {
         ->expectsOutput('Waiting for changes...')
         ->assertExitCode(0);
 
-    expect(resource_path('lang/en/app.php'))
+    expect(lang_path('en/app.php'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.laravel.base.output-en-app');
 
-    expect(resource_path('lang/en/special.php'))
+    expect(lang_path('en/special.php'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.laravel.base.output-en-special');
 
-    expect(resource_path('lang/it/app.php'))
+    expect(lang_path('it/app.php'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.laravel.base.output-it-app');
 
-    expect(resource_path('lang/it/special.php'))
+    expect(lang_path('it/special.php'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.laravel.base.output-it-special');
@@ -77,19 +77,19 @@ it('exports strings with --include option', function () {
         ->expectsOutput('resources/lang/en/another.php created successfully.')
         ->assertExitCode(0);
 
-    expect(resource_path('lang/en/app.php'))
+    expect(lang_path('en/app.php'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.laravel.include-exclude.output-en-app');
 
-    expect(resource_path('lang/en/another.php'))
+    expect(lang_path('en/another.php'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.laravel.include-exclude.output-en-another');
 
-    expect(resource_path('lang/it/app.php'))->not->toBeFile();
+    expect(lang_path('it/app.php'))->not->toBeFile();
 
-    expect(resource_path('lang/it/another.php'))->not->toBeFile();
+    expect(lang_path('it/another.php'))->not->toBeFile();
 });
 
 it('exports strings with --exclude option', function () {
@@ -101,16 +101,16 @@ it('exports strings with --exclude option', function () {
         ->expectsOutput('resources/lang/it/another.php created successfully.')
         ->assertExitCode(0);
 
-    expect(resource_path('lang/en/app.php'))->not->toBeFile();
+    expect(lang_path('en/app.php'))->not->toBeFile();
 
-    expect(resource_path('lang/en/another.php'))->not->toBeFile();
+    expect(lang_path('en/another.php'))->not->toBeFile();
 
-    expect(resource_path('lang/it/app.php'))
+    expect(lang_path('it/app.php'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.laravel.include-exclude.output-it-app');
 
-    expect(resource_path('lang/it/another.php'))
+    expect(lang_path('it/another.php'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.laravel.include-exclude.output-it-another');
@@ -127,12 +127,12 @@ it('exports strings with warning', function () {
         ->expectsOutput('resources/lang/it/app.php created successfully.')
         ->assertExitCode(0);
 
-    expect(resource_path('lang/en/app.php'))
+    expect(lang_path('en/app.php'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.laravel.warnings.output-en');
 
-    expect(resource_path('lang/it/app.php'))
+    expect(lang_path('it/app.php'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.laravel.warnings.output-it');
@@ -156,12 +156,12 @@ it('exports strings with language code territory', function () {
         ->expectsOutput('resources/lang/it/app.php created successfully.')
         ->assertExitCode(0);
 
-    expect(resource_path('lang/en_GB/app.php'))
+    expect(lang_path('en_GB/app.php'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.laravel.territory.output-en_GB');
 
-    expect(resource_path('lang/it/app.php'))
+    expect(lang_path('it/app.php'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.laravel.territory.output-it');
@@ -180,22 +180,22 @@ it('exports strings with different eol', function () {
         ->expectsOutput('resources/lang/it/special.php created successfully.')
         ->assertExitCode(0);
 
-    expect(resource_path('lang/en/app.php'))
+    expect(lang_path('en/app.php'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.laravel.base.output-en-app');
 
-    expect(resource_path('lang/en/special.php'))
+    expect(lang_path('en/special.php'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.laravel.base.output-en-special');
 
-    expect(resource_path('lang/it/app.php'))
+    expect(lang_path('it/app.php'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.laravel.base.output-it-app');
 
-    expect(resource_path('lang/it/special.php'))
+    expect(lang_path('it/special.php'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.laravel.base.output-it-special');
@@ -210,12 +210,12 @@ it('exports strings trimming whitespaces in group and key', function () {
         ->expectsOutput('resources/lang/it/app.php created successfully.')
         ->assertExitCode(0);
 
-    expect(resource_path('lang/en/app.php'))
+    expect(lang_path('en/app.php'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.laravel.spaces.output-en');
 
-    expect(resource_path('lang/it/app.php'))
+    expect(lang_path('it/app.php'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.laravel.spaces.output-it');

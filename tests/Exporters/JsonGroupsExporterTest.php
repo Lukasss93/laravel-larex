@@ -14,22 +14,22 @@ it('exports strings', function () {
         ->expectsOutput('resources/lang/it/special.json created successfully.')
         ->assertExitCode(0);
 
-    expect(resource_path('lang/en/app.json'))
+    expect(lang_path('en/app.json'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.json-groups.base.output-en-app');
 
-    expect(resource_path('lang/en/special.json'))
+    expect(lang_path('en/special.json'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.json-groups.base.output-en-special');
 
-    expect(resource_path('lang/it/app.json'))
+    expect(lang_path('it/app.json'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.json-groups.base.output-it-app');
 
-    expect(resource_path('lang/it/special.json'))
+    expect(lang_path('it/special.json'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.json-groups.base.output-it-special');
@@ -47,22 +47,22 @@ it('exports strings with --watch option', function () {
         ->expectsOutput('Waiting for changes...')
         ->assertExitCode(0);
 
-    expect(resource_path('lang/en/app.json'))
+    expect(lang_path('en/app.json'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.json-groups.base.output-en-app');
 
-    expect(resource_path('lang/en/special.json'))
+    expect(lang_path('en/special.json'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.json-groups.base.output-en-special');
 
-    expect(resource_path('lang/it/app.json'))
+    expect(lang_path('it/app.json'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.json-groups.base.output-it-app');
 
-    expect(resource_path('lang/it/special.json'))
+    expect(lang_path('it/special.json'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.json-groups.base.output-it-special');
@@ -77,19 +77,19 @@ it('exports strings with --include option', function () {
         ->expectsOutput('resources/lang/en/special.json created successfully.')
         ->assertExitCode(0);
 
-    expect(resource_path('lang/en/app.json'))
+    expect(lang_path('en/app.json'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.json-groups.base.output-en-app');
 
-    expect(resource_path('lang/en/special.json'))
+    expect(lang_path('en/special.json'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.json-groups.base.output-en-special');
 
-    expect(resource_path('lang/it/app.json'))->not->toBeFile();
+    expect(lang_path('it/app.json'))->not->toBeFile();
 
-    expect(resource_path('lang/it/special.json'))->not->toBeFile();
+    expect(lang_path('it/special.json'))->not->toBeFile();
 });
 
 it('exports strings with --exclude option', function () {
@@ -101,16 +101,16 @@ it('exports strings with --exclude option', function () {
         ->expectsOutput('resources/lang/it/special.json created successfully.')
         ->assertExitCode(0);
 
-    expect(resource_path('lang/en/app.json'))->not->toBeFile();
+    expect(lang_path('en/app.json'))->not->toBeFile();
 
-    expect(resource_path('lang/en/special.json'))->not->toBeFile();
+    expect(lang_path('en/special.json'))->not->toBeFile();
 
-    expect(resource_path('lang/it/app.json'))
+    expect(lang_path('it/app.json'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.json-groups.base.output-it-app');
 
-    expect(resource_path('lang/it/special.json'))
+    expect(lang_path('it/special.json'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.json-groups.base.output-it-special');
@@ -127,12 +127,12 @@ it('exports strings with warning', function () {
         ->expectsOutput('resources/lang/it/app.json created successfully.')
         ->assertExitCode(0);
 
-    expect(resource_path('lang/en/app.json'))
+    expect(lang_path('en/app.json'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.json-groups.warnings.output-en-app');
 
-    expect(resource_path('lang/it/app.json'))
+    expect(lang_path('it/app.json'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.json-groups.warnings.output-it-app');
@@ -156,12 +156,12 @@ it('exports strings trimming whitespaces in group and key', function () {
         ->expectsOutput('resources/lang/it/app.json created successfully.')
         ->assertExitCode(0);
 
-    expect(resource_path('lang/en/app.json'))
+    expect(lang_path('en/app.json'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.json-groups.spaces.output-en-app');
 
-    expect(resource_path('lang/it/app.json'))
+    expect(lang_path('it/app.json'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.json-groups.spaces.output-it-app');

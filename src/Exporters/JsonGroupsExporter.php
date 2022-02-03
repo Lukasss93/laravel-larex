@@ -47,12 +47,12 @@ class JsonGroupsExporter implements Exporter
             }
             $found++;
 
-            if (!File::exists(resource_path("lang/$language/"))) {
-                File::makeDirectory(resource_path("lang/$language/"));
+            if (!File::exists(lang_path("$language/"))) {
+                File::makeDirectory(lang_path("$language/"));
             }
 
             foreach ($groups as $group => $keys) {
-                Utils::putJson(resource_path("lang/$language/$group.json"), $keys);
+                Utils::putJson(lang_path("$language/$group.json"), $keys);
                 $command->info("resources/lang/$language/$group.json created successfully.");
             }
         }

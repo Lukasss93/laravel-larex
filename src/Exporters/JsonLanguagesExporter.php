@@ -53,7 +53,7 @@ class JsonLanguagesExporter implements Exporter
                 }
             }
 
-            Utils::putJson(resource_path("lang/$language.json"), $data);
+            Utils::putJson(lang_path("$language.json"), $data);
             $command->info("resources/lang/$language.json created successfully.");
         }
 

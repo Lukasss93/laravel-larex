@@ -4,11 +4,11 @@ use Illuminate\Support\Facades\File;
 use Lukasss93\Larex\Console\LarexImportCommand;
 
 it('imports strings', function () {
-    File::makeDirectory(resource_path('lang/en'), 0755, true, true);
-    File::makeDirectory(resource_path('lang/it'), 0755, true, true);
+    File::makeDirectory(lang_path('en'), 0755, true, true);
+    File::makeDirectory(lang_path('it'), 0755, true, true);
 
-    initFromStub('importers.json-langs.base.input-en', resource_path('lang/en.json'));
-    initFromStub('importers.json-langs.base.input-it', resource_path('lang/it.json'));
+    initFromStub('importers.json-langs.base.input-en', lang_path('en.json'));
+    initFromStub('importers.json-langs.base.input-it', lang_path('it.json'));
 
     $this->artisan(LarexImportCommand::class, ['importer' => 'json:lang'])
         ->expectsOutput('Importing entries...')
@@ -22,13 +22,13 @@ it('imports strings', function () {
 });
 
 it('imports strings with --include option', function () {
-    File::makeDirectory(resource_path('lang/en'), 0755, true, true);
-    File::makeDirectory(resource_path('lang/fr'), 0755, true, true);
-    File::makeDirectory(resource_path('lang/it'), 0755, true, true);
+    File::makeDirectory(lang_path('en'), 0755, true, true);
+    File::makeDirectory(lang_path('fr'), 0755, true, true);
+    File::makeDirectory(lang_path('it'), 0755, true, true);
 
-    initFromStub('importers.json-langs.include-exclude.input-en', resource_path('lang/en.json'));
-    initFromStub('importers.json-langs.include-exclude.input-fr', resource_path('lang/fr.json'));
-    initFromStub('importers.json-langs.include-exclude.input-it', resource_path('lang/it.json'));
+    initFromStub('importers.json-langs.include-exclude.input-en', lang_path('en.json'));
+    initFromStub('importers.json-langs.include-exclude.input-fr', lang_path('fr.json'));
+    initFromStub('importers.json-langs.include-exclude.input-it', lang_path('it.json'));
 
     $this->artisan(LarexImportCommand::class, ['importer' => 'json:lang', '--include' => 'en,fr'])
         ->expectsOutput('Importing entries...')
@@ -42,13 +42,13 @@ it('imports strings with --include option', function () {
 });
 
 it('imports strings with --exclude option', function () {
-    File::makeDirectory(resource_path('lang/en'), 0755, true, true);
-    File::makeDirectory(resource_path('lang/fr'), 0755, true, true);
-    File::makeDirectory(resource_path('lang/it'), 0755, true, true);
+    File::makeDirectory(lang_path('en'), 0755, true, true);
+    File::makeDirectory(lang_path('fr'), 0755, true, true);
+    File::makeDirectory(lang_path('it'), 0755, true, true);
 
-    initFromStub('importers.json-langs.include-exclude.input-en', resource_path('lang/en.json'));
-    initFromStub('importers.json-langs.include-exclude.input-fr', resource_path('lang/fr.json'));
-    initFromStub('importers.json-langs.include-exclude.input-it', resource_path('lang/it.json'));
+    initFromStub('importers.json-langs.include-exclude.input-en', lang_path('en.json'));
+    initFromStub('importers.json-langs.include-exclude.input-fr', lang_path('fr.json'));
+    initFromStub('importers.json-langs.include-exclude.input-it', lang_path('it.json'));
 
     $this->artisan(LarexImportCommand::class, ['importer' => 'json:lang', '--exclude' => 'fr'])
         ->expectsOutput('Importing entries...')

@@ -34,7 +34,7 @@ uses(TestCase::class)
         ]);
 
         //clear lang folder
-        $items = glob(resource_path('lang/*'));
+        $items = glob(lang_path('*'));
         foreach ($items as $item) {
             if (is_dir($item)) {
                 File::deleteDirectory($item);

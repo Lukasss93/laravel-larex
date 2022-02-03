@@ -47,12 +47,12 @@ class LaravelExporter implements Exporter
 
             $folder = str_replace('-', '_', $language);
 
-            if (!File::exists(resource_path("lang/$folder/"))) {
-                File::makeDirectory(resource_path("lang/$folder/"));
+            if (!File::exists(lang_path("$folder/"))) {
+                File::makeDirectory(lang_path("$folder/"));
             }
 
             foreach ($groups as $group => $keys) {
-                $write = fopen(resource_path("lang/$folder/$group.php"), 'wb');
+                $write = fopen(lang_path("$folder/$group.php"), 'wb');
                 fwrite($write, /** @lang text */ "<?php$eol{$eol}return [$eol$eol");
 
                 foreach ($keys as $key => $value) {

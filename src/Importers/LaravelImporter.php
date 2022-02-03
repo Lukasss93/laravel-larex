@@ -31,7 +31,7 @@ class LaravelImporter implements Importer
         $rawValues = collect([]);
 
         //get all files
-        $files = File::glob(resource_path('lang/**/*.php'));
+        $files = File::glob(lang_path('**/*.php'));
 
         foreach ($files as $file) {
             $items = include $file;

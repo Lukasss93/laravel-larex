@@ -12,12 +12,12 @@ it('exports strings', function () {
         ->expectsOutput('resources/lang/it.json created successfully.')
         ->assertExitCode(0);
 
-    expect(resource_path('lang/en.json'))
+    expect(lang_path('en.json'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.json-language.base.output-en');
 
-    expect(resource_path('lang/it.json'))
+    expect(lang_path('it.json'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.json-language.base.output-it');
@@ -33,12 +33,12 @@ it('exports strings with --watch option', function () {
         ->expectsOutput('Waiting for changes...')
         ->assertExitCode(0);
 
-    expect(resource_path('lang/en.json'))
+    expect(lang_path('en.json'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.json-language.base.output-en');
 
-    expect(resource_path('lang/it.json'))
+    expect(lang_path('it.json'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.json-language.base.output-it');
@@ -52,12 +52,12 @@ it('exports strings with --include option', function () {
         ->expectsOutput('resources/lang/en.json created successfully.')
         ->assertExitCode(0);
 
-    expect(resource_path('lang/en.json'))
+    expect(lang_path('en.json'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.json-language.include-exclude.output-en');
 
-    expect(resource_path('lang/it.json'))->not->toBeFile();
+    expect(lang_path('it.json'))->not->toBeFile();
 });
 
 it('exports strings with --exclude option', function () {
@@ -68,9 +68,9 @@ it('exports strings with --exclude option', function () {
         ->expectsOutput('resources/lang/it.json created successfully.')
         ->assertExitCode(0);
 
-    expect(resource_path('lang/en.json'))->not->toBeFile();
+    expect(lang_path('en.json'))->not->toBeFile();
 
-    expect(resource_path('lang/it.json'))
+    expect(lang_path('it.json'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.json-language.include-exclude.output-it');
@@ -87,12 +87,12 @@ it('exports strings with warning', function () {
         ->expectsOutput('resources/lang/it.json created successfully.')
         ->assertExitCode(0);
 
-    expect(resource_path('lang/en.json'))
+    expect(lang_path('en.json'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.json-language.warnings.output-en');
 
-    expect(resource_path('lang/it.json'))
+    expect(lang_path('it.json'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.json-language.warnings.output-it');
@@ -116,12 +116,12 @@ it('exports strings trimming whitespaces in group and key', function () {
         ->expectsOutput('resources/lang/it.json created successfully.')
         ->assertExitCode(0);
 
-    expect(resource_path('lang/en.json'))
+    expect(lang_path('en.json'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.json-language.spaces.output-en');
 
-    expect(resource_path('lang/it.json'))
+    expect(lang_path('it.json'))
         ->toBeFile()
         ->fileContent()
         ->toEqualStub('exporters.json-language.spaces.output-it');
