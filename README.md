@@ -1,5 +1,5 @@
 <p align="center">
-    <img style="max-height:400px" src="https://banners.beyondco.de/Laravel%20Larex.png?theme=dark&packageManager=composer+require&packageName=lukasss93%2Flaravel-larex+--dev&pattern=graphPaper&style=style_1&description=Translate+your+Laravel+application+from+a+single+CSV+file%21+&md=1&showWatermark=0&fontSize=125px&images=table"/>
+    <img style="max-height:400px" src="https://banners.beyondco.de/Laravel%20Larex.png?theme=dark&packageManager=composer+require&packageName=lukasss93%2Flaravel-larex+--dev&pattern=graphPaper&style=style_1&description=Translate+your+Laravel+application+with+a+single+CSV+file%21+&md=1&showWatermark=0&fontSize=125px&images=table"/>
 </p>
 
 # Laravel Larex
@@ -14,7 +14,7 @@
 
 > Translate Laravel Apps from a CSV File
 
-Laravel Larex lets you translate your whole Laravel application from a single CSV file.
+Laravel Larex lets you translate your whole Laravel application with a single CSV file.
 
 You can import translation entries from resources/lang files into a structured CSV, edit the translations and export them back to Laravel PHP files.
 
