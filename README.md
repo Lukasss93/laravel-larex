@@ -12,8 +12,6 @@
 ![Build](https://img.shields.io/github/workflow/status/Lukasss93/laravel-larex/run-tests)
 [![Coverage](https://img.shields.io/codecov/c/github/lukasss93/laravel-larex?token=XcLU2ccFQ7)](https://codecov.io/gh/Lukasss93/laravel-larex)
 
-> Translate Laravel Apps from a CSV File
-
 Laravel Larex lets you translate your whole Laravel application with a single CSV file.
 
 You can import translation entries from resources/lang files into a structured CSV, edit the translations and export them back to Laravel PHP files.
