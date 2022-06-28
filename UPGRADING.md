@@ -8,11 +8,15 @@ cover. We accept PRs to improve this guide.
 ```php
 // <project-root>/config/larex.php
 
-// before...
+// before
 'path' => 'resources/lang/localization.csv',
 
-// after...
+// after (Laravel 9)
 'path' => lang_path('localization.csv'),
+
+// after (Laravel 8)
+'path' => resource_path('lang/localization.csv'),
+```
 
 ```
 _Or you can delete your current config and publish it again (copy your changes before)._
