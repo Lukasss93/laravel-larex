@@ -106,9 +106,7 @@ class ConcurrentKeyLinter implements Linter
                 continue;
             }
 
-            if ($key['row'] === null) {
-                $this->parseErrors($group, $key['children'], $errors);
-            }
+            $this->parseErrors($group, $key['children'], $errors);
         }
     }
 

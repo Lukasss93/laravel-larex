@@ -27,7 +27,11 @@ class JsonLanguagesImporter implements Importer
     {
         $include = Str::of($command->option('include'))->explode(',')->reject(fn ($i) => empty($i));
         $exclude = Str::of($command->option('exclude'))->explode(',')->reject(fn ($i) => empty($i));
+
+        /** @var Collection<int,string> $languages */
         $languages = collect([]);
+
+        /** @var Collection<int,array> $rawValues */
         $rawValues = collect([]);
 
         //get all files
@@ -64,6 +68,7 @@ class JsonLanguagesImporter implements Importer
         }
 
         //creating the csv file
+        /** @var Collection<int,array> $data */
         $data = collect([]);
 
         foreach ($rawValues as $rawValue) {

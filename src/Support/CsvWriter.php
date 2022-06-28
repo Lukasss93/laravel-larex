@@ -112,7 +112,7 @@ class CsvWriter
     {
         if ($condition) {
             $this->addRow($rowTrue);
-        } elseif ($rowFalse !== null && is_array($rowFalse)) {
+        } elseif (is_array($rowFalse)) {
             $this->addRow($rowFalse);
         }
 

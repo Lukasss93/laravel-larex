@@ -3,6 +3,7 @@
 namespace Lukasss93\Larex\Console;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Lukasss93\Larex\Support\CsvReader;
 use Lukasss93\Larex\Support\CsvWriter;
@@ -109,6 +110,7 @@ class LarexInsertCommand extends Command
             }
 
             $table = new Table($this->output);
+            /** @var Collection<int,mixed> $tableRows */
             $tableRows = collect([]);
             $tableRows->push([new TableCell('<fg=yellow>Summary</>', ['colspan' => 2])]);
             $tableRows->push(new TableSeparator());

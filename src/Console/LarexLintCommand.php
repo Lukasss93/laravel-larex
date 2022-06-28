@@ -3,6 +3,7 @@
 namespace Lukasss93\Larex\Console;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Lukasss93\Larex\Contracts\Linter;
@@ -44,6 +45,7 @@ class LarexLintCommand extends Command
         /** @var Linter[] $linters */
         $linters = config('larex.linters');
 
+        /** @var Collection<int,bool> $status */
         $status = collect([]);
 
         $timeStart = microtime(true);

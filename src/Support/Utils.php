@@ -8,6 +8,7 @@ use Fuse\Fuse;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Iterator;
 use JsonException;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -63,16 +64,22 @@ class Utils
 
     /**
      * Format line as CSV and write to file pointer.
-     * @param $handle
-     * @param $array
+     * @param resource $handle
+     * @param string[] $array
      * @param string $delimiter
      * @param string $enclosure
      * @param string $escape
      * @param string $eol
      * @return bool|int
      */
-    public static function fputcsv($handle, $array, $delimiter = ',', $enclosure = '"', $escape = '\\', $eol = "\n")
-    {
+    public static function fputcsv(
+        $handle,
+        array $array,
+        string $delimiter = ',',
+        string $enclosure = '"',
+        string $escape = '\\',
+        string $eol = "\n"
+    ): bool|int {
         $output = '';
 
         $count = count($array);
@@ -128,7 +135,7 @@ class Utils
      * @param string $code
      * @return bool|string
      */
-    public static function isValidLanguageCode(string $code)
+    public static function isValidLanguageCode(string $code): bool|string
     {
         $languages = collect(require 'Languages.php');
 
@@ -159,7 +166,7 @@ class Utils
             $doc->loadHTML("<html><body>$string</body></html>");
 
             return true;
-        } catch (Exception $e) {
+        } catch (Exception) {
             return false;
         }
     }
@@ -168,7 +175,7 @@ class Utils
      * Returns a collection of files by paths and patterns.
      * @param array $paths
      * @param array $patterns
-     * @return Collection|SplFileInfo[]
+     * @return Collection<string,SplFileInfo>
      */
     public static function findFiles(array $paths, array $patterns): Collection
     {
@@ -176,18 +183,18 @@ class Utils
             return base_path($dir);
         }, $paths);
 
-        $finder = new Finder();
-        $files = $finder
+        /** @var Iterator<string,SplFileInfo> $files */
+        $files = (new Finder())
             ->in($directories)
             ->name($patterns)
             ->files();
 
-        return new Collection($files);
+        return collect($files);
     }
 
     /**
      * Returns a collection of localization strings from a collection of files.
-     * @param Collection|SplFileInfo[] $files
+     * @param Collection<string,SplFileInfo> $files
      * @param array $functions
      * @return Collection
      */
@@ -207,7 +214,8 @@ class Utils
      */
     public static function getStrings(SplFileInfo $file, array $functions): Collection
     {
-        $strings = collect();
+        /** @var Collection<int,array> $strings */
+        $strings = collect([]);
         foreach ($functions as $function) {
             $content = self::normalizeEOLs($file->getContents());
             $regex = '/('.$function.')\(\h*[\'"](.+)[\'"]\h*[),]/U';

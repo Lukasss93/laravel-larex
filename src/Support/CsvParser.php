@@ -3,6 +3,7 @@
 namespace Lukasss93\Larex\Support;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 
 class CsvParser
 {
@@ -91,10 +92,13 @@ class CsvParser
     public function validateRaw(): void
     {
         //read raw csv
+        /** @var Collection<int,Collection<int,string>> $output */
         $output = collect([]);
         $file = fopen($this->reader->getPath(), 'rb');
-        while (($columns = fgetcsv($file)) !== false) {
-            $output->push(collect($columns ?? []));
+        while (($cols = fgetcsv($file)) !== false) {
+            /** @var Collection<int,string> $columns */
+            $columns = collect($cols ?? []);
+            $output->push($columns);
         }
         fclose($file);
 
