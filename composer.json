@@ -30,7 +30,8 @@
     },
     "require-dev": {
         "orchestra/testbench": "^6.0|^7.0",
-        "pestphp/pest": "^1.21"
+        "pestphp/pest": "^1.21",
+        "vimeo/psalm": "^4.24"
     },
     "autoload": {
         "psr-4": {
@@ -62,11 +63,9 @@
         }
     },
     "scripts": {
-        "test": [
-            "./vendor/bin/pest --colors=always"
-        ],
-        "test-coverage": [
-            "./vendor/bin/pest --colors=always --coverage-clover coverage.xml"
-        ]
+        "test": "./vendor/bin/pest --colors=always",
+        "test-coverage": "./vendor/bin/pest --colors=always --coverage-clover coverage.xml",
+        "psalm": "./vendor/bin/psalm",
+        "psalm-info": "./vendor/bin/psalm --show-info=true"
     }
 }
