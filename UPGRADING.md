@@ -18,7 +18,6 @@ cover. We accept PRs to improve this guide.
 'path' => resource_path('lang/localization.csv'),
 ```
 
-```
 _Or you can delete your current config and publish it again (copy your changes before)._
 - ⚠️ Dropped **PHP 7.4** support, please upgrade at least to **PHP 8.0**.
 - ⚠️ Dropped **Laravel 7** support, please upgrade at least to **Laravel 8**.
