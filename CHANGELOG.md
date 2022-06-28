@@ -7,6 +7,13 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Please check the [UPGRADING.md](UPGRADING.md) file before upgrading to a major version!
 
+## [v4.1](https://github.com/Lukasss93/laravel-larex/releases/tag/v4.1) - 2022-06-28
+
+### Added
+
+- Added larex:lang:add command
+- Added larex:lang:remove command
+
 ## [v4.0](https://github.com/Lukasss93/laravel-larex/releases/tag/v4.0) - 2022-02-04
 
 ### Added

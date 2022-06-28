@@ -79,6 +79,8 @@ php artisan vendor:publish --provider="Lukasss93\Larex\LarexServiceProvider" --t
   CSV).
 * You can use `php artisan larex:find` to search existing groups or keys in your CSV file.
 * You can use `php artisan larex:remove` to remove existing strings in your CSV file.
+* You can use `php artisan larex:lang:add` to add a new language column to your CSV file.
+* You can use `php artisan larex:lang:remove` to remove a language column from your CSV file.
 
 ### 📝 Example
 
