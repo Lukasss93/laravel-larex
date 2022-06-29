@@ -56,7 +56,7 @@ php artisan vendor:publish --provider="Lukasss93\Larex\LarexServiceProvider" --t
    * en (the language code)
    * other language codes...
 
-2. Open the *project-root/resources/lang/localization.csv* file and edit it as you see fit.
+2. Open the *project-root/lang/localization.csv* file and edit it as you see fit.
 
 3. Finally, you can use `php artisan larex:export` to translate your entries from the csv file to the laravel php files.
 
@@ -86,7 +86,7 @@ php artisan vendor:publish --provider="Lukasss93\Larex\LarexServiceProvider" --t
 
 1. Run `php artisan larex:init` command
 
-2. Edit the *project-root/resources/lang/localization.csv* file
+2. Edit the *project-root/lang/localization.csv* file
    
 | group | key             | en         | it           |
 |-------|-----------------|------------|--------------|
