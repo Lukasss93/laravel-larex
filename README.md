@@ -14,7 +14,7 @@
 
 Laravel Larex lets you translate your whole Laravel application with a single CSV file.
 
-You can import translation entries from resources/lang files into a structured CSV, edit the translations and export them back to Laravel PHP files.
+You can import translation entries from lang folder into a structured CSV, edit the translations and export them back to Laravel PHP files.
 
 Laravel Larex also supports functionalities to sort entries and find strings that aren't localized yet.
 
@@ -48,7 +48,7 @@ php artisan vendor:publish --provider="Lukasss93\Larex\LarexServiceProvider" --t
 ## 👓 Usage
 
 1. First, you must create the initial CSV file with `php artisan larex:init`.<br>
-   Or you can use `php artisan larex:import` to import entries from resources/lang files.<br>
+   Or you can use `php artisan larex:import` to import entries from lang folder.<br>
    The csv file has the following columns:
    
    * group (basically the file name)
@@ -99,7 +99,7 @@ php artisan vendor:publish --provider="Lukasss93\Larex\LarexServiceProvider" --t
 4. You'll get the following files:
    
    ```php
-   //project-root/resources/lang/en/app.php
+   //project-root/lang/en/app.php
    
    <?php
    
@@ -113,7 +113,7 @@ php artisan vendor:publish --provider="Lukasss93\Larex\LarexServiceProvider" --t
    ```
    
    ```php
-   //project-root/resources/lang/it/app.php
+   //project-root/lang/it/app.php
    
    <?php
    
