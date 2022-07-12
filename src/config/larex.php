@@ -62,7 +62,7 @@ return [
     ],
 
     /**
-     * Used by SameParametersLinter
+     * Used by SameParametersLinter.
      */
     'ignore_empty_values' => false,
 
