@@ -3,7 +3,28 @@
 Because there are many breaking changes an upgrade is not that easy. There are many edge cases this guide does not
 cover. We accept PRs to improve this guide.
 
-## From v3.0 to v4.0
+## From v4.0 to v4.2
+- The `larex.php` config was changed:
+  - **Optional**. Please append new `SameParametersLinter` linter in this way:
+    ```php
+    /**
+         * Linters to run with larex:lint command.
+         */
+        'linters' => [
+            // other linters here
+            // Lukasss93\Larex\Linters\SameParametersLinter::class,
+        ],
+    ```
+  - **Optional**. Please append `ignore_empty_values` key in this way:
+    ```php
+    /**
+     * Used by SameParametersLinter
+     */
+    'ignore_empty_values' => false,
+    ```
+_Or you can delete your current config and publish it again (copy your changes before)._
+
+## From v3.x to v4.0
 - The `larex.php` config was changed. Please change the `path` key in this way:
 ```php
 // <project-root>/config/larex.php
@@ -23,7 +44,7 @@ _Or you can delete your current config and publish it again (copy your changes b
 - ⚠️ Dropped **Laravel 7** support, please upgrade at least to **Laravel 8**.
 
 
-## From v2.1 to v3.0
+## From v2.1 to v3.x
 
 - The `larex.php` config was changed. Please delete your current config and publish it again (copy your changes before).
 - If you created a custom Linter, please follow this steps:

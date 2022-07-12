@@ -131,10 +131,10 @@ php artisan vendor:publish --provider="Lukasss93\Larex\LarexServiceProvider" --t
 The `larex:export <exporter>` command exports CSV strings to a specific location based on the selected exporter.
 
 | Exporter   | Default | Description                                        |
-|------------|---------|----------------------------------------------------|
-| laravel    | Yes     | Export data from CSV to Laravel localization files |
-| json:group | No      | Export data from CSV to JSON by group              |
-| json:lang  | No      | Export data from CSV to JSON by language           |
+|------------|:-------:|----------------------------------------------------|
+| laravel    |    ✅    | Export data from CSV to Laravel localization files |
+| json:group |    ❌    | Export data from CSV to JSON by group              |
+| json:lang  |    ❌    | Export data from CSV to JSON by language           |
 
 ##### How to create an exporter:
 
@@ -145,11 +145,11 @@ The `larex:export <exporter>` command exports CSV strings to a specific location
 
 The `larex:import <importer>` command imports the strings of the selected importer, into the CSV.
 
-| Importer   | Default | Description                                        |
-|------------|---------|----------------------------------------------------|
-| laravel    | Yes     | Import data from Laravel localization files to CSV |
-| json:group | No      | Import data from JSON by group to CSV              |
-| json:lang  | No      | Import data from JSON by language to CSV           |
+| Importer   |  Default  | Description                                        |
+|------------|:---------:|----------------------------------------------------|
+| laravel    |     ✅     | Import data from Laravel localization files to CSV |
+| json:group |     ❌     | Import data from JSON by group to CSV              |
+| json:lang  |     ❌     | Import data from JSON by language to CSV           |
 
 ##### How to create an importer:
 
@@ -162,17 +162,18 @@ Larex provides a linting system by using the `php artisan larex:lint` command to
 
 ##### Available linters:
 
-| Linter                    | Enabled by default | Description                                       |
-|---------------------------|--------------------|---------------------------------------------------|
-| ValidHeaderLinter         | Yes                | Validate the header structure                     |
-| ValidLanguageCodeLinter   | Yes                | Validate the language codes in the header columns |
-| DuplicateKeyLinter        | Yes                | Find duplicated keys                              |
-| ConcurrentKeyLinter       | Yes                | Find concurrent keys                              |
-| NoValueLinter             | Yes                | Find missing values                               |
-| DuplicateValueLinter      | Yes                | Find duplicated values in the same row            |
-| UntranslatedStringsLinter | No                 | Find untranslated strings                         |
-| UntranslatedStringsLinter | No                 | Find unused strings                               |
-| ValidHtmlValueLinter      | No                 | Check valid html values                           |
+| Linter                    | Enabled<br>by default | Description                                       |
+|---------------------------|:---------------------:|---------------------------------------------------|
+| ValidHeaderLinter         |           ✅           | Validate the header structure                     |
+| ValidLanguageCodeLinter   |           ✅           | Validate the language codes in the header columns |
+| DuplicateKeyLinter        |           ✅           | Find duplicated keys                              |
+| ConcurrentKeyLinter       |           ✅           | Find concurrent keys                              |
+| NoValueLinter             |           ✅           | Find missing values                               |
+| DuplicateValueLinter      |           ✅           | Find duplicated values in the same row            |
+| UntranslatedStringsLinter |           ❌           | Find untranslated strings                         |
+| UntranslatedStringsLinter |           ❌           | Find unused strings                               |
+| ValidHtmlValueLinter      |           ❌           | Check valid html values                           |
+| SameParametersLinter      |           ❌           | Check same parameters in each language            |
 
 You can enable/disable any linter you want by comment/uncomment it inside the larex config.
 
@@ -193,19 +194,19 @@ composer test
 
 ## 🔰 Version Support
 
-| Larex            | L5.8 | L6.x | L7.x | L8.x | L9.x |
-|------------------|------|------|------|------|------|
-| ^1.0             | ✅    | ✅    | ✅    | ✅    | ❌    |
-| ^1.2 &#124; ^2.0 | ❌    | ✅    | ✅    | ✅    | ❌    |
-| ^3.0             | ❌    | ❌    | ✅    | ✅    | ❌    |
-| ^4.0             | ❌    | ❌    | ❌    | ✅    | ✅    |
+|      Larex       | L5.8 | L6.x | L7.x | L8.x | L9.x |
+|:----------------:|:----:|:----:|:----:|:----:|:----:|
+|       ^1.0       |  ✅   |  ✅   |  ✅   |  ✅   |  ❌   |
+| ^1.2 &#124; ^2.0 |  ❌   |  ✅   |  ✅   |  ✅   |  ❌   |
+|       ^3.0       |  ❌   |  ❌   |  ✅   |  ✅   |  ❌   |
+|       ^4.0       |  ❌   |  ❌   |  ❌   |  ✅   |  ✅   |
 
-| Larex            | PHP7.2 | PHP7.3 | PHP7.4 | PHP8.0 | PHP8.1 |
-|------------------|--------|--------|--------|--------|--------|
-| ^1.0             | ✅      | ✅      | ✅      | ❌      | ❌      |
-| ^1.6 &#124; ^2.0 | ❌      | ✅      | ✅      | ✅      | ✅      |
-| ^3.0             | ❌      | ❌      | ✅      | ✅      | ✅      |
-| ^4.0             | ❌      | ❌      | ❌      | ✅      | ✅      |
+|      Larex       | PHP7.2 | PHP7.3 | PHP7.4 | PHP8.0 | PHP8.1 |
+|:----------------:|:------:|:------:|:------:|:------:|:------:|
+|       ^1.0       |   ✅    |   ✅    |   ✅    |   ❌    |   ❌    |
+| ^1.6 &#124; ^2.0 |   ❌    |   ✅    |   ✅    |   ✅    |   ✅    |
+|       ^3.0       |   ❌    |   ❌    |   ✅    |   ✅    |   ✅    |
+|       ^4.0       |   ❌    |   ❌    |   ❌    |   ✅    |   ✅    |
 
 
 ## 📃 Changelog
