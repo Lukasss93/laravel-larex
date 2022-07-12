@@ -1,0 +1,6 @@
+group,key,en,it,es
+app,hello,My name is :name and I'm :age.,Il nome è :name.,Tengo :age años.
+app,cat,The :animal is on the table.,Il :animal è sul :thing.,El animal está sobre la mesa.
+app,yep,Yes :who can,Sì :who può,Sí :who puede
+app,nope,Nope,No,No
+app,bye,Bye :name,Ciao :name,

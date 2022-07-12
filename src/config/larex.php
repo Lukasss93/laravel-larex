@@ -58,7 +58,13 @@ return [
         // Lukasss93\Larex\Linters\UntranslatedStringsLinter::class,
         // Lukasss93\Larex\Linters\UnusedStringsLinter::class,
         // Lukasss93\Larex\Linters\ValidHtmlValueLinter::class,
+        // Lukasss93\Larex\Linters\SameParametersLinter::class,
     ],
+
+    /**
+     * Used by SameParametersLinter
+     */
+    'ignore_empty_values' => false,
 
     /**
      * Search criteria for file used by:
