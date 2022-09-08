@@ -120,8 +120,8 @@ it('inserts string and export data', function () {
         ->expectsOutput('Item added successfully.')
         ->expectsOutput('')
         ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
-        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('en/app.php')))
-        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('it/app.php')))
+        ->expectsOutput(sprintf('%s created successfully.', lang_rpath('en/app.php')))
+        ->expectsOutput(sprintf('%s created successfully.', lang_rpath('it/app.php')))
         ->assertExitCode(0);
 
     expect(csv_path())
@@ -180,8 +180,8 @@ it('inserts string with correction and export data', function () {
         ->expectsOutput('Item added successfully.')
         ->expectsOutput('')
         ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
-        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('en/app.php')))
-        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('it/app.php')))
+        ->expectsOutput(sprintf('%s created successfully.', lang_rpath('en/app.php')))
+        ->expectsOutput(sprintf('%s created successfully.', lang_rpath('it/app.php')))
         ->assertExitCode(0);
 
     expect(csv_path())

@@ -54,7 +54,7 @@ class JsonLanguagesExporter implements Exporter
             }
 
             Utils::putJson(lang_path("$language.json"), $data);
-            $command->info(sprintf("%s created successfully.", lang_rpath("$language.json")));
+            $command->info(sprintf('%s created successfully.', lang_rpath("$language.json")));
         }
 
         if ($found === 0) {
