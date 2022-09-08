@@ -62,7 +62,7 @@ class LaravelExporter implements Exporter
                 fwrite($write, "$eol];$eol");
 
                 fclose($write);
-                $command->info(sprintf("%s created successfully.", lang_rpath("$folder/$group.php")));
+                $command->info(sprintf('%s created successfully.', lang_rpath("$folder/$group.php")));
             }
         }
 

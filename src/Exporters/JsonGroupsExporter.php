@@ -53,7 +53,7 @@ class JsonGroupsExporter implements Exporter
 
             foreach ($groups as $group => $keys) {
                 Utils::putJson(lang_path("$language/$group.json"), $keys);
-                $command->info(sprintf("%s created successfully.", lang_rpath("$language/$group.json")));
+                $command->info(sprintf('%s created successfully.', lang_rpath("$language/$group.json")));
             }
         }
 
