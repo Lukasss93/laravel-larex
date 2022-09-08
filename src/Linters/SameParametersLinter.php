@@ -56,7 +56,11 @@ class SameParametersLinter implements Linter
                     continue;
                 }
 
-                foreach ($max->diff($items) as $param) {
+                $diff = $max
+                    ->diff($items)
+                    ->unique(); //TODO: Temporary fix. We need to investigate why there are duplicates.
+
+                foreach ($diff as $param) {
                     $errors->push("line $line ($group.$key), column $column ($lang): missing $param parameter");
                 }
             }
