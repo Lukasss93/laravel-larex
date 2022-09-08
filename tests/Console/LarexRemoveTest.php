@@ -97,8 +97,8 @@ it('removes rows and export data', function () {
         ->expectsQuestion('Are you sure you want to delete 1 string?', true)
         ->expectsOutput('Removed successfully.')
         ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
-        ->expectsOutput('resources/lang/en/app.php created successfully.')
-        ->expectsOutput('resources/lang/it/app.php created successfully.')
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('en/app.php')))
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('it/app.php')))
         ->assertExitCode(0);
 
     expect(csv_path())

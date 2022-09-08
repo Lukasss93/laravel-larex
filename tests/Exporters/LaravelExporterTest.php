@@ -8,10 +8,10 @@ it('exports strings', function () {
 
     $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel'])
         ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
-        ->expectsOutput('resources/lang/en/app.php created successfully.')
-        ->expectsOutput('resources/lang/en/special.php created successfully.')
-        ->expectsOutput('resources/lang/it/app.php created successfully.')
-        ->expectsOutput('resources/lang/it/special.php created successfully.')
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('en/app.php')))
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('en/special.php')))
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('it/app.php')))
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('it/special.php')))
         ->assertExitCode(0);
 
     expect(lang_path('en/app.php'))
@@ -40,10 +40,10 @@ it('exports strings with --watch option', function () {
 
     $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel', '--watch' => true])
         ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
-        ->expectsOutput('resources/lang/en/app.php created successfully.')
-        ->expectsOutput('resources/lang/en/special.php created successfully.')
-        ->expectsOutput('resources/lang/it/app.php created successfully.')
-        ->expectsOutput('resources/lang/it/special.php created successfully.')
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('en/app.php')))
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('en/special.php')))
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('it/app.php')))
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('it/special.php')))
         ->expectsOutput('Waiting for changes...')
         ->assertExitCode(0);
 
@@ -73,8 +73,8 @@ it('exports strings with --include option', function () {
 
     $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel', '--include' => 'en'])
         ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
-        ->expectsOutput('resources/lang/en/app.php created successfully.')
-        ->expectsOutput('resources/lang/en/another.php created successfully.')
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('en/app.php')))
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('en/another.php')))
         ->assertExitCode(0);
 
     expect(lang_path('en/app.php'))
@@ -97,8 +97,8 @@ it('exports strings with --exclude option', function () {
 
     $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel', '--exclude' => 'en'])
         ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
-        ->expectsOutput('resources/lang/it/app.php created successfully.')
-        ->expectsOutput('resources/lang/it/another.php created successfully.')
+        ->expectsOutput(lang_rpath('it/app.php').' created successfully.')
+        ->expectsOutput(lang_rpath('it/another.php').' created successfully.')
         ->assertExitCode(0);
 
     expect(lang_path('en/app.php'))->not->toBeFile();
@@ -123,8 +123,8 @@ it('exports strings with warning', function () {
         ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
         ->expectsOutput('Missing key name at line 4. The row will be skipped.')
         ->expectsOutput('app.second at line 5, column 3 (en) is missing. It will be skipped.')
-        ->expectsOutput('resources/lang/en/app.php created successfully.')
-        ->expectsOutput('resources/lang/it/app.php created successfully.')
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('en/app.php')))
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('it/app.php')))
         ->assertExitCode(0);
 
     expect(lang_path('en/app.php'))
@@ -152,8 +152,8 @@ it('exports strings with language code territory', function () {
 
     $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel'])
         ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
-        ->expectsOutput('resources/lang/en_GB/app.php created successfully.')
-        ->expectsOutput('resources/lang/it/app.php created successfully.')
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('en_GB/app.php')))
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('it/app.php')))
         ->assertExitCode(0);
 
     expect(lang_path('en_GB/app.php'))
@@ -174,10 +174,10 @@ it('exports strings with different eol', function () {
 
     $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel'])
         ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
-        ->expectsOutput('resources/lang/en/app.php created successfully.')
-        ->expectsOutput('resources/lang/en/special.php created successfully.')
-        ->expectsOutput('resources/lang/it/app.php created successfully.')
-        ->expectsOutput('resources/lang/it/special.php created successfully.')
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('en/app.php')))
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('en/special.php')))
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('it/app.php')))
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('it/special.php')))
         ->assertExitCode(0);
 
     expect(lang_path('en/app.php'))
@@ -206,8 +206,8 @@ it('exports strings trimming whitespaces in group and key', function () {
 
     $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel'])
         ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
-        ->expectsOutput('resources/lang/en/app.php created successfully.')
-        ->expectsOutput('resources/lang/it/app.php created successfully.')
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('en/app.php')))
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('it/app.php')))
         ->assertExitCode(0);
 
     expect(lang_path('en/app.php'))

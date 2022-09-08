@@ -10,3 +10,13 @@ function csv_path($relative = false): string
 
     return $path;
 }
+
+function lang_rpath(string $value): string
+{
+    $value = ltrim($value, '\\/');
+
+    return Str::of(lang_path($value))
+        ->replace(base_path(), '')
+        ->replace('lang\\', 'lang/')
+        ->ltrim('\\/');
+}

@@ -8,10 +8,10 @@ it('exports strings', function () {
 
     $this->artisan(LarexExportCommand::class, ['exporter' => 'json:group'])
         ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
-        ->expectsOutput('resources/lang/en/app.json created successfully.')
-        ->expectsOutput('resources/lang/en/special.json created successfully.')
-        ->expectsOutput('resources/lang/it/app.json created successfully.')
-        ->expectsOutput('resources/lang/it/special.json created successfully.')
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('en/app.json')))
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('en/special.json')))
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('it/app.json')))
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('it/special.json')))
         ->assertExitCode(0);
 
     expect(lang_path('en/app.json'))
@@ -40,10 +40,10 @@ it('exports strings with --watch option', function () {
 
     $this->artisan(LarexExportCommand::class, ['exporter' => 'json:group', '--watch' => true])
         ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
-        ->expectsOutput('resources/lang/en/app.json created successfully.')
-        ->expectsOutput('resources/lang/en/special.json created successfully.')
-        ->expectsOutput('resources/lang/it/app.json created successfully.')
-        ->expectsOutput('resources/lang/it/special.json created successfully.')
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('en/app.json')))
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('en/special.json')))
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('it/app.json')))
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('it/special.json')))
         ->expectsOutput('Waiting for changes...')
         ->assertExitCode(0);
 
@@ -73,8 +73,8 @@ it('exports strings with --include option', function () {
 
     $this->artisan(LarexExportCommand::class, ['exporter' => 'json:group', '--include' => 'en'])
         ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
-        ->expectsOutput('resources/lang/en/app.json created successfully.')
-        ->expectsOutput('resources/lang/en/special.json created successfully.')
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('en/app.json')))
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('en/special.json')))
         ->assertExitCode(0);
 
     expect(lang_path('en/app.json'))
@@ -97,8 +97,8 @@ it('exports strings with --exclude option', function () {
 
     $this->artisan(LarexExportCommand::class, ['exporter' => 'json:group', '--exclude' => 'en'])
         ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
-        ->expectsOutput('resources/lang/it/app.json created successfully.')
-        ->expectsOutput('resources/lang/it/special.json created successfully.')
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('it/app.json')))
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('it/special.json')))
         ->assertExitCode(0);
 
     expect(lang_path('en/app.json'))->not->toBeFile();
@@ -123,8 +123,8 @@ it('exports strings with warning', function () {
         ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
         ->expectsOutput('Missing key name at line 4. The row will be skipped.')
         ->expectsOutput('app.second at line 5, column 3 (en) is missing. It will be skipped.')
-        ->expectsOutput('resources/lang/en/app.json created successfully.')
-        ->expectsOutput('resources/lang/it/app.json created successfully.')
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('en/app.json')))
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('it/app.json')))
         ->assertExitCode(0);
 
     expect(lang_path('en/app.json'))
@@ -152,8 +152,8 @@ it('exports strings trimming whitespaces in group and key', function () {
 
     $this->artisan(LarexExportCommand::class, ['exporter' => 'json:group'])
         ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
-        ->expectsOutput('resources/lang/en/app.json created successfully.')
-        ->expectsOutput('resources/lang/it/app.json created successfully.')
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('en/app.json')))
+        ->expectsOutput(sprintf("%s created successfully.", lang_rpath('it/app.json')))
         ->assertExitCode(0);
 
     expect(lang_path('en/app.json'))
