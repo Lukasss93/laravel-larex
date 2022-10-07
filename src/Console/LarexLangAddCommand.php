@@ -8,7 +8,7 @@ use Lukasss93\Larex\Support\CsvReader;
 use Lukasss93\Larex\Support\CsvWriter;
 use Lukasss93\Larex\Support\Utils;
 
-class LarexLangAdd extends Command
+class LarexLangAddCommand extends Command
 {
     /**
      * The name and signature of the console command.

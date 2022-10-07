@@ -1,11 +1,11 @@
 <?php
 
-use Lukasss93\Larex\Console\LarexLangAdd;
+use Lukasss93\Larex\Console\LarexLangAddCommand;
 
 it('does not add a new language due to invalid language code', function () {
     initFromStub('lang.lang-input');
 
-    $this->artisan(LarexLangAdd::class, ['code' => 'xyz'])
+    $this->artisan(LarexLangAddCommand::class, ['code' => 'xyz'])
         ->expectsOutput('Invalid language code (xyz)')
         ->assertExitCode(1);
 
@@ -18,7 +18,7 @@ it('does not add a new language due to invalid language code', function () {
 it('does not add a new language due to invalid language code + suggest', function () {
     initFromStub('lang.lang-input');
 
-    $this->artisan(LarexLangAdd::class, ['code' => 'itx'])
+    $this->artisan(LarexLangAddCommand::class, ['code' => 'itx'])
         ->expectsOutput('Language code is not valid (itx). Did you mean: it?')
         ->assertExitCode(1);
 
@@ -31,7 +31,7 @@ it('does not add a new language due to invalid language code + suggest', functio
 it('adds a new language column', function () {
     initFromStub('lang.lang-input');
 
-    $this->artisan(LarexLangAdd::class, ['code' => 'es'])
+    $this->artisan(LarexLangAddCommand::class, ['code' => 'es'])
         ->expectsOutput('Added language column: "es"')
         ->assertExitCode(0);
 
