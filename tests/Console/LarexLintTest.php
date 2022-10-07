@@ -15,7 +15,7 @@ it('does not lint due to missing localization file', function () {
 
 it('does not lint due to missing linters', function () {
     config(['larex.linters' => []]);
-    initFromStub('lint.no-linters');
+    initFromStub('console.lint.no-linters');
 
     $this->artisan(LarexLintCommand::class)
         ->expectsOutput('No linters executed!')
@@ -28,7 +28,7 @@ it('lints with failure', function () {
             DuplicateKeyLinter::class,
         ],
     ]);
-    initFromStub('lint.failure');
+    initFromStub('console.lint.failure');
 
     $this->artisan(LarexLintCommand::class)
         ->expectsOutput(' FAIL  1 duplicate key found:')
@@ -44,7 +44,7 @@ it('lints successfully', function () {
             ValidHeaderLinter::class,
         ],
     ]);
-    initFromStub('lint.success');
+    initFromStub('console.lint.success');
 
     $this->artisan(LarexLintCommand::class)
         ->expectsOutput('OK (1 linter)')

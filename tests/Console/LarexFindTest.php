@@ -11,7 +11,7 @@ it('does not find rows due to missing localization file', function () {
 });
 
 it('finds no strings', function () {
-    initFromStub('find.input');
+    initFromStub('console.find.input');
 
     $this->artisan(LarexFindCommand::class, ['value' => 'test'])
         ->expectsOutput('No string found.')
@@ -19,7 +19,7 @@ it('finds no strings', function () {
 });
 
 it('finds strings', function () {
-    initFromStub('find.input');
+    initFromStub('console.find.input');
 
     $this->artisan(LarexFindCommand::class, ['value' => 'app'])
         ->expectsTable(['group', 'key', 'en'], [

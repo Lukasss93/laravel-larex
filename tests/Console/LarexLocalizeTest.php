@@ -3,8 +3,8 @@
 use Lukasss93\Larex\Console\LarexLocalizeCommand;
 
 it('does not find unlocalized strings', function () {
-    initFromStub('localize.no-strings.blade', resource_path('views/test.blade.php'));
-    initFromStub('localize.no-strings.csv');
+    initFromStub('console.localize.no-strings.blade', resource_path('views/test.blade.php'));
+    initFromStub('console.localize.no-strings.csv');
 
     $this->artisan(LarexLocalizeCommand::class)
         ->expectsOutput('No unlocalized strings found.')
@@ -12,8 +12,8 @@ it('does not find unlocalized strings', function () {
 });
 
 it('finds unlocalized strings', function () {
-    $testFilePath = initFromStub('localize.with-strings.blade', resource_path('views/test.blade.php'));
-    initFromStub('localize.with-strings.csv');
+    $testFilePath = initFromStub('console.localize.with-strings.blade', resource_path('views/test.blade.php'));
+    initFromStub('console.localize.with-strings.csv');
 
     $this->artisan(LarexLocalizeCommand::class)
         ->expectsOutput('1 unlocalized string found:')
@@ -22,8 +22,8 @@ it('finds unlocalized strings', function () {
 });
 
 it('finds unlocalized strings and import data', function () {
-    $testFilePath = initFromStub('localize.with-strings-import.blade', resource_path('views/test.blade.php'));
-    initFromStub('localize.with-strings-import.csv-before');
+    $testFilePath = initFromStub('console.localize.with-strings-import.blade', resource_path('views/test.blade.php'));
+    initFromStub('console.localize.with-strings-import.csv-before');
 
     $this->artisan(LarexLocalizeCommand::class, ['--import' => true])
         ->expectsOutput('1 unlocalized string found:')
@@ -36,5 +36,5 @@ it('finds unlocalized strings and import data', function () {
     expect(csv_path())
         ->toBeFile()
         ->fileContent()
-        ->toEqualStub('localize.with-strings-import.csv-after');
+        ->toEqualStub('console.localize.with-strings-import.csv-after');
 });

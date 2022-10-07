@@ -11,7 +11,7 @@ it('does not insert string due to missing localization file', function () {
 });
 
 it('inserts string', function () {
-    initFromStub('insert.base.input');
+    initFromStub('console.insert.base.input');
 
     $this->artisan(LarexInsertCommand::class)
         ->expectsQuestion('Enter the group', 'app')
@@ -25,11 +25,11 @@ it('inserts string', function () {
     expect(csv_path())
         ->toBeFile()
         ->fileContent()
-        ->toEqualStub('insert.base.output');
+        ->toEqualStub('console.insert.base.output');
 });
 
 it('inserts string with special chars', function () {
-    initFromStub('insert.special.input');
+    initFromStub('console.insert.special.input');
 
     $this->artisan(LarexInsertCommand::class)
         ->expectsQuestion('Enter the group', 'app')
@@ -43,11 +43,11 @@ it('inserts string with special chars', function () {
     expect(csv_path())
         ->toBeFile()
         ->fileContent()
-        ->toEqualStub('insert.special.output');
+        ->toEqualStub('console.insert.special.output');
 });
 
 it('inserts string overwriting existent', function () {
-    initFromStub('insert.exists.input');
+    initFromStub('console.insert.exists.input');
 
     $this->artisan(LarexInsertCommand::class)
         ->expectsQuestion('Enter the group', 'app')
@@ -62,11 +62,11 @@ it('inserts string overwriting existent', function () {
     expect(csv_path())
         ->toBeFile()
         ->fileContent()
-        ->toEqualStub('insert.exists.output-continue-yes');
+        ->toEqualStub('console.insert.exists.output-continue-yes');
 });
 
 it('inserts string not overwriting existent', function () {
-    initFromStub('insert.exists.input');
+    initFromStub('console.insert.exists.input');
 
     $this->artisan(LarexInsertCommand::class)
         ->expectsQuestion('Enter the group', 'app')
@@ -83,11 +83,11 @@ it('inserts string not overwriting existent', function () {
     expect(csv_path())
         ->toBeFile()
         ->fileContent()
-        ->toEqualStub('insert.exists.output-continue-no');
+        ->toEqualStub('console.insert.exists.output-continue-no');
 });
 
 it('inserts string checking empty group/key', function () {
-    initFromStub('insert.base.input');
+    initFromStub('console.insert.base.input');
 
     $this->artisan(LarexInsertCommand::class)
         ->expectsQuestion('Enter the group', '')
@@ -105,11 +105,11 @@ it('inserts string checking empty group/key', function () {
     expect(csv_path())
         ->toBeFile()
         ->fileContent()
-        ->toEqualStub('insert.base.output');
+        ->toEqualStub('console.insert.base.output');
 });
 
 it('inserts string and export data', function () {
-    initFromStub('insert.base.input');
+    initFromStub('console.insert.base.input');
 
     $this->artisan(LarexInsertCommand::class, ['--export' => true])
         ->expectsQuestion('Enter the group', 'app')
@@ -127,21 +127,21 @@ it('inserts string and export data', function () {
     expect(csv_path())
         ->toBeFile()
         ->fileContent()
-        ->toEqualStub('insert.base.output')
+        ->toEqualStub('console.insert.base.output')
         //check exported en file
         ->and(lang_path('en/app.php'))
         ->toBeFile()
         ->fileContent()
-        ->toEqualStub('insert.base.output-app-en')
+        ->toEqualStub('console.insert.base.output-app-en')
         //check exported it file
         ->and(lang_path('it/app.php'))
         ->toBeFile()
         ->fileContent()
-        ->toEqualStub('insert.base.output-app-it');
+        ->toEqualStub('console.insert.base.output-app-it');
 });
 
 it('inserts string with correction', function () {
-    initFromStub('insert.correction.input');
+    initFromStub('console.insert.correction.input');
 
     $this->artisan(LarexInsertCommand::class)
         ->expectsQuestion('Enter the group', 'app')
@@ -160,11 +160,11 @@ it('inserts string with correction', function () {
     expect(csv_path())
         ->toBeFile()
         ->fileContent()
-        ->toEqualStub('insert.correction.output');
+        ->toEqualStub('console.insert.correction.output');
 });
 
 it('inserts string with correction and export data', function () {
-    initFromStub('insert.correction.input');
+    initFromStub('console.insert.correction.input');
 
     $this->artisan(LarexInsertCommand::class, ['--export' => true])
         ->expectsQuestion('Enter the group', 'app')
@@ -187,17 +187,17 @@ it('inserts string with correction and export data', function () {
     expect(csv_path())
         ->toBeFile()
         ->fileContent()
-        ->toEqualStub('insert.correction.output')
+        ->toEqualStub('console.insert.correction.output')
         //check exported en file
         ->and(lang_path('en/app.php'))
         ->toBeFile()
         ->fileContent()
-        ->toEqualStub('insert.correction.output-app-en')
+        ->toEqualStub('console.insert.correction.output-app-en')
         //check exported it file
         ->and(lang_path('it/app.php'))
         ->toBeFile()
         ->fileContent()
-        ->toEqualStub('insert.correction.output-app-it');
+        ->toEqualStub('console.insert.correction.output-app-it');
 });
 
 it('inserts string after initializing localization file', function () {
@@ -214,5 +214,5 @@ it('inserts string after initializing localization file', function () {
     expect(csv_path())
         ->toBeFile()
         ->fileContent()
-        ->toEqualStub('insert.init.output');
+        ->toEqualStub('console.insert.init.output');
 });

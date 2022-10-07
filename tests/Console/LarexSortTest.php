@@ -3,7 +3,7 @@
 use Lukasss93\Larex\Console\LarexSortCommand;
 
 it('sorts rows', function () {
-    initFromStub('sort.sort-input');
+    initFromStub('console.sort.sort-input');
 
     $this->artisan(LarexSortCommand::class)
         ->expectsOutput('Sorting che CSV rows...')
@@ -13,7 +13,7 @@ it('sorts rows', function () {
     expect(csv_path())
         ->toBeFile()
         ->fileContent()
-        ->toEqualStub('sort.sort-output');
+        ->toEqualStub('console.sort.sort-output');
 });
 
 it('does not sort rows due to missing localization file', function () {
