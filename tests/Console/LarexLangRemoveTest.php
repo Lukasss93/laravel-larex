@@ -1,11 +1,11 @@
 <?php
 
-use Lukasss93\Larex\Console\LarexLangRemove;
+use Lukasss93\Larex\Console\LarexLangRemoveCommand;
 
 it('fails due to missing language column', function () {
     initFromStub('lang.lang-input');
 
-    $this->artisan(LarexLangRemove::class, ['code' => 'es'])
+    $this->artisan(LarexLangRemoveCommand::class, ['code' => 'es'])
         ->expectsOutput('The language code "es" is not present in the CSV file.')
         ->assertExitCode(1);
 
@@ -18,7 +18,7 @@ it('fails due to missing language column', function () {
 it('remove a language column', function () {
     initFromStub('lang.lang-input');
 
-    $this->artisan(LarexLangRemove::class, ['code' => 'en'])
+    $this->artisan(LarexLangRemoveCommand::class, ['code' => 'en'])
         ->expectsOutput('The language code "en" has been removed from the CSV file.')
         ->assertExitCode(0);
 

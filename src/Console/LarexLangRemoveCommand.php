@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 use Lukasss93\Larex\Support\CsvReader;
 use Lukasss93\Larex\Support\CsvWriter;
 
-class LarexLangRemove extends Command
+class LarexLangRemoveCommand extends Command
 {
     /**
      * The name and signature of the console command.
