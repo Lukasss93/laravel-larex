@@ -81,6 +81,7 @@ php artisan vendor:publish --provider="Lukasss93\Larex\LarexServiceProvider" --t
 * You can use `php artisan larex:remove` to remove existing strings in your CSV file.
 * You can use `php artisan larex:lang:add` to add a new language column to your CSV file.
 * You can use `php artisan larex:lang:remove` to remove a language column from your CSV file.
+* You can use `php artisan larex:lang:order` to reorder language columns in your CSV file.
 
 ### 📝 Example
 

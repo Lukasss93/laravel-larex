@@ -9,6 +9,7 @@ use Lukasss93\Larex\Console\LarexImportCommand;
 use Lukasss93\Larex\Console\LarexInitCommand;
 use Lukasss93\Larex\Console\LarexInsertCommand;
 use Lukasss93\Larex\Console\LarexLangAddCommand;
+use Lukasss93\Larex\Console\LarexLangOrderCommand;
 use Lukasss93\Larex\Console\LarexLangRemoveCommand;
 use Lukasss93\Larex\Console\LarexLintCommand;
 use Lukasss93\Larex\Console\LarexLocalizeCommand;
@@ -51,6 +52,7 @@ class LarexServiceProvider extends ServiceProvider
             LarexRemoveCommand::class,
             LarexLangAddCommand::class,
             LarexLangRemoveCommand::class,
+            LarexLangOrderCommand::class,
         ]);
     }
 
