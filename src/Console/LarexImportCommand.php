@@ -113,7 +113,8 @@ class LarexImportCommand extends Command
 
         //set source languages
         if (!$this->option('skip-source-reordering')) {
-            $this->callSilently(LarexLangOrderCommand::class, ['from' => config('larex.source_language'), 'to' => 1]);
+            $this->callSilently(LarexLangOrderCommand::class,
+                ['from' => config('larex.source_language', 'en'), 'to' => 1]);
         }
 
         $this->info('Data imported successfully.');
