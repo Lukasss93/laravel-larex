@@ -105,9 +105,8 @@ it('imports strings and set the source language',
             ->toBeFile()
             ->fileContent()
             ->toEqualStub($expected);
-
     })->with([
-    'ar' => ['ar', 'importers.laravel.source.output-ar', false],
-    'en' => ['en', 'importers.laravel.source.output-en', false],
-    'en-skip' => ['en', 'importers.laravel.source.output-ar', true],
-]);
+        'ar' => ['ar', 'importers.laravel.source.output-ar', false],
+        'en' => ['en', 'importers.laravel.source.output-en', false],
+        'en-skip' => ['en', 'importers.laravel.source.output-ar', true],
+    ]);
