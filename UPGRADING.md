@@ -3,23 +3,28 @@
 Because there are many breaking changes an upgrade is not that easy. There are many edge cases this guide does not
 cover. We accept PRs to improve this guide.
 
-## From v4.0 to v4.2
+## From v4.2 to v4.3.0
+
 - The `larex.php` config was changed:
-  - **Optional**. Please append new `SameParametersLinter` linter in this way:
-    ```php
-    /**
-         * Linters to run with larex:lint command.
-         */
-        'linters' => [
-            // other linters here
-            // Lukasss93\Larex\Linters\SameParametersLinter::class,
-        ],
-    ```
+    - **Optional**. Please append new `source_language` key in this way:
+      ```php
+      'source_language' => 'en',
+      ```
+
+_Or you can delete your current config and publish it again (copy your changes before)._
+
+## From v4.0 to v4.2
+
+- The `larex.php` config was changed:
+    - **Optional**. Please append new `SameParametersLinter` linter in this way:
+      ```php
+      'linters' => [
+          // other linters here
+          // Lukasss93\Larex\Linters\SameParametersLinter::class,
+      ],
+      ```
   - **Optional**. Please append `ignore_empty_values` key in this way:
     ```php
-    /**
-     * Used by SameParametersLinter
-     */
     'ignore_empty_values' => false,
     ```
 _Or you can delete your current config and publish it again (copy your changes before)._

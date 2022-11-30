@@ -7,6 +7,24 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Please check the [UPGRADING.md](UPGRADING.md) file before upgrading to a major version!
 
+## [v4.3.0](https://github.com/Lukasss93/laravel-larex/releases/tag/v4.3.0) - 2022-11-30
+
+### Added
+
+- Added `larex:lang:order` command
+- Added ability to set source language for "larex:import" command
+
+### Fixed
+
+- Fixed: wrong export message (#26)
+- Fixed: duplicate lint message (#27) in "SameParametersLinter" file
+
+## [v4.2](https://github.com/Lukasss93/laravel-larex/releases/tag/v4.2) - 2022-07-12
+
+### Added
+
+- Added new linter: SameParametersLinter
+
 ## [v4.1](https://github.com/Lukasss93/laravel-larex/releases/tag/v4.1) - 2022-06-28
 
 ### Added
