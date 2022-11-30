@@ -109,4 +109,5 @@ it('imports strings and set the source language',
         'ar' => ['ar', 'importers.laravel.source.output-ar', false],
         'en' => ['en', 'importers.laravel.source.output-en', false],
         'en-skip' => ['en', 'importers.laravel.source.output-ar', true],
+        'invalid-lang' => ['es', 'importers.laravel.source.output-ar', false],
     ]);
