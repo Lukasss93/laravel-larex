@@ -22,7 +22,8 @@ class LarexImportCommand extends Command
                             {importer? : Importer}
                             {--f|force : Overwrite CSV file if already exists}
                             {--include= : Languages allowed to import in the CSV}
-                            {--exclude= : Languages not allowed to import in the CSV}';
+                            {--exclude= : Languages not allowed to import in the CSV}
+                            {--skip-source-reordering : Skip source reordering}';
 
     /**
      * The console command description.
@@ -82,7 +83,6 @@ class LarexImportCommand extends Command
         $this->warn('Importing entries...');
 
         try {
-
             //call the importer
             $items = $importer->handle($this);
         } catch (ImportException $e) {
@@ -110,6 +110,11 @@ class LarexImportCommand extends Command
         //write csv
         CsvWriter::create(csv_path())
             ->addRows($items->toArray());
+
+        //set source languages
+        if (!$this->option('skip-source-reordering')) {
+            $this->callSilently(LarexLangOrderCommand::class, ['from' => config('larex.source_language'), 'to' => 1]);
+        }
 
         $this->info('Data imported successfully.');
 

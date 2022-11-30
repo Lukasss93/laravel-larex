@@ -82,3 +82,32 @@ it('imports strings with territory', function () {
         ->fileContent()
         ->toEqualStub('importers.laravel.territory.output');
 });
+
+it('imports strings and set the source language',
+    function (string $source, string $expected, bool $skipSourceReordering) {
+        File::makeDirectory(lang_path('ar'), 0755, true, true);
+        File::makeDirectory(lang_path('en'), 0755, true, true);
+        File::makeDirectory(lang_path('it'), 0755, true, true);
+
+        initFromStub('importers.laravel.source.input-ar', lang_path('ar/app.php'));
+        initFromStub('importers.laravel.source.input-en', lang_path('en/app.php'));
+        initFromStub('importers.laravel.source.input-it', lang_path('it/app.php'));
+
+        config(['larex.source_language' => $source]);
+
+        $this->artisan(LarexImportCommand::class,
+            ['importer' => 'laravel', '--skip-source-reordering' => $skipSourceReordering])
+            ->expectsOutput('Importing entries...')
+            ->expectsOutput('Data imported successfully.')
+            ->assertExitCode(0);
+
+        expect(csv_path())
+            ->toBeFile()
+            ->fileContent()
+            ->toEqualStub($expected);
+
+    })->with([
+    'ar' => ['ar', 'importers.laravel.source.output-ar', false],
+    'en' => ['en', 'importers.laravel.source.output-en', false],
+    'en-skip' => ['en', 'importers.laravel.source.output-ar', true],
+]);

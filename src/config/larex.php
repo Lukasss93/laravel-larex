@@ -136,4 +136,16 @@ return [
      */
 
     'eol' => PHP_EOL,
+
+    /*
+     |--------------------------------------------------------------------------
+     | Source Language
+     |--------------------------------------------------------------------------
+     |
+     | The source language is the language used as the base for the translation.
+     | This value is used by the "larex:import" command to set the first language column in the CSV file.
+     |
+     */
+
+    'source_language' => 'en',
 ];

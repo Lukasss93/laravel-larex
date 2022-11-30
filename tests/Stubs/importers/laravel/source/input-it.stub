@@ -1,0 +1,8 @@
+<?php
+
+return [
+
+    'hello' => 'Ciao',
+    'bike'  => 'Bicicletta',
+
+];
