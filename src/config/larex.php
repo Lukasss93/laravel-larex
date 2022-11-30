@@ -21,12 +21,12 @@ return [
      |--------------------------------------------------------------------------
      |
      | Here you can specify the exporters that will be used by larex:export command.
-     | You can add your own exporters (they must implement the \Lukasss93\Larex\Contracts\Exporter interface) 
+     | You can add your own exporters (they must implement the \Lukasss93\Larex\Contracts\Exporter interface)
      | by adding them to the "list" array.
      | Calling the "larex:export" command without the exporter parameter will use the "default" exporter.
      |
      */
-    
+
     'exporters' => [
         'default' => 'laravel',
         'list' => [
@@ -35,14 +35,14 @@ return [
             'json:group' => Lukasss93\Larex\Exporters\JsonGroupsExporter::class,
         ],
     ],
-    
+
     /*
      |--------------------------------------------------------------------------
      | Larex Importers
      |--------------------------------------------------------------------------
      |
      | Here you can specify the importers that will be used by "larex:import" command.
-     | You can add your own importers (they must implement the \Lukasss93\Larex\Contracts\Importer interface) 
+     | You can add your own importers (they must implement the \Lukasss93\Larex\Contracts\Importer interface)
      | by adding them to the "list" array.
      | Calling the "larex:import" command without the importer parameter will use the "default" importer.
      |
@@ -65,11 +65,11 @@ return [
      | Linters to run with "larex:lint" command.
      | Linters are executed in the order they are defined.
      | You can disable a linter by commenting it out.
-     | You can add your own linters (they must implement the \Lukasss93\Larex\Contracts\Linter interface) 
+     | You can add your own linters (they must implement the \Lukasss93\Larex\Contracts\Linter interface)
      | by adding them to the list.
      |
      */
-    
+
     'linters' => [
         Lukasss93\Larex\Linters\ValidHeaderLinter::class,
         Lukasss93\Larex\Linters\ValidLanguageCodeLinter::class,
@@ -82,7 +82,7 @@ return [
         // Lukasss93\Larex\Linters\ValidHtmlValueLinter::class,
         // Lukasss93\Larex\Linters\SameParametersLinter::class,
     ],
-    
+
     /*
      |--------------------------------------------------------------------------
      | Ignore Empty Values
@@ -93,7 +93,7 @@ return [
      */
 
     'ignore_empty_values' => false,
-    
+
     /*
      |--------------------------------------------------------------------------
      | Search Criteria
@@ -120,7 +120,7 @@ return [
         'patterns' => ['*.php'],
         'functions' => ['__', 'trans', '@lang'],
     ],
-    
+
     /*
      |--------------------------------------------------------------------------
      | EOL
@@ -132,7 +132,7 @@ return [
      | - "\r\n" (Windows)
      | - "\n" (Unix, Mac OS X)
      | - "\r" (Mac OS 9 and before)
-     | 
+     |
      */
 
     'eol' => PHP_EOL,
