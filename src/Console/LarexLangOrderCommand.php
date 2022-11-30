@@ -98,7 +98,7 @@ class LarexLangOrderCommand extends Command
         if (is_numeric($language)) {
             $position = (int)$language;
             if (!$languages->has($position - 1)) {
-                throw new RuntimeException(sprintf("The %s language (%s) is not valid.", $type, $language));
+                throw new RuntimeException(sprintf('The %s language (%s) is not valid.', $type, $language));
             }
 
             return $position - 1;
@@ -107,7 +107,7 @@ class LarexLangOrderCommand extends Command
         $index = $languages->search($language);
 
         if ($index === false) {
-            throw new RuntimeException(sprintf("The %s language (%s) is not valid.", $type, $language));
+            throw new RuntimeException(sprintf('The %s language (%s) is not valid.', $type, $language));
         }
 
         return $index;
