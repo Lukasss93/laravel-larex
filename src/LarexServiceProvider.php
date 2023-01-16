@@ -38,7 +38,7 @@ class LarexServiceProvider extends ServiceProvider
 
         $this->registerCommands();
 
-        Collection::macro('insertAt', function (int $index, $item, $key = null): Collection {
+        Collection::macro('insertAt', function (int $index, $item, $key = null) {
             $after = $this->splice($index);
             $this->items = isset($key)
                 ? $this->put($key, $item)->merge($after)->toArray()
