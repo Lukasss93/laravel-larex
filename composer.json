@@ -24,12 +24,13 @@
         "php": "^8.0",
         "ext-dom": "*",
         "ext-json": "*",
-        "illuminate/support": "^8.0|^9.0",
+        "illuminate/support": "^8.0|^9.0|^10.0",
         "loilo/fuse": "^6.4.6",
         "spatie/laravel-collection-macros": "^7.12",
         "spatie/simple-excel": "^1.13.1"
     },
     "require-dev": {
+        "orchestra/testbench": "^6.0|^7.0|^8.0",
         "pestphp/pest": "^1.21",
         "psalm/plugin-laravel": "^2.0",
         "vimeo/psalm": "^4.24"
