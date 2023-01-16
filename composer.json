@@ -26,7 +26,6 @@
         "ext-json": "*",
         "illuminate/support": "^8.0|^9.0|^10.0",
         "loilo/fuse": "^6.4.6",
-        "spatie/laravel-collection-macros": "^7.12",
         "spatie/simple-excel": "^1.13.1"
     },
     "require-dev": {

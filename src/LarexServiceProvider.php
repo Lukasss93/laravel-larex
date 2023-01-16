@@ -2,6 +2,7 @@
 
 namespace Lukasss93\Larex;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use Lukasss93\Larex\Console\LarexExportCommand;
 use Lukasss93\Larex\Console\LarexFindCommand;
@@ -36,6 +37,15 @@ class LarexServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/config/larex.php', 'larex');
 
         $this->registerCommands();
+
+        Collection::macro('insertAt', function (int $index, $item, $key = null): Collection {
+            $after = $this->splice($index);
+            $this->items = isset($key)
+                ? $this->put($key, $item)->merge($after)->toArray()
+                : $this->push($item)->merge($after)->toArray();
+
+            return $this;
+        });
     }
 
     protected function registerCommands(): void
