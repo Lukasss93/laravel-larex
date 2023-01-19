@@ -37,7 +37,6 @@ class LarexServiceProvider extends ServiceProvider
 
         $this->registerCommands();
 
-        /** @psalm-suppress InaccessibleProperty */
         Collection::macro('insertAt', function (int $index, $item, $key = null) {
             /** @var Collection $this */
             $after = $this->splice($index);

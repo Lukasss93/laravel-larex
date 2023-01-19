@@ -17,8 +17,10 @@
                 <referencedClass name="Lukasss93\Larex\Contracts\Linter"/>
             </errorLevel>
         </UndefinedClass>
+        <InaccessibleProperty>
+            <errorLevel type="suppress">
+                <file name="Lukasss93\Larex\LarexServiceProvider"/>
+            </errorLevel>
+        </InaccessibleProperty>
     </issueHandlers>
-    <plugins>
-        <pluginClass class="Psalm\LaravelPlugin\Plugin"/>
-    </plugins>
 </psalm>
