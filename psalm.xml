@@ -19,7 +19,7 @@
         </UndefinedClass>
         <InaccessibleProperty>
             <errorLevel type="suppress">
-                <file name="Lukasss93\Larex\LarexServiceProvider"/>
+                <file name="src/LarexServiceProvider.php"/>
             </errorLevel>
         </InaccessibleProperty>
     </issueHandlers>
