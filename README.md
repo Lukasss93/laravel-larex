@@ -12,7 +12,7 @@
 
 ![Tests](https://img.shields.io/github/actions/workflow/status/lukasss93/laravel-larex/run-tests.yml?label=Test%20Suite&logo=github)
 
-Laravel Larex lets you translate your whole Laravel application with a single CSV file.
+> Laravel Larex lets you translate your whole Laravel application with a single CSV file.
 
 You can import translation entries from lang folder into a structured CSV, edit the translations and export them back to Laravel PHP files.
 
