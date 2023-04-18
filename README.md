@@ -4,13 +4,13 @@
 
 # Laravel Larex
 
-[![Version](https://poser.pugx.org/lukasss93/laravel-larex/v/stable)](https://packagist.org/packages/lukasss93/laravel-larex)
-[![Downloads](https://poser.pugx.org/lukasss93/laravel-larex/downloads)](https://packagist.org/packages/lukasss93/laravel-larex)
-![PHP](https://img.shields.io/badge/PHP-%E2%89%A5%208.0-blue)
-![Laravel](https://img.shields.io/badge/Laravel-%E2%89%A5%208.0-orange)
-[![License](https://poser.pugx.org/lukasss93/laravel-larex/license)](https://packagist.org/packages/lukasss93/laravel-larex)
-![Build](https://img.shields.io/github/actions/workflow/status/Lukasss93/laravel-larex/run-tests.yml)
-[![Coverage](https://img.shields.io/codecov/c/github/lukasss93/laravel-larex?token=XcLU2ccFQ7)](https://codecov.io/gh/Lukasss93/laravel-larex)
+[![Version](https://img.shields.io/packagist/v/lukasss93/laravel-larex?label=composer&logo=composer)](https://packagist.org/packages/lukasss93/laravel-larex)
+[![Downloads](https://img.shields.io/packagist/dt/lukasss93/laravel-larex)](https://packagist.org/packages/lukasss93/laravel-larex)
+![License](https://img.shields.io/packagist/l/lukasss93/laravel-larex)
+![PHP](https://img.shields.io/packagist/dependency-v/lukasss93/laravel-larex/php?logo=php)
+![Laravel](https://img.shields.io/packagist/dependency-v/lukasss93/laravel-larex/illuminate/support?label=laravel&logo=laravel)
+
+![Tests](https://img.shields.io/github/actions/workflow/status/lukasss93/laravel-larex/run-tests.yml?label=Test%20Suite&logo=github)
 
 Laravel Larex lets you translate your whole Laravel application with a single CSV file.
 
