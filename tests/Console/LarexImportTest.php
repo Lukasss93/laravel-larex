@@ -20,8 +20,7 @@ it('does not import strings due to missing importer', function () {
 
 it('does not import strings due to invalid importer', function () {
     config([
-        'larex.importers.list.foo' => new class()
-        {
+        'larex.importers.list.foo' => new class() {
         },
     ]);
 

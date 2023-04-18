@@ -48,7 +48,6 @@ class CsvParser
 
         //loop rows
         foreach ($rows as $columns) {
-
             //get first two columns values
             $group = trim($columns->get('group'));
             $key = trim($columns->get('key'));

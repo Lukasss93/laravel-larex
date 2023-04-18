@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Str;
+
 function csv_path($relative = false): string
 {
     $path = config('larex.csv.path');

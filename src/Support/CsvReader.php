@@ -20,6 +20,9 @@ class CsvReader
         return new self($path);
     }
 
+    /**
+     * @return Collection<int,string>
+     */
     public function getHeader(): Collection
     {
         $header = $this->reader->getHeaders();
