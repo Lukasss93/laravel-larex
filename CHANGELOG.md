@@ -7,6 +7,14 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Please check the [UPGRADING.md](UPGRADING.md) file before upgrading to a major version!
 
+## v4.4.0 - 2023-04-18
+
+### What's Changed
+
+- Laravel 10 support by @Lukasss93 in https://github.com/Lukasss93/laravel-larex/pull/36
+
+**Full Changelog**: https://github.com/Lukasss93/laravel-larex/compare/v4.3.0...v4.4.0
+
 ## [v4.3.0](https://github.com/Lukasss93/laravel-larex/releases/tag/v4.3.0) - 2022-11-30
 
 ### Added
@@ -165,8 +173,9 @@ Please check the [UPGRADING.md](UPGRADING.md) file before upgrading to a major v
 ### Changed
 
 - Changed default csv format:
-    - Delimiter changed from `;` to `,`
-    - Escape character changed from `\"` to `""`
+- - Delimiter changed from `;` to `,`
+- - Escape character changed from `\"` to `""`
+- 
 
 ## [v1.6](https://github.com/Lukasss93/laravel-larex/releases/tag/v1.6) - 2021-01-02
 
