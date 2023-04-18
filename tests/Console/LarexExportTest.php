@@ -36,8 +36,7 @@ it('does not export strings due to missing exporter', function () {
 
 it('does not export strings due to invalid exporter', function () {
     config([
-        'larex.exporters.list.foo' => new class()
-        {
+        'larex.exporters.list.foo' => new class() {
         },
     ]);
 
