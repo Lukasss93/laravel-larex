@@ -11,6 +11,7 @@
 ![Laravel](https://img.shields.io/packagist/dependency-v/lukasss93/laravel-larex/illuminate/support?label=laravel&logo=laravel)
 
 ![Tests](https://img.shields.io/github/actions/workflow/status/lukasss93/laravel-larex/run-tests.yml?label=Test%20Suite&logo=github)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/174c66250f81b7637524/test_coverage)](https://codeclimate.com/github/Lukasss93/laravel-larex/test_coverage)
 
 > Laravel Larex lets you translate your whole Laravel application with a single CSV file.
 

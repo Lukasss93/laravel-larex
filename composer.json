@@ -65,9 +65,9 @@
         }
     },
     "scripts": {
-        "test": "./vendor/bin/pest --colors=always",
-        "test-coverage": "./vendor/bin/pest --colors=always --coverage-clover coverage.xml",
-        "psalm": "./vendor/bin/psalm",
-        "psalm-info": "./vendor/bin/psalm --show-info=true"
+        "test": "@php ./vendor/bin/pest --colors=always",
+        "test-coverage": "@php ./vendor/bin/pest --colors=always --coverage-clover=coverage.xml",
+        "psalm": "@php ./vendor/bin/psalm",
+        "psalm-info": "@php ./vendor/bin/psalm --show-info=true"
     }
 }
