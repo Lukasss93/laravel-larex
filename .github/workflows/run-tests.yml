@@ -17,17 +17,7 @@ jobs:
             -   name: Validate composer.json and composer.lock
                 run: composer validate
 
-            -   name: Cache Composer packages
-                id: composer-cache
-                uses: actions/cache@v2
-                with:
-                    path: vendor
-                    key: ${{ runner.os }}-php-${{ hashFiles('**/composer.json') }}
-                    restore-keys: |
-                        ${{ runner.os }}-php-
-
             -   name: Install dependencies
-                if: steps.composer-cache.outputs.cache-hit != 'true'
                 run: composer install --no-progress --no-ansi
 
             -   name: Run Psalm
@@ -38,8 +28,8 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php: [ 8.0, 8.1, 8.2 ]
-                laravel: [ 8.*, 9.*, 10.* ]
+                php: [ 8.0, 8.1, 8.2, 8.3 ]
+                laravel: [ 8.*, 9.*, 10.*, 11.* ]
                 include:
                     -   laravel: 8.*
                         testbench: 6.*
@@ -47,21 +37,21 @@ jobs:
                         testbench: 7.*
                     -   laravel: 10.*
                         testbench: 8.*
+                    -   laravel: 11.*
+                        testbench: 9.*
                 exclude:
                     -   php: 8.0
                         laravel: 10.*
+                    -   php: 8.0
+                        laravel: 11.*
+                    -   php: 8.1
+                        laravel: 11.*
         
         name: Laravel ${{ matrix.laravel }} with PHP ${{ matrix.php }}
         
         steps:
             -   name: Checkout code
                 uses: actions/checkout@v2
-
-            -   name: Cache dependencies
-                uses: actions/cache@v1
-                with:
-                    path: ~/.composer/cache/files
-                    key: php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
 
             -   name: Setup PHP
                 uses: shivammathur/setup-php@v2
@@ -71,8 +61,9 @@ jobs:
 
             -   name: Install dependencies
                 run: |
-                    composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
-                    composer update --prefer-dist --no-interaction --no-suggest
+                    composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
+                    composer require "orchestra/testbench:${{ matrix.testbench }}" --dev --no-interaction --no-update
+                    composer update --prefer-dist --no-interaction
 
             -   name: Execute tests
                 run: composer run-script test
@@ -87,27 +78,17 @@ jobs:
             -   name: Setup PHP
                 uses: shivammathur/setup-php@v2
                 with:
-                    php-version: 8.2
+                    php-version: 8.0
                     coverage: xdebug
 
             -   name: Validate composer.json and composer.lock
                 run: composer validate
 
-            -   name: Cache Composer packages
-                id: composer-cache
-                uses: actions/cache@v2
-                with:
-                    path: vendor
-                    key: ${{ runner.os }}-php-8.2-${{ hashFiles('**/composer.json') }}
-                    restore-keys: |
-                        ${{ runner.os }}-php-8.2-
-
             -   name: Install dependencies
-                if: steps.composer-cache.outputs.cache-hit != 'true'
-                run: composer install --prefer-dist --no-interaction --no-suggest
+                run: composer install --prefer-dist --no-interaction
 
             -   name: Run test suite
-                uses: paambaati/codeclimate-action@v3.2.0
+                uses: paambaati/codeclimate-action@v5.0.0
                 env:
                     CC_TEST_REPORTER_ID: ${{ secrets.CC_REPORTER_ID }}
                 with:

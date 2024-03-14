@@ -4,3 +4,4 @@ composer.lock
 phpinsights.json
 coverage.xml
 composer.phar
+/.phpunit.cache/
