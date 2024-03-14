@@ -17,17 +17,7 @@ jobs:
             -   name: Validate composer.json and composer.lock
                 run: composer validate
 
-            -   name: Cache Composer packages
-                id: composer-cache
-                uses: actions/cache@v2
-                with:
-                    path: vendor
-                    key: ${{ runner.os }}-php-${{ hashFiles('**/composer.json') }}
-                    restore-keys: |
-                        ${{ runner.os }}-php-
-
             -   name: Install dependencies
-                if: steps.composer-cache.outputs.cache-hit != 'true'
                 run: composer install --no-progress --no-ansi
 
             -   name: Run Psalm
@@ -88,27 +78,17 @@ jobs:
             -   name: Setup PHP
                 uses: shivammathur/setup-php@v2
                 with:
-                    php-version: 8.2
+                    php-version: 8.0
                     coverage: xdebug
 
             -   name: Validate composer.json and composer.lock
                 run: composer validate
 
-            -   name: Cache Composer packages
-                id: composer-cache
-                uses: actions/cache@v2
-                with:
-                    path: vendor
-                    key: ${{ runner.os }}-php-8.2-${{ hashFiles('**/composer.json') }}
-                    restore-keys: |
-                        ${{ runner.os }}-php-8.2-
-
             -   name: Install dependencies
-                if: steps.composer-cache.outputs.cache-hit != 'true'
-                run: composer install --prefer-dist --no-interaction --no-suggest
+                run: composer install --prefer-dist --no-interaction
 
             -   name: Run test suite
-                uses: paambaati/codeclimate-action@v3.2.0
+                uses: paambaati/codeclimate-action@v5.0.0
                 env:
                     CC_TEST_REPORTER_ID: ${{ secrets.CC_REPORTER_ID }}
                 with:
