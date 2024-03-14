@@ -67,6 +67,7 @@ class LarexInsertCommand extends Command
         $languages = $header->skip(2)->values();
 
         //initialize data
+        /** @var Collection<int, string> $data */
         $data = collect([]);
 
         //iterate until user confirm the inserted data
