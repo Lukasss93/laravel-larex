@@ -42,6 +42,11 @@ uses(TestCase::class)
                 File::delete($item);
             }
         }
+
+        //delete lang folder
+        if (file_exists(lang_path())) {
+            @rmdir(lang_path());
+        }
     })
     ->in(__DIR__);
 
@@ -81,7 +86,7 @@ function getTestStub(string $name, $eol = "\n"): string
 function initFromStub(string $stub, string $file = null): string
 {
     $filePath = Utils::normalizeDS($file ?? csv_path());
-    File::put($filePath, getTestStub($stub));
+    Utils::filePut($filePath, getTestStub($stub));
 
     return $filePath;
 }

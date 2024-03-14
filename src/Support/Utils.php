@@ -306,4 +306,13 @@ class Utils
             JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         File::put($path, Str::finish($content, "\n"));
     }
+
+    public static function filePut(string $path, string $content): void
+    {
+        if (!File::exists(dirname($path))) {
+            File::makeDirectory(dirname($path), 0755, true, true);
+        }
+
+        File::put($path, $content);
+    }
 }

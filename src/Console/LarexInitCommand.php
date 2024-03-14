@@ -41,7 +41,7 @@ class LarexInitCommand extends Command
             return 1;
         }
 
-        File::put(csv_path(), Utils::getStub($stub));
+        Utils::filePut(csv_path(), Utils::getStub($stub));
 
         $this->info(csv_path(true).' created successfully.');
 
