@@ -56,7 +56,7 @@ uses(TestCase::class)
 |
 */
 
-expect()->extend('fileContent', fn () => $this->and(File::get($this->value)));
+expect()->extend('fileContent', fn () => $this->and($this->value = File::get($this->value)));
 expect()->extend('toEqualStub', fn (string $name, $eol = "\n") => $this->toEqual(getTestStub($name, $eol)));
 
 /*
