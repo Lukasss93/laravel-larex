@@ -23,7 +23,8 @@ class LarexImportCommand extends Command
                             {--f|force : Overwrite CSV file if already exists}
                             {--include= : Languages allowed to import in the CSV}
                             {--exclude= : Languages not allowed to import in the CSV}
-                            {--skip-source-reordering : Skip source reordering}';
+                            {--skip-source-reordering : Skip source reordering}
+                            {--normalize-folder-name=true : Normalize the folder name from csv header or keep as is without transforms}';
 
     /**
      * The console command description.
@@ -113,8 +114,10 @@ class LarexImportCommand extends Command
 
         //set source languages
         if (!$this->option('skip-source-reordering')) {
-            $this->callSilently(LarexLangOrderCommand::class,
-                ['from' => config('larex.source_language', 'en'), 'to' => 1]);
+            $this->callSilently(
+                LarexLangOrderCommand::class,
+                ['from' => config('larex.source_language', 'en'), 'to' => 1]
+            );
         }
 
         $this->info('Data imported successfully.');

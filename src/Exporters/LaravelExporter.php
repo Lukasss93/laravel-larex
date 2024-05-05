@@ -30,8 +30,10 @@ class LaravelExporter implements Exporter
             $command->warn($warning);
         }
 
-        $include = $command->option('include') !== null ? (explode(',', $command->option('include'))) : [];
+        $include = $command->option('include') !== null ? explode(',', $command->option('include')) : [];
         $exclude = $command->option('exclude') !== null ? explode(',', $command->option('exclude')) : [];
+        $normalizeFolderName = $command->option('normalize-folder-name') === 'true';
+
         $eol = config('larex.eol', PHP_EOL);
 
         //finally save the files
@@ -45,7 +47,7 @@ class LaravelExporter implements Exporter
             }
             $found++;
 
-            $folder = str_replace('-', '_', $language);
+            $folder = $normalizeFolderName ? str_replace('-', '_', $language) : $language;
 
             if (!File::exists(lang_path("$folder/"))) {
                 File::makeDirectory(lang_path("$folder/"));
@@ -53,7 +55,11 @@ class LaravelExporter implements Exporter
 
             foreach ($groups as $group => $keys) {
                 $write = fopen(lang_path("$folder/$group.php"), 'wb');
-                fwrite($write, /** @lang text */ "<?php$eol{$eol}return [$eol$eol");
+                fwrite(
+                    $write,
+                    /** @lang text */
+                    "<?php$eol{$eol}return [$eol$eol"
+                );
 
                 foreach ($keys as $key => $value) {
                     self::writeKeyValue($key, $value, $write, 1, $eol);
@@ -78,24 +84,24 @@ class LaravelExporter implements Exporter
         $enclosure = '"';
 
         if (is_array($value)) {
-            fwrite($file, str_repeat('    ', $level)."'$key' => [$eol");
+            fwrite($file, str_repeat('    ', $level) . "'$key' => [$eol");
             $level++;
             foreach ($value as $childKey => $childValue) {
                 self::writeKeyValue($childKey, $childValue, $file, $level, $eol);
             }
-            fwrite($file, str_repeat('    ', $level - 1)."],$eol");
+            fwrite($file, str_repeat('    ', $level - 1) . "],$eol");
 
             return;
         }
 
         $value = (string)$value;
-        $value = str_replace(["'", '\\'.$enclosure], ["\'", $enclosure], $value);
+        $value = str_replace(["'", '\\' . $enclosure], ["\'", $enclosure], $value);
 
         if (is_int($key) || (is_numeric($key) && ctype_digit($key))) {
             $key = (int)$key;
-            fwrite($file, str_repeat('    ', $level)."$key => '$value',$eol");
+            fwrite($file, str_repeat('    ', $level) . "$key => '$value',$eol");
         } else {
-            fwrite($file, str_repeat('    ', $level)."'$key' => '$value',$eol");
+            fwrite($file, str_repeat('    ', $level) . "'$key' => '$value',$eol");
         }
     }
 }

@@ -83,7 +83,8 @@ it('imports strings with territory', function () {
         ->toEqualStub('importers.laravel.territory.output');
 });
 
-it('imports strings and set the source language',
+it(
+    'imports strings and set the source language',
     function (string $source, string $expected, bool $skipSourceReordering) {
         File::makeDirectory(lang_path('ar'), 0755, true, true);
         File::makeDirectory(lang_path('en'), 0755, true, true);
@@ -95,8 +96,10 @@ it('imports strings and set the source language',
 
         config(['larex.source_language' => $source]);
 
-        $this->artisan(LarexImportCommand::class,
-            ['importer' => 'laravel', '--skip-source-reordering' => $skipSourceReordering])
+        $this->artisan(
+            LarexImportCommand::class,
+            ['importer' => 'laravel', '--skip-source-reordering' => $skipSourceReordering]
+        )
             ->expectsOutput('Importing entries...')
             ->expectsOutput('Data imported successfully.')
             ->assertExitCode(0);
@@ -105,9 +108,64 @@ it('imports strings and set the source language',
             ->toBeFile()
             ->fileContent()
             ->toEqualStub($expected);
-    })->with([
-        'ar' => ['ar', 'importers.laravel.source.output-ar', false],
-        'en' => ['en', 'importers.laravel.source.output-en', false],
-        'en-skip' => ['en', 'importers.laravel.source.output-ar', true],
-        'invalid-lang' => ['es', 'importers.laravel.source.output-ar', false],
-    ]);
+    }
+)->with([
+    'ar' => ['ar', 'importers.laravel.source.output-ar', false],
+    'en' => ['en', 'importers.laravel.source.output-en', false],
+    'en-skip' => ['en', 'importers.laravel.source.output-ar', true],
+    'invalid-lang' => ['es', 'importers.laravel.source.output-ar', false],
+]);
+
+it('imports strings with normalize option on', function () {
+    File::makeDirectory(lang_path('en'), 0755, true, true);
+    File::makeDirectory(lang_path('it'), 0755, true, true);
+
+    initFromStub('importers.laravel.normalize.input-en-simple', lang_path('en/simple.php'));
+    initFromStub('importers.laravel.normalize.input-it-simple', lang_path('it_100/simple.php'));
+
+    $this->artisan(LarexImportCommand::class, ['importer' => 'laravel'])
+        ->expectsOutput('Importing entries...')
+        ->expectsOutput('Data imported successfully.')
+        ->assertExitCode(0);
+
+    expect(csv_path())
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('importers.laravel.normalize.output_normalized');
+});
+
+it('imports strings with normalize option on set by user', function () {
+    File::makeDirectory(lang_path('en'), 0755, true, true);
+    File::makeDirectory(lang_path('it'), 0755, true, true);
+
+    initFromStub('importers.laravel.normalize.input-en-simple', lang_path('en/simple.php'));
+    initFromStub('importers.laravel.normalize.input-it-simple', lang_path('it_100/simple.php'));
+
+    $this->artisan(LarexImportCommand::class, ['importer' => 'laravel', '--normalize-folder-name' => 'true'])
+        ->expectsOutput('Importing entries...')
+        ->expectsOutput('Data imported successfully.')
+        ->assertExitCode(0);
+
+    expect(csv_path())
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('importers.laravel.normalize.output_normalized');
+});
+
+it('imports strings with normalize option off', function () {
+    File::makeDirectory(lang_path('en'), 0755, true, true);
+    File::makeDirectory(lang_path('it'), 0755, true, true);
+
+    initFromStub('importers.laravel.normalize.input-en-simple', lang_path('en/simple.php'));
+    initFromStub('importers.laravel.normalize.input-it-simple', lang_path('it_100/simple.php'));
+
+    $this->artisan(LarexImportCommand::class, ['importer' => 'laravel', '--normalize-folder-name' => 'false'])
+        ->expectsOutput('Importing entries...')
+        ->expectsOutput('Data imported successfully.')
+        ->assertExitCode(0);
+
+    expect(csv_path())
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('importers.laravel.normalize.output_normalized_false');
+});
