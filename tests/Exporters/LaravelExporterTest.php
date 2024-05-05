@@ -220,3 +220,63 @@ it('exports strings trimming whitespaces in group and key', function () {
         ->fileContent()
         ->toEqualStub('exporters.laravel.spaces.output-it');
 });
+
+it('creates folder with normalize option on', function () {
+    initFromStub('exporters.laravel.normalize.input');
+
+    $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel', '--normalize-folder-name' => 'true'])
+        ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
+        ->expectsOutput(sprintf('%s created successfully.', lang_rpath('en/app.php')))
+        ->expectsOutput(sprintf('%s created successfully.', lang_rpath('it_100/app.php')))
+        ->assertExitCode(0);
+
+    expect(lang_path('en/app.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.normalize.output-en-app');
+
+    expect(lang_path('it_100/app.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.normalize.output-it-app');
+});
+
+it('creates folder with normalize option on set by user', function () {
+    initFromStub('exporters.laravel.normalize.input');
+
+    $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel'])
+        ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
+        ->expectsOutput(sprintf('%s created successfully.', lang_rpath('en/app.php')))
+        ->expectsOutput(sprintf('%s created successfully.', lang_rpath('it_100/app.php')))
+        ->assertExitCode(0);
+
+    expect(lang_path('en/app.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.normalize.output-en-app');
+
+    expect(lang_path('it_100/app.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.normalize.output-it-app');
+});
+
+it('creates folder with normalize option off', function () {
+    initFromStub('exporters.laravel.normalize.input');
+
+    $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel', '--normalize-folder-name' => 'false'])
+        ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
+        ->expectsOutput(sprintf('%s created successfully.', lang_rpath('en/app.php')))
+        ->expectsOutput(sprintf('%s created successfully.', lang_rpath('it-100/app.php')))
+        ->assertExitCode(0);
+
+    expect(lang_path('en/app.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.normalize.output-en-app');
+
+    expect(lang_path('it-100/app.php'))
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('exporters.laravel.normalize.output-it-app');
+});
