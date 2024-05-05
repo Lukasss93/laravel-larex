@@ -97,8 +97,8 @@ it('exports strings with --exclude option', function () {
 
     $this->artisan(LarexExportCommand::class, ['exporter' => 'laravel', '--exclude' => 'en'])
         ->expectsOutput(sprintf("Processing the '%s' file...", csv_path(true)))
-        ->expectsOutput(lang_rpath('it/app.php') . ' created successfully.')
-        ->expectsOutput(lang_rpath('it/another.php') . ' created successfully.')
+        ->expectsOutput(lang_rpath('it/app.php').' created successfully.')
+        ->expectsOutput(lang_rpath('it/another.php').' created successfully.')
         ->assertExitCode(0);
 
     expect(lang_path('en/app.php'))->not->toBeFile();

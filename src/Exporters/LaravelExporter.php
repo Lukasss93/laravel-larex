@@ -55,11 +55,7 @@ class LaravelExporter implements Exporter
 
             foreach ($groups as $group => $keys) {
                 $write = fopen(lang_path("$folder/$group.php"), 'wb');
-                fwrite(
-                    $write,
-                    /** @lang text */
-                    "<?php$eol{$eol}return [$eol$eol"
-                );
+                fwrite($write, /** @lang text */ "<?php$eol{$eol}return [$eol$eol");
 
                 foreach ($keys as $key => $value) {
                     self::writeKeyValue($key, $value, $write, 1, $eol);
@@ -84,24 +80,24 @@ class LaravelExporter implements Exporter
         $enclosure = '"';
 
         if (is_array($value)) {
-            fwrite($file, str_repeat('    ', $level) . "'$key' => [$eol");
+            fwrite($file, str_repeat('    ', $level)."'$key' => [$eol");
             $level++;
             foreach ($value as $childKey => $childValue) {
                 self::writeKeyValue($childKey, $childValue, $file, $level, $eol);
             }
-            fwrite($file, str_repeat('    ', $level - 1) . "],$eol");
+            fwrite($file, str_repeat('    ', $level - 1)."],$eol");
 
             return;
         }
 
         $value = (string)$value;
-        $value = str_replace(["'", '\\' . $enclosure], ["\'", $enclosure], $value);
+        $value = str_replace(["'", '\\'.$enclosure], ["\'", $enclosure], $value);
 
         if (is_int($key) || (is_numeric($key) && ctype_digit($key))) {
             $key = (int)$key;
-            fwrite($file, str_repeat('    ', $level) . "$key => '$value',$eol");
+            fwrite($file, str_repeat('    ', $level)."$key => '$value',$eol");
         } else {
-            fwrite($file, str_repeat('    ', $level) . "'$key' => '$value',$eol");
+            fwrite($file, str_repeat('    ', $level)."'$key' => '$value',$eol");
         }
     }
 }

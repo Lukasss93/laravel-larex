@@ -83,8 +83,7 @@ it('imports strings with territory', function () {
         ->toEqualStub('importers.laravel.territory.output');
 });
 
-it(
-    'imports strings and set the source language',
+it('imports strings and set the source language',
     function (string $source, string $expected, bool $skipSourceReordering) {
         File::makeDirectory(lang_path('ar'), 0755, true, true);
         File::makeDirectory(lang_path('en'), 0755, true, true);
@@ -96,10 +95,8 @@ it(
 
         config(['larex.source_language' => $source]);
 
-        $this->artisan(
-            LarexImportCommand::class,
-            ['importer' => 'laravel', '--skip-source-reordering' => $skipSourceReordering]
-        )
+        $this->artisan(LarexImportCommand::class,
+            ['importer' => 'laravel', '--skip-source-reordering' => $skipSourceReordering])
             ->expectsOutput('Importing entries...')
             ->expectsOutput('Data imported successfully.')
             ->assertExitCode(0);
@@ -108,13 +105,12 @@ it(
             ->toBeFile()
             ->fileContent()
             ->toEqualStub($expected);
-    }
-)->with([
-    'ar' => ['ar', 'importers.laravel.source.output-ar', false],
-    'en' => ['en', 'importers.laravel.source.output-en', false],
-    'en-skip' => ['en', 'importers.laravel.source.output-ar', true],
-    'invalid-lang' => ['es', 'importers.laravel.source.output-ar', false],
-]);
+    })->with([
+        'ar' => ['ar', 'importers.laravel.source.output-ar', false],
+        'en' => ['en', 'importers.laravel.source.output-en', false],
+        'en-skip' => ['en', 'importers.laravel.source.output-ar', true],
+        'invalid-lang' => ['es', 'importers.laravel.source.output-ar', false],
+    ]);
 
 it('imports strings with normalize option on', function () {
     File::makeDirectory(lang_path('en'), 0755, true, true);
