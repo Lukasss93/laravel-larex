@@ -12,7 +12,7 @@ return [
      */
 
     'csv' => [
-        'path' => env('LAREX_CSV_PATH', lang_path('localization.csv')),
+        'path' => env('LAREX_CSV_FILE', lang_path('localization.csv')),
     ],
 
     /*
