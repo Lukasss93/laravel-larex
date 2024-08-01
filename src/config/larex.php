@@ -12,7 +12,7 @@ return [
      */
 
     'csv' => [
-        'path' => lang_path('localization.csv'),
+        'path' => env('LAREX_CSV_FILE', lang_path('localization.csv')),
     ],
 
     /*
@@ -28,7 +28,7 @@ return [
      */
 
     'exporters' => [
-        'default' => 'laravel',
+        'default' => env('LAREX_DEFAULT_EXPORTER', 'laravel'),
         'list' => [
             'laravel' => Lukasss93\Larex\Exporters\LaravelExporter::class,
             'json:lang' => Lukasss93\Larex\Exporters\JsonLanguagesExporter::class,
@@ -49,11 +49,18 @@ return [
      */
 
     'importers' => [
-        'default' => 'laravel',
+        'default' => env('LAREX_DEFAULT_IMPORTER', 'laravel'),
         'list' => [
             'laravel' => Lukasss93\Larex\Importers\LaravelImporter::class,
             'json:lang' => Lukasss93\Larex\Importers\JsonLanguagesImporter::class,
             'json:group' => Lukasss93\Larex\Importers\JsonGroupsImporter::class,
+        ],
+    ],
+
+    'writers' => [
+        'default' => env('LAREX_DEFAULT_WRITER', 'csv'),
+        'list' => [
+            'csv' => Lukasss93\Larex\Writers\CsvWriter::class,
         ],
     ],
 
@@ -92,7 +99,7 @@ return [
      |
      */
 
-    'ignore_empty_values' => false,
+    'ignore_empty_values' => env('LAREX_IGNORE_EMPTY_VALUES', false),
 
     /*
      |--------------------------------------------------------------------------
@@ -147,5 +154,5 @@ return [
      |
      */
 
-    'source_language' => 'en',
+    'source_language' => env('LAREX_SOURCE_LANGUAGE', 'en'),
 ];
