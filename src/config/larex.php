@@ -57,6 +57,13 @@ return [
         ],
     ],
 
+    'writers' => [
+        'default' => env('LAREX_DEFAULT_WRITER', 'csv'),
+        'list' => [
+            'csv' => Lukasss93\Larex\Writers\CsvWriter::class,
+        ],
+    ],
+
     /*
      |--------------------------------------------------------------------------
      | Linters
