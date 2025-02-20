@@ -6,15 +6,9 @@ on:
 
 jobs:
   psalm:
-
     runs-on: ubuntu-latest
-
-
-
     steps:
-      - uses: actions/checkout@v2
-
-
+      - uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -22,29 +16,21 @@ jobs:
           php-version: '8.0'
           coverage: none
 
-
-
       - name: Validate composer.json and composer.lock
         run: composer validate
 
-
-
       - name: Install dependencies
         run: composer install --no-progress --no-ansi
-
-
 
       - name: Run Psalm
         run: composer run-script psalm
 
   tests:
-
     runs-on: ubuntu-latest
-
     strategy:
       fail-fast: false
       matrix:
-        php: [8.0, 8.1, 8.2, 8.3]
+        php: [8.0, 8.1, 8.2, 8.3, 8.4]
         laravel: ['8.*', '9.*', '10.*', '11.*', '12.*']
         include:
           - laravel: 8.*
@@ -70,14 +56,9 @@ jobs:
             php: 8.1
 
     name: Laravel ${{ matrix.laravel }} with PHP ${{ matrix.php }}
-
-
-
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
-
-
+        uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -85,34 +66,22 @@ jobs:
           php-version: ${{ matrix.php }}
           coverage: none
 
-
-
       - name: Install dependencies
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
           composer require "orchestra/testbench:${{ matrix.testbench }}" --dev --no-interaction --no-update
           composer update --prefer-dist --no-interaction
 
-
-
       - name: Execute tests
         run: composer run-script test
 
   coverage:
-
     name: Coverage
-
     needs:
       - tests
-
     runs-on: ubuntu-latest
-
-
-
     steps:
-      - uses: actions/checkout@v2
-
-
+      - uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -120,20 +89,14 @@ jobs:
           php-version: 8.0
           coverage: xdebug
 
-
-
       - name: Validate composer.json and composer.lock
         run: composer validate
-
-
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-interaction
 
-
-
       - name: Run test suite
-        uses: paambaati/codeclimate-action@v5.0.0
+        uses: paambaati/codeclimate-action@v9
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_REPORTER_ID }}
         with:
