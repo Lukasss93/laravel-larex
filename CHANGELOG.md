@@ -7,6 +7,19 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Please check the [UPGRADING.md](UPGRADING.md) file before upgrading to a major version!
 
+## v4.6.0 - 2025-02-23
+
+### What's Changed
+
+* Laravel 12.x Compatibility by @laravel-shift in https://github.com/Lukasss93/laravel-larex/pull/46
+* Add PHP 8.4 support
+
+### New Contributors
+
+* @laravel-shift made their first contribution in https://github.com/Lukasss93/laravel-larex/pull/46
+
+**Full Changelog**: https://github.com/Lukasss93/laravel-larex/compare/v4.5.0...v4.6.0
+
 ## v4.5.0 - 2024-03-15
 
 ### What's Changed
@@ -182,6 +195,7 @@ Please check the [UPGRADING.md](UPGRADING.md) file before upgrading to a major v
 ### Changed
 
 - Changed default csv format:
+  
 - - Delimiter changed from `;` to `,`
   
 - - Escape character changed from `\"` to `""`
