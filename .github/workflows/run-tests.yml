@@ -1,7 +1,9 @@
 name: run-tests
 
 on:
-  - push
+    push:
+        branches: [ master ]
+    pull_request:
 
 jobs:
   psalm:
@@ -106,10 +108,12 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-interaction
 
-      - name: Run test suite
-        uses: paambaati/codeclimate-action@v9
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_REPORTER_ID }}
-        with:
-          coverageCommand: composer run-script test-coverage
-          coverageLocations: ${{github.workspace}}/coverage.xml:clover
+      -   name: Run test suite
+          run: composer run-script test-coverage
+      
+      -   name: Upload Coverage
+          uses: qltysh/qlty-action/coverage@v2
+          with:
+              token: ${{ secrets.COVERAGE_TOKEN }}
+              files: ${{github.workspace}}/coverage.xml
+              format: clover
