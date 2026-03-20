@@ -7,6 +7,14 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Please check the [UPGRADING.md](UPGRADING.md) file before upgrading to a major version!
 
+## v4.7.0 - 2026-03-20
+
+### What's Changed
+
+* Add Laravel 13 support by @Lukasss93 in https://github.com/Lukasss93/laravel-larex/pull/49
+
+**Full Changelog**: https://github.com/Lukasss93/laravel-larex/compare/v4.6.0...v4.7.0
+
 ## v4.6.0 - 2025-02-23
 
 ### What's Changed
