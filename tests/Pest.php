@@ -83,7 +83,7 @@ function getTestStub(string $name, $eol = "\n"): string
     return Utils::normalizeEOLs($content, $eol);
 }
 
-function initFromStub(string $stub, string $file = null): string
+function initFromStub(string $stub, ?string $file = null): string
 {
     $filePath = Utils::normalizeDS($file ?? csv_path());
     Utils::filePut($filePath, getTestStub($stub));
