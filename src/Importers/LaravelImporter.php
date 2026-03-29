@@ -27,6 +27,7 @@ class LaravelImporter implements Importer
     {
         $include = Str::of($command->option('include'))->explode(',')->reject(fn ($i) => empty($i));
         $exclude = Str::of($command->option('exclude'))->explode(',')->reject(fn ($i) => empty($i));
+        $normalizeFolderName = $command->option('normalize-folder-name') === 'true';
 
         /** @var Collection<int,string> $languages */
         $languages = collect([]);
@@ -40,7 +41,7 @@ class LaravelImporter implements Importer
         foreach ($files as $file) {
             $items = include $file;
             $group = pathinfo($file, PATHINFO_FILENAME);
-            $lang = str_replace('_', '-', basename(dirname($file)));
+            $lang = $normalizeFolderName ? str_replace('_', '-', basename(dirname($file))) : basename(dirname($file));
 
             if ($include->isNotEmpty() && !$include->contains($lang)) {
                 continue;

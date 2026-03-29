@@ -23,7 +23,8 @@ class LarexImportCommand extends Command
                             {--f|force : Overwrite CSV file if already exists}
                             {--include= : Languages allowed to import in the CSV}
                             {--exclude= : Languages not allowed to import in the CSV}
-                            {--skip-source-reordering : Skip source reordering}';
+                            {--skip-source-reordering : Skip source reordering}
+                            {--normalize-folder-name=true : Normalize the folder name from csv header or keep as is without transforms}';
 
     /**
      * The console command description.

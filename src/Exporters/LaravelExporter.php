@@ -30,8 +30,10 @@ class LaravelExporter implements Exporter
             $command->warn($warning);
         }
 
-        $include = $command->option('include') !== null ? (explode(',', $command->option('include'))) : [];
+        $include = $command->option('include') !== null ? explode(',', $command->option('include')) : [];
         $exclude = $command->option('exclude') !== null ? explode(',', $command->option('exclude')) : [];
+        $normalizeFolderName = $command->option('normalize-folder-name') === 'true';
+
         $eol = config('larex.eol', PHP_EOL);
 
         //finally save the files
@@ -45,7 +47,7 @@ class LaravelExporter implements Exporter
             }
             $found++;
 
-            $folder = str_replace('-', '_', $language);
+            $folder = $normalizeFolderName ? str_replace('-', '_', $language) : $language;
 
             if (!File::exists(lang_path("$folder/"))) {
                 File::makeDirectory(lang_path("$folder/"));

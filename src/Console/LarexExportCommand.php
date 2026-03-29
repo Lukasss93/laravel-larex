@@ -19,7 +19,8 @@ class LarexExportCommand extends Command
                             {exporter? : Exporter}
                             {--watch : Watch the CSV file from changes}
                             {--include= : Languages allowed to export in the application}
-                            {--exclude= : Languages not allowed to export in the application}';
+                            {--exclude= : Languages not allowed to export in the application}
+                            {--normalize-folder-name=true : Normalize the folder name from csv header or keep as is without transforms}';
 
     /**
      * The console command description.

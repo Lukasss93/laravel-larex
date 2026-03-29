@@ -111,3 +111,57 @@ it('imports strings and set the source language',
         'en-skip' => ['en', 'importers.laravel.source.output-ar', true],
         'invalid-lang' => ['es', 'importers.laravel.source.output-ar', false],
     ]);
+
+it('imports strings with normalize option on', function () {
+    File::makeDirectory(lang_path('en'), 0755, true, true);
+    File::makeDirectory(lang_path('it'), 0755, true, true);
+
+    initFromStub('importers.laravel.normalize.input-en-simple', lang_path('en/simple.php'));
+    initFromStub('importers.laravel.normalize.input-it-simple', lang_path('it_100/simple.php'));
+
+    $this->artisan(LarexImportCommand::class, ['importer' => 'laravel'])
+        ->expectsOutput('Importing entries...')
+        ->expectsOutput('Data imported successfully.')
+        ->assertExitCode(0);
+
+    expect(csv_path())
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('importers.laravel.normalize.output_normalized');
+});
+
+it('imports strings with normalize option on set by user', function () {
+    File::makeDirectory(lang_path('en'), 0755, true, true);
+    File::makeDirectory(lang_path('it'), 0755, true, true);
+
+    initFromStub('importers.laravel.normalize.input-en-simple', lang_path('en/simple.php'));
+    initFromStub('importers.laravel.normalize.input-it-simple', lang_path('it_100/simple.php'));
+
+    $this->artisan(LarexImportCommand::class, ['importer' => 'laravel', '--normalize-folder-name' => 'true'])
+        ->expectsOutput('Importing entries...')
+        ->expectsOutput('Data imported successfully.')
+        ->assertExitCode(0);
+
+    expect(csv_path())
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('importers.laravel.normalize.output_normalized');
+});
+
+it('imports strings with normalize option off', function () {
+    File::makeDirectory(lang_path('en'), 0755, true, true);
+    File::makeDirectory(lang_path('it'), 0755, true, true);
+
+    initFromStub('importers.laravel.normalize.input-en-simple', lang_path('en/simple.php'));
+    initFromStub('importers.laravel.normalize.input-it-simple', lang_path('it_100/simple.php'));
+
+    $this->artisan(LarexImportCommand::class, ['importer' => 'laravel', '--normalize-folder-name' => 'false'])
+        ->expectsOutput('Importing entries...')
+        ->expectsOutput('Data imported successfully.')
+        ->assertExitCode(0);
+
+    expect(csv_path())
+        ->toBeFile()
+        ->fileContent()
+        ->toEqualStub('importers.laravel.normalize.output_normalized_false');
+});
